@@ -11,6 +11,6 @@ Within the game room, game rounds will run in sequence with rest periods between
 
 ### Members
 * [Emily McMinn](https://github.com/AllegroFox)
-* [Alfred Law](Alfred529)
+* [Alfred Law](https://github.com/Alfred529)
 * [Danny Fekete](https://github.com/StandardGiraffe)
 
