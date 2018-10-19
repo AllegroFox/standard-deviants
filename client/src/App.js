@@ -3,11 +3,11 @@ import './App.css';
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
-  compoponentDidMount() {
+  componentDidMount() {
     this.socket = new WebSocket("ws://localhost:3001");
   }
 
