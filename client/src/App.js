@@ -8,7 +8,14 @@ class App extends Component {
   // }
 
   componentDidMount() {
+
+    // Connection is attempted.
     this.socket = new WebSocket("ws://localhost:3001");
+
+    // Successful connection is reported to the client.
+    this.socket.onopen = function (event) {
+      console.log("The server welcomes you.");
+    }
   }
 
   render() {
