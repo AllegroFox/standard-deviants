@@ -1,6 +1,7 @@
 # Game Logic
 
 ## Game Flow
+Room: Tell Round to initialze a new round
 
 ### Round Start
 Round: Derive The Objective (according to rules fed by Room)
@@ -11,7 +12,7 @@ Round: Derive answer bank for The Objective (using API, etc.), create Answer obj
 
 Room: Turn off chat for players
 
-Round: Display The Objective and game rules to players
+Room tells Round: Display The Objective and game rules to players
 Room: have the status marquee count down to start (to give players a few seconds to think)
 Room: have the status marquee count down to end of input period.
 

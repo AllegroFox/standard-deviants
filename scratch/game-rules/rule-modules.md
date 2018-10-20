@@ -12,6 +12,12 @@ Slots for rule modules exist at the following points of play:
 - __Competition Rules__ (Are duplicate answers rewarded, punished; how?)
 - __Round Duration__ (Static round time, correct answers reduce the clock, game ends when pool is depleted)
 
+## Answer Pool Criteria
+- Find synonyms for the Objective word
+- Find rhyming words for the Objective word
+- Find words that start with the Objective syllable
+
+
 ## Scoring Calculations:
 
 - Valid answers are worth 1 point.
@@ -21,11 +27,15 @@ Slots for rule modules exist at the following points of play:
 
 ## Competition Rules:
 
-#### Boggle Rules
-Answers found by more than one player are retroactively worth 0 points.
+- Boggle Rules
+  - Answers found by more than one player are retroactively worth 0 points.
+- Originality Rewarded
+  - Answers found the first time are worth more points for that player.
+- Popularity penalized
+  - Answer point value is divided evenly among those who guessed it.
+- Collaboration
+  - The room starts with a point pool that decreases towards zero as the timer runs down.  The goal is for everyone to work together to exhaust the answer pool, and then everyone gets the points remaining in the point pool.
 
-#### Originality Rewarded
-Answers found the first time are worth more points for that player.
 
 
 
@@ -33,3 +43,10 @@ Answers found the first time are worth more points for that player.
 ## Wildcards
 
 - Secret word selected from the answer pool that's worth bonus points.
+
+
+## General Game Alternatives
+
+- Select a word from the dictionary and publish its definition, plus clues (number of letters, a letter in its correct space, etc.)  First player to type the correct answer gets a point.
+
+-
