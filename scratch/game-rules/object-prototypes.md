@@ -9,8 +9,8 @@ Round
 {
   getPrompt:          function () => {}  // Does something to get a word/syllable/etc and check its validity.
   rules:              ""  // Rules reminder
-  prompt:             "Target word"
-  answerBank:         [{word}, {word}, {word}]
+  prompt:             "Objective Word"
+  answerBank:         [{answer}, {answer}, {answer}]
   guesses:            [{guess}, {guess}, {guess}]
 
 }
@@ -20,6 +20,7 @@ Guess
   player:             player
   guess:              ""  // word guessed
   "wrong?":           false
+  status:
 
 }
 

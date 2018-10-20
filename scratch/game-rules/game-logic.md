@@ -26,18 +26,19 @@ Room tells Round:
     create a new Guess (player, input),
     check that guess against all answers.
     IF guess matches an answer:
-      check all guesses to determine status:
-        IF no guesses match answer:
+      check answer.status:
+        IF answer.status == "unguessed":
           set answer {status: "unique"}
           tell player to update their guess bank
           calcScore(answer, +, player)
           broadcast updated scoreboard
-        IF guess matches ONE other guess
+        IF answer.status == "unique":
           set answer {status: "popular"}
+          search all guesses for the original player who guessed it
           tell BOTH players to update their guess bank
           calcScore(answer, -, original guess' player)
           broadcast updated scoreboard
-        ELSE:
+        ELSE (answer.status must be "popular"):
           tell player to update their guess bank
     ELSE (guess doesn't match an answer):
       set guess {wrong?: true}
