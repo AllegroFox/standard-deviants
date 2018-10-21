@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import './App.css';
+import NavBar from './Navbar';
+import InputBar from './InputBar';
 
 class App extends Component {
 
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor(props) {
+    super(props);
+
+    this.state = { gameType   : "Syllybles",
+                   gameState  : "Get Ready!",
+                   timeLeft   : 180,
+                   currentUser: "Anonymous" }
+  }
 
   componentDidMount() {
 
@@ -20,7 +27,14 @@ class App extends Component {
 
   render() {
     return (
-      <h1> We are standard deviants.  Good. </h1>
+      <div>
+        <NavBar gameType={this.state.gameType} gameState={this.state.gameState} timeLeft={this.state.timeLeft} currentUser={this.state.currentUser}/>
+        <h1> We are standard deviants.  Good. </h1>
+        <Prompt/>
+        <GuessBank/>
+        <Roster/>
+        <InputBar/>
+      </div>
     );
   }
 }
