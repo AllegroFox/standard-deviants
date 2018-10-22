@@ -1,5 +1,18 @@
 class Room {
-  function constructor () {
 
+  constructor () {
+    this.hello = "You found me."
   }
+
+  clientNotifier (content) {
+    return {
+      content: content,
+      type: "incomingScoreBoard"
+    }
+  }
+
+
+
 }
+
+module.exports = Room;

@@ -42,49 +42,49 @@ class App extends Component {
 
         switch(message.type) {
           case "incomingLogin":
-            console.log(message);
+            console.log(`Type: ${message.type}; "${message.content}"`);
 
             break;
 
           case "incomingGuess":
 
-            console.log(message);
+            console.log(`Type: ${message.type}; "${message.content}"`);
 
             break;
 
           case "incomingGuessState":
 
-            console.log(message);
+            console.log(`Type: ${message.type}; "${message.content}"`);
 
             break;
 
           case "incomingNewGame":
 
-            console.log(message);
+            console.log(`Type: ${message.type}; "${message.content}"`);
 
             break;
 
           case "incomingNewRound":
 
-            console.log(message);
+            console.log(`Type: ${message.type}; "${message.content}"`);
 
             break;
 
           case "incomingGameState":
 
-            console.log(message);
+            console.log(`Type: ${message.type}; "${message.content}"`);
 
             break;
 
           case "incomingScoreBoard":
 
-            console.log(message);
+            console.log(`Type: ${message.type}; "${message.content}"`);
 
             break;
 
           case "incomingEndOfRound":
 
-            console.log(message);
+            console.log(`Type: ${message.type}; "${message.content}"`);
 
             break;
 

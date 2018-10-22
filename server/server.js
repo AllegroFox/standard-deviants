@@ -6,7 +6,7 @@ const express = require('express');
 // const SocketServer = require('ws').Server;
 const WebSocket = require('ws');
 const uuidv4 = require('uuid/v4');
-const Room = require('./game/Room');
+const Room = require('./game/Room.js');
 
 
 // ######################
@@ -28,6 +28,9 @@ const wss = new WebSocket.Server({ server });
 
 
 
+room = new Room;
+
+// console.log(bob.hello);
 
 
 // ################################
@@ -155,12 +158,14 @@ wss.on('connection', (ws) => {
   // wss.broadcast(greeting);
   console.log('Client connected');
   let newPlayer = {
-    type: postLogin,
-    id: uuidv4();
-    avatar: "Default";
+    type: "postLogin",
+    id: uuidv4(),
+    avatar: "Default",
     clientObject: ws
   }
-  validateMessage(newPlayer);
+  // validateMessage(newPlayer);
+  broadcastMessage(room.clientNotifier("Hello from the game room!"));
+
 
 
 
