@@ -6,20 +6,20 @@ class NavBar extends Component {
     return (
 
       <div>
-        <nav class="navbar">
-          <a href="/" class="navbar-brand">Syllynyms</a>
-          <ul class="nav justify-content-end">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Active</a>
+        <nav className="navbar">
+          <a href="/" className="navbar-brand">Syllynyms</a>
+          <ul className="nav justify-content-end">
+            <li className="nav-item">
+              <a className="nav-link active" href="#">Active</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Link</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Link</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
+            <li className="nav-item">
+              <a className="nav-link disabled" href="#">Disabled</a>
             </li>
           </ul>
         </nav>

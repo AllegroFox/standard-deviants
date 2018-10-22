@@ -5,8 +5,8 @@ class Prompt extends Component {
     return (
 
       <div>
-        <div class="prompt">Synonyms for Awesome</div>
-        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="right" title="Here are some rules.">
+        <div className="prompt">Synonyms for Awesome</div>
+        <button type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="right" title="Here are some rules.">
           What do I need to do?
         </button>
       </div>
