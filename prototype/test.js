@@ -1,5 +1,7 @@
 const datamuse = require('datamuse');
 const thesaurus = require('thesaurus-com');
+const randomWords = require('random-words');
+
 
 function prompt(question) {
   return new Promise((resolve, reject) => {
@@ -16,13 +18,14 @@ function prompt(question) {
 
 // ############ Here begins the code ###############
 
-let target = process.argv[2];
-let wordBank = thesaurus.search(target).synonyms;
+// let target = process.argv[2];
+let target = randomWords(1)[0];
+let wordBank = thesaurus.search(target);
 console.log(wordBank);
 
-prompt(`What is a synonym for ${target}?  (We've found ${wordBank.length} of them...)  `)
+prompt(`What is a synonym for ${target}?  (We've found ${wordBank.synonyms.length} of them...)  `)
   .then((answer) => {
-    if (wordBank.includes(answer.toLowerCase())) {
+    if (wordBank.synonyms.includes(answer.toLowerCase())) {
       console.log(`Yep, it's in there!`);
     }
     else {
