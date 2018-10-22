@@ -7,6 +7,7 @@ class NavBar extends Component {
 
       <div>
         <nav className="navbar">
+          <img src={require('./icons/connection.svg')} />
           <a href="/" className="navbar-brand">Syllynyms</a>
           <ul className="nav justify-content-end">
             <li className="nav-item">
