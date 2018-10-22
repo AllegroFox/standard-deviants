@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import './gameRoom.css';
 import NavBar from './Navbar';
 import InputBar from './InputBar';
 import Prompt from './Prompt';
@@ -99,14 +100,23 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="game-window container-fluid">
         <NavBar gameType={this.state.gameType} gameState={this.state.gameState} timeLeft={this.state.timeLeft} currentUser={this.state.currentUser}/>
-        <h1> We are standard deviants.  Good. </h1>
-        <Prompt prompt={this.state.prompt}/>
-        <GuessBank guesses={this.state.guesses}/>
-        <Roster players={this.state.connectedPlayers}/>
-        <SystemUpdates systemUpdates={this.state.systemUpdates}/>
-        <InputBar/>
+        <div className="row">
+          <div className="col-md-8">
+            <h1> We are standard deviants.  Good. </h1>
+            <Prompt prompt={this.state.prompt}/>
+            <GuessBank guesses={this.state.guesses}/>
+            <InputBar/>
+          </div>
+          <div className="col-md-4">
+            <Roster players={this.state.connectedPlayers}/>
+            <SystemUpdates systemUpdates={this.state.systemUpdates}/>
+          </div>
+          <footer className="fixed-bottom">
+            <span>Standard-Deviants 2018</span>
+          </footer>
+        </div>
       </div>
     );
   }
