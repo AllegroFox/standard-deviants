@@ -2,6 +2,12 @@
 // # Import dependencies #
 // #######################
 
+"use strict";
+
+const {MongoClient} = require("mongodb");
+const MONGODB_URI = "mongodb://localhost:27017/standardDeviants";
+
+
 const express = require('express');
 // const SocketServer = require('ws').Server;
 const WebSocket = require('ws');
@@ -24,6 +30,50 @@ const server = express()
 // Create the WebSockets server
 const wss = new WebSocket.Server({ server });
 
+// #######################
+// # Connect to MongoDB: #
+// #######################
+
+MongoClient.connect(MONGODB_URI, (err, db) => {
+  if (err) {
+    console.error(`Failed to connect: ${MONGODB_URI}`);
+    throw err;
+  }
+
+  console.log(`Connected to mongodb: ${MONGODB_URI}`);
+
+  function getData(callback) {
+    db.collection("inventory").find().toArray(callback);
+  }
+
+  // Saves new data `db`
+  function saveData(newData, callback) {
+    db.collection("inventory").insertOne(newData);
+    callback(null, true);
+  }
+
+  getData((err, data) => {
+    if (err) throw err;
+
+    console.log("Logging each data in inventory:");
+    for (let d of data) {
+      console.log(d);
+    }
+    db.close();
+  });
+
+  // Database testing:
+  let testData = {
+    "item": "test",
+    "qty": 25,
+    "status": "test",
+    "size": { "h" : 14, "w" : 21, "uom" : "cm" },
+    "tags": [ "blank", "red" ]
+  }
+  saveData(testData);
+  // getData();
+
+});
 
 
 
