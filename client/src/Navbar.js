@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Marquee from './Marquee'
 
 class NavBar extends Component {
 
@@ -7,20 +8,24 @@ class NavBar extends Component {
 
       <div>
         <nav className="navbar">
-          <img src={require('./icons/connection.svg')} />
-          <a href="/" className="navbar-brand">Syllynyms</a>
+          <img src={require('./icons/connection.svg')} className="game-icon"/>
+          <ul className="nav justify-content-center">
+            <li className="nav-item">
+              <Marquee/>
+            </li>
+          </ul>
           <ul className="nav justify-content-end">
             <li className="nav-item">
-              <a className="nav-link active" href="#">Active</a>
+              <span className="nav-link active">timer</span>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
+              <span className="nav-link"> - </span>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Link</a>
+              <a href="/" className="navbar-brand">Syllynyms</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link disabled" href="#">Disabled</a>
+              <span className="nav-link disabled">User IMG</span>
             </li>
           </ul>
         </nav>

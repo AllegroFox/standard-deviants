@@ -11,6 +11,10 @@
       top: 0;
     }
 
+.nav-item {
+  line-height: 3em;
+}
+
 .navbar-brand {
   color: inherit;
   display: block;
@@ -93,6 +97,19 @@
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
+}
+
+.game-icon {
+
+  width: 60px;
+  height: 60px;
+  margin: 0px;
+  line-height: 3em;
+  display: block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+
 }
 
 .user {
