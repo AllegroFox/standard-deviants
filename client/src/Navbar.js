@@ -25,7 +25,9 @@ class NavBar extends Component {
               <a href="/" className="navbar-brand">Syllynyms</a>
             </li>
             <li className="nav-item">
-              <span className="nav-link disabled">User IMG</span>
+              <span className="nav-link disabled">
+                <img src='https://api.adorable.io/avatars/60/bob@adorable.io.png' className="profile-img"/>
+              </span>
             </li>
           </ul>
         </nav>

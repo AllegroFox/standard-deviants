@@ -42,6 +42,7 @@ class App extends Component {
 
         switch(message.type) {
           case "incomingLogin":
+
             console.log(message);
 
             break;

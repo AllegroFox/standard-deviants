@@ -6,8 +6,8 @@ class Prompt extends Component {
 
       <div>
         <div className="prompt">Synonyms for Awesome</div>
-        <button type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="right" title="Here are some rules.">
-          What do I need to do?
+        <button type="button" className="btn btn-secondary" data-toggle="popover" data-placement="right" data-content="Here are some rules.">
+          What am I doing again?
         </button>
       </div>
 
