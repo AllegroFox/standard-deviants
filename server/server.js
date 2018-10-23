@@ -28,6 +28,7 @@ const wss = new WebSocket.Server({ server });
 
 // Delivers the message object to all connected users.
 const broadcast = (messageObject) => {
+  console.log("You shouldn't see me.")
     wss.clients.forEach(function each(client) {
     if (client.readyState === WebSocket.OPEN) {
       client.send(JSON.stringify(messageObject));
@@ -36,9 +37,10 @@ const broadcast = (messageObject) => {
 }
 
 // Delivers the message object to all connected users EXCEPT the triggering user.
-const broadcastOthers = (messageObject, ws) => {
-    wss.clients.forEach(function each(client) {
-    if (client !== ws && client.readyState === WebSocket.OPEN) {
+const broadcastOthers = (messageObject) => {
+    wss.clients.forEach((client) => {
+      console.log(`BroadcastOthers is getting a message with client id ${client.clientId}`)
+    if (client.clientId !== messageObject.clientId && client.readyState === WebSocket.OPEN) {
       client.send(JSON.stringify(messageObject));
     }
   });
@@ -61,10 +63,10 @@ const room = new Room;
 
 // Sends a message to one particular Client.
 
-const sendClientMessage = (messageObject, clientId) => {
+const sendClientMessage = (messageObject) => {
   wss.clients.forEach(function each(client) {
-    console.log(`client.id: ${client.id}\nmessageObject.content.id: ${messageObject.content.id}`);
-    if (clientId === client.id && client.readyState === WebSocket.OPEN) {
+    // console.log(`client.id: ${client.id}\nmessageObject.content.id: ${messageObject.content.id}`);
+    if (messageObject.clientId === client.clientId && client.readyState === WebSocket.OPEN) {
       client.send(JSON.stringify(messageObject))
       // console.log(messageObject.content.message);
     }
@@ -73,11 +75,13 @@ const sendClientMessage = (messageObject, clientId) => {
 
 // Fully processes a message: takes the initial object, applies a unique identifier, validates its type, and sends it out for broadcasts to all connected users, or all users excepting the provided socket (in the argument, othersOnly).
 
-const broadcastMessage = (messageObject, othersOnly = false) => {
+const broadcastMessage = (messageObject, othersOnly) => {
   messageObject.id = uuidv4();
   validateMessage(messageObject);
 
-  (othersOnly) ? broadcastOthers(messageObject, othersOnly) : broadcast(messageObject);
+  console.log(`The value of othersOnly is ${othersOnly}`);
+
+  (othersOnly) ? broadcastOthers(messageObject, ) : broadcast(messageObject);
 }
 
 
@@ -87,7 +91,7 @@ const validateMessage = (messageObject) => {
 
       // Log-in: Client sends a requested handle to Server
       case "postLogin":
-        room.playerJoin(messageObject, broadcast, sendClientMessage);
+        room.playerJoin(messageObject, broadcastMessage, sendClientMessage);
       break;
 
       // Submit Guess: Client sends a guess object to the Server
@@ -162,12 +166,12 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
   let newPlayer = {
     type: "postLogin",
-    id: uuidv4(),
+    clientId: uuidv4(),
     avatar: "https://api.adorable.io/avatars/285/Bob.png",
   }
-  ws.id = newPlayer.id;
+  ws.clientId = newPlayer.clientId;
   validateMessage(newPlayer);
-  broadcastMessage(room.clientNotifier("Hello from the game room!"));
+  // broadcastMessage(`Please welcome ${newPlayer.handle} to the game!`);
 
 
 

@@ -7,11 +7,11 @@
 
 class Player {
   constructor (playerObject) {
-    this.id = playerObject.id;
+    this.clientId = playerObject.clientId;
     this.avatar = playerObject.avatar;
     // this.clientObject = playerObject.clientObject;
 
-    this.handle = "";
+    this.handle = "Default";
     this.score = 0;
   }
 

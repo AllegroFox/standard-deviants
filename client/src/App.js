@@ -46,6 +46,11 @@ class App extends Component {
 
             break;
 
+          case "incomingNewPlayer":
+            console.log(`Type: ${message.type}; "${message.content.message}"`);
+
+            break;
+
           case "incomingGuess":
 
             console.log(`Type: ${message.type}; "${message.content}"`);

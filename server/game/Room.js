@@ -11,21 +11,25 @@ class Room {
   }
 
   //  This could be a class method, rather than an instance method.
-  clientNotifier (content) {
+  serverMessageFormatter (content, addresseeId, type) {
     return {
       content: content,
-      type: "incomingScoreBoard"
+      clientId: addresseeId,
+      type: type
     }
   }
 
-  playerJoin (playerObject, broadcast, sendClientMessage) {
+  playerJoin (playerObject, broadcastMessage, sendClientMessage) {
     // console.log(JSON.stringify(playerObject));
     const newPlayer = new Player(playerObject);
     this.players.push(newPlayer);
-    const message = this.clientNotifier("Hello from DEEP INSIDE THE GAME.");
-    message.id = playerObject.id;
+    // const message = this.clientNotifier("Hello from DEEP INSIDE THE GAME.");
+    // message.id = playerObject.id;
     // console.log(JSON.stringify(message));
-    sendClientMessage(this.clientNotifier(message), newPlayer.id);
+    console.log(`sendClientMessage to ${newPlayer.clientId}`);
+    sendClientMessage(this.serverMessageFormatter({message: "Hello from deep in the game!"}, newPlayer.clientId, "incomingNewPlayer"));
+    broadcastMessage(this.serverMessageFormatter({message: `New player, ${newPlayer.handle}, has joined!`}, newPlayer.clientId, "incomingNewPlayer"), true)
+
     console.log(`Game says: my players are now ${this.players}`);
   }
 
