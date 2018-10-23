@@ -24,7 +24,7 @@ class Room {
     // message.id = playerObject.id;
     // console.log(JSON.stringify(message));
     console.log(`sendClientMessage to ${newPlayer.clientId}`);
-    this.messager.sendClientMessage(this.serverMessageFormatter({message: "Hello from deep in the game!"}, newPlayer.clientId, "incomingNewPlayer"));
+    this.messager.sendClientMessage(this.serverMessageFormatter({message: "Hello from deep in the game!", clientId: newPlayer.clientId}, newPlayer.clientId, "incomingPlayerInitialization"));
     this.messager.broadcastMessage(this.serverMessageFormatter({message: `New player, ${newPlayer.handle}, has joined!`}, newPlayer.clientId, "incomingNewPlayer"), true)
 
     console.log(`Game says: my players are now ${this.players}`);

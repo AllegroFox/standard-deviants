@@ -18,6 +18,7 @@ class App extends Component {
                    gameState  : "Get Ready!",
                    timeLeft   : 180,
                    currentUser: "Anonymous",
+                   clientId   : "",
                    guesses    : ['blue', 'red', 'grey'],
                    connectedPlayers: ["AllegroFox", "StandardGiraffe", "CalmingManatee"],
                    systemUpdates   : ["some", "system", "messages"],
@@ -97,6 +98,12 @@ class App extends Component {
 
             break;
 
+          // Received when a player first connects and is initialized as an object within the game room.
+          case "incomingPlayerInitialization":
+            this.setState({clientId: message.content.clientId});
+            console.log(`Player, you have been initialized by the game room!`);
+            break;
+
           default:
             throw new Error("Unknown message type: " + message.type);
         }
@@ -110,7 +117,16 @@ class App extends Component {
 
   handleSubmit(event) {
     if (event.key === 'Enter') {
+
       this.setState({guessBarContent: ""});
+    }
+  }
+
+  clientMessageFormatter (content, type) {
+    return {
+      content: content,
+      clientId: this.clientId,
+      type: type
     }
   }
 
