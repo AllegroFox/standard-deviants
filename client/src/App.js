@@ -21,9 +21,12 @@ class App extends Component {
                    guesses    : ['blue', 'red', 'grey'],
                    connectedPlayers: ["AllegroFox", "StandardGiraffe", "CalmingManatee"],
                    systemUpdates   : ["some", "system", "messages"],
-                   prompt     : {objective: "targetWord", rules: "Some rules" } }
+                   prompt     : {objective: "targetWord", rules: "Some rules" },
+                   guessBarContent: ""
+                 }
 
-    this.onKeyPress = this.onKeyPress.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.socket = null;
   }
 
@@ -100,8 +103,15 @@ class App extends Component {
       }
     };
 
-  onKeyPress(key) {
+  handleChange(event) {
+    this.setState({guessBarContent: event.target.value});
+    console.log(`Field value: ${event.target.value}`);
+  }
 
+  handleSubmit(event) {
+    if (event.key === 'Enter') {
+      this.setState({guessBarContent: ""});
+    }
   }
 
   render() {
@@ -113,7 +123,11 @@ class App extends Component {
             <h1> We are standard deviants.  Good. </h1>
             <Prompt prompt={this.state.prompt}/>
             <GuessBank guesses={this.state.guesses}/>
-            <InputBar/>
+            <InputBar
+              value={this.state.guessBarContent}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
+              />
           </div>
           <div className="col-md-4">
             <Roster players={this.state.connectedPlayers}/>
