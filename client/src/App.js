@@ -14,13 +14,13 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { gameType   : "Syllybles",
+    this.state = { gameType   : "Syllynyms",
                    gameState  : "Get Ready!",
                    timeLeft   : 180,
                    currentUser: "Anonymous",
-                   guesses    : [],
-                   connectedPlayers: [],
-                   systemUpdates   : [],
+                   guesses    : ['blue', 'red', 'grey'],
+                   connectedPlayers: ["AllegroFox", "StandardGiraffe", "CalmingManatee"],
+                   systemUpdates   : ["some", "system", "messages"],
                    prompt     : {objective: "targetWord", rules: "Some rules" } }
 
     this.onKeyPress = this.onKeyPress.bind(this);

@@ -5,8 +5,8 @@ class Prompt extends Component {
     return (
 
       <div>
-        <div className="prompt">Synonyms for Awesome</div>
-        <button type="button" className="btn btn-secondary" data-toggle="popover" data-placement="right" data-content="Here are some rules.">
+        <div className="prompt">{this.props.prompt.objective}</div>
+        <button type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="right" data-content={this.props.prompt.rules}>
           What am I doing again?
         </button>
       </div>
