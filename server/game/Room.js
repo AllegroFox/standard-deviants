@@ -1,10 +1,12 @@
 const Player = require('./Player.js');
+const Round = require('./Round.js');
 
 class Room {
 
   constructor (messager) {
     this.messager = messager;
     this.players = [];
+    this.round = null;
   }
 
   //  This could be a class method, rather than an instance method.
@@ -13,6 +15,18 @@ class Room {
       content: content,
       clientId: addresseeId,
       type: type
+    }
+  }
+
+  newRound () {
+    this.round = new Round;
+  }
+
+  playerGuess (guessObject) {
+    if (this.round.checkGuess(guessObject)) {
+      this.messager.sendClientMessage(this.serverMessageFormatter({message: "You got it!!!"}, guessObject.clientId, "incomingGuessState"));
+    } else {
+      this.messager.sendClientMessage(this.serverMessageFormatter({message: "No, you boob!!!"}, guessObject.clientId, "incomingGuessState"));
     }
   }
 

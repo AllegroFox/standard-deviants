@@ -31,6 +31,7 @@ const wss = new WebSocket.Server({ server });
 
 const messager = new Messager(wss);
 const room = new Room(messager);
+room.newRound();
 
 // console.log(bob.hello);
 
@@ -52,7 +53,7 @@ const validateMessage = (messageObject) => {
 
       // Submit Guess: Client sends a guess object to the Server
       case "postGuess":
-        round.guessCheck(messageObject);
+        room.playerGuess(messageObject);
       break;
 
       // Server announcement: new Player

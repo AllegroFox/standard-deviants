@@ -1,9 +1,3 @@
-/*
-    type: "postLogin",
-    id: uuidv4(),
-    avatar: "Default",
-    clientObject: ws
-*/
 
 class Player {
   constructor (playerObject) {

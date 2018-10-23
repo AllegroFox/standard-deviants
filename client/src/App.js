@@ -64,7 +64,7 @@ class App extends Component {
 
           case "incomingGuessState":
 
-            console.log(`Type: ${message.type}; "${message.content}"`);
+            console.log(message.content.message);
 
             break;
 
@@ -112,22 +112,24 @@ class App extends Component {
 
   handleChange(event) {
     this.setState({guessBarContent: event.target.value});
-    console.log(`Field value: ${event.target.value}`);
   }
 
   handleSubmit(event) {
     if (event.key === 'Enter') {
-
+      const guess = { guess: this.state.guessBarContent };
+      this.sendMessage(guess, "postGuess");
       this.setState({guessBarContent: ""});
     }
   }
 
-  clientMessageFormatter (content, type) {
-    return {
-      content: content,
+  // Formats a message package with type and id, and then sends it on to the server.
+  sendMessage (messageObject, messageType) {
+    const message = {
+      content: messageObject,
       clientId: this.clientId,
-      type: type
+      type: messageType
     }
+    this.socket.send(JSON.stringify(message));
   }
 
   render() {
