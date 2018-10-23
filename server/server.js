@@ -7,6 +7,7 @@ const express = require('express');
 const WebSocket = require('ws');
 const uuidv4 = require('uuid/v4');
 const Room = require('./game/Room.js');
+const Messager = require('./message-functions.js');
 
 
 // ######################
@@ -26,63 +27,13 @@ const server = express()
 const wss = new WebSocket.Server({ server });
 
 
-// Delivers the message object to all connected users.
-const broadcast = (messageObject) => {
-  console.log("You shouldn't see me.")
-    wss.clients.forEach(function each(client) {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify(messageObject));
-    }
-  });
-}
-
-// Delivers the message object to all connected users EXCEPT the triggering user.
-const broadcastOthers = (messageObject) => {
-    wss.clients.forEach((client) => {
-      console.log(`BroadcastOthers is getting a message with client id ${client.clientId}`)
-    if (client.clientId !== messageObject.clientId && client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify(messageObject));
-    }
-  });
-}
 
 
-
-const room = new Room;
+const messager = new Messager(wss);
+const room = new Room(messager);
 
 // console.log(bob.hello);
 
-
-// ################################
-// ################################
-
-//   Message-Processing Functions
-
-// ################################
-// ################################
-
-// Sends a message to one particular Client.
-
-const sendClientMessage = (messageObject) => {
-  wss.clients.forEach(function each(client) {
-    // console.log(`client.id: ${client.id}\nmessageObject.content.id: ${messageObject.content.id}`);
-    if (messageObject.clientId === client.clientId && client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify(messageObject))
-      // console.log(messageObject.content.message);
-    }
-  })
-}
-
-// Fully processes a message: takes the initial object, applies a unique identifier, validates its type, and sends it out for broadcasts to all connected users, or all users excepting the provided socket (in the argument, othersOnly).
-
-const broadcastMessage = (messageObject, othersOnly) => {
-  messageObject.id = uuidv4();
-  validateMessage(messageObject);
-
-  console.log(`The value of othersOnly is ${othersOnly}`);
-
-  (othersOnly) ? broadcastOthers(messageObject, ) : broadcast(messageObject);
-}
 
 
 // Processes incoming messages by type.  If recognized, re-types the message in preparation for broadcast.  (If a message is not re-typed in this way, it will be caught by the client and log an error message.)
@@ -91,7 +42,7 @@ const validateMessage = (messageObject) => {
 
       // Log-in: Client sends a requested handle to Server
       case "postLogin":
-        room.playerJoin(messageObject, broadcastMessage, sendClientMessage);
+        room.playerJoin(messageObject);
       break;
 
       // Submit Guess: Client sends a guess object to the Server
@@ -165,11 +116,9 @@ wss.on('connection', (ws) => {
   // wss.broadcast(greeting);
   console.log('Client connected');
   let newPlayer = {
-
     type: "postLogin",
     clientId: uuidv4(),
-    avatar: "https://api.adorable.io/avatars/285/Bob.png",
-
+    avatar: "https://api.adorable.io/avatars/285/Bob.png"
   }
 
   ws.clientId = newPlayer.clientId;
@@ -184,10 +133,12 @@ wss.on('connection', (ws) => {
   // A message package is received from a connected client.
   // ######################################################
 
+  // Stamps the message with the client's ws identity, gives it a unique id to keep React happy, and sends it on to the switchboard.
   ws.on('message', (data) => {
     const dataObject = JSON.parse(data);
-    dataObject.clientObject = ws;
-    broadcastMessage(dataObject);
+    dataObject.id = uuidv4();
+    dataObject.clientId = ws.clientId;
+    validateMessage(dataObject);
   });
 
 
