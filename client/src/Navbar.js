@@ -4,8 +4,6 @@ import Clock from './Clock';
 
 class NavBar extends Component {
 
-  avatarLink = 'https://api.adorable.io/avatars/60/' + {this.props.currentUser} + '.io.png'
-
   render() {
     return (
 
@@ -31,7 +29,7 @@ class NavBar extends Component {
             </li>
             <li className="nav-item">
               <span className="nav-link disabled">
-                <img src="<% avatarLink %>" className="profile-img"/>
+                <img src={'https://api.adorable.io/avatars/60/' + this.props.currentUser + '.io.png'} className="profile-img"/>
                 <a href='#'>{this.props.currentUser}</a>
               </span>
             </li>
