@@ -154,9 +154,9 @@ wss.on('connection', (ws) => {
   // wss.broadcast(greeting);
   console.log('Client connected');
   let newPlayer = {
-    type: postLogin,
-    id: uuidv4();
-    avatar: "Default";
+    type: 'postLogin',
+    id: uuidv4(),
+    avatar: "Default",
     clientObject: ws
   }
   validateMessage(newPlayer);
