@@ -17,7 +17,7 @@ class Round {
 
     if (result) {
 
-      switch (results.status) {
+      switch (result.status) {
         case "unguessed":
           result.status = "unique";
           newGuess.status = "unique";
@@ -60,6 +60,7 @@ class Round {
     const result = this.guesses.filter(collectedGuess => (
       collectedGuess.guess === guessObject.guess && collectedGuess.player !== guessObject.player))
     console.log(`findGuess produced: ${JSON.stringify(result)}`);
+    return result[0];
   }
 
 }
