@@ -17,10 +17,14 @@ class App extends Component {
     this.state = { gameType   : "Syllynyms",
                    gameState  : "Get Ready!",
                    timeLeft   : 180,
-                   currentUser: "Anonymous",
+                   currentUser: "AllegroFox",
                    clientId   : "",
-                   guesses    : ['blue', 'red', 'grey'],
-                   connectedPlayers: ["AllegroFox", "StandardGiraffe", "CalmingManatee"],
+                   guesses    : [{guess:'blue', status:'unique'},
+                                 {guess:'red',  status:'wrong'},
+                                 {guess:'grey', status: 'popular'}],
+                   connectedPlayers: [{name:"AllegroFox"},
+                                      {name:"StandardGiraffe"},
+                                      {name:"CalmingManatee"}],
                    systemUpdates   : ["some", "system", "messages"],
                    prompt     : {objective: "targetWord", rules: "Some rules" },
                    guessBarContent: ""
@@ -60,11 +64,34 @@ class App extends Component {
 
             console.log(`Type: ${message.type}; "${message.content}"`);
 
+            let guess = message.content;
+            let newGuess = [...this.state.guesses, guess];
+
+            this.setState({guesses: newGuess});
+
             break;
 
           case "incomingGuessState":
 
             console.log(message.content.message);
+
+            let guessWord = message.content.guess;
+            let guessState = message.content.status;
+
+            let foundGuessIndex = this.state.guesses.findIndex(guessObj => (guessObj.guess === guessWord));
+            let modifiedGuess = {
+              ...this.state.guesses[foundGuessIndex],
+              status: guessState
+            };
+
+            let newGuesses = [
+              ...this.state.guesses.slice(0, foundGuessIndex),
+              modifiedGuess,
+              ...this.state.guesses.slice(foundGuessIndex + 1)
+            ];
+
+            this.setState({guesses: newGuesses});
+
 
             break;
 

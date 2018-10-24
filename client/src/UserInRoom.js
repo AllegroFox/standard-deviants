@@ -5,7 +5,7 @@ class UserInRoom extends Component {
   render() {
     return (
 
-      <div>I'm a PLAYER</div>
+      <div>{this.props.player}</div>
 
     );
   }

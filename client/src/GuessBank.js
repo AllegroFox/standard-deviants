@@ -5,7 +5,7 @@ class GuessBank extends Component {
 
   render() {
     const  guessItems = this.props.guesses.map(guess => (
-      <Guess guess={guess} status={guess.guessStatus}/>
+      <Guess guess={guess.guess} status={guess.status}/>
       ));
     return (
 

@@ -5,7 +5,7 @@ class Guess extends Component {
   render() {
     return (
 
-      <div>I'm a GUESS</div>
+      <div>{this.props.guess}: {this.props.status}</div>
 
     );
   }

@@ -3,17 +3,13 @@
       background: #1f4a5b;
       color: white;
       border-bottom: 1px solid black;
-      height: 70px;
+      height: 100px;
       left: 0;
       padding: 0 10px;
       position: fixed;
       right: 0;
       top: 0;
     }
-
-.nav-item {
-  line-height: 3em;
-}
 
 .navbar-brand {
   color: inherit;
@@ -27,11 +23,15 @@
   text-decoration: none;
 }
 
+.row {
+  margin-top: 100px;
+}
+
 .game-window {
   height: 100%;
   background: black;
   color: #9cc700;
-  margin: 70px 0;
+  margin: 100px 0;
   position: absolute;
 }
 
@@ -101,8 +101,8 @@
 
 .game-icon {
 
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   margin: 0px;
   line-height: 3em;
   display: block;
