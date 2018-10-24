@@ -1,0 +1,122 @@
+
+.navbar {
+      background: #1f4a5b;
+      color: white;
+      border-bottom: 1px solid black;
+      height: 100px;
+      left: 0;
+      padding: 0 10px;
+      position: fixed;
+      right: 0;
+      top: 0;
+    }
+
+.navbar-brand {
+  color: inherit;
+  display: block;
+  float: left;
+  font-weight: 700;
+  font-size: 28px;
+  height: 70px;
+  line-height: 70px;
+  padding: 0 10px;
+  text-decoration: none;
+}
+
+.row {
+  margin-top: 100px;
+}
+
+.game-window {
+  height: 100%;
+  background: black;
+  color: #9cc700;
+  margin: 100px 0;
+  position: absolute;
+}
+
+.game-input {
+  bottom: 40px;
+  display: block;
+  height: 60px;
+  line-height: 60px;
+  position: fixed;
+  margin-bottom: 60px;
+  width: 60%;
+}
+
+.chatbar {
+
+  right: 0;
+  bottom: 0;
+  display: block;
+
+}
+
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.profile-img
+{
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 25%;
+    -webkit-border-radius: 25%;
+    border-radius: 25%;
+}
+
+.game-icon {
+
+  width: 80px;
+  height: 80px;
+  margin: 0px;
+  line-height: 3em;
+  display: block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+
+}
+
+.user {
+    padding:0 10px 10px;
+    min-height:150px;
+    height:auto;
+    margin: 10px 0;
+}
+
+
