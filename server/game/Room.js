@@ -23,7 +23,7 @@ class Room {
   newRound () {
     this.round = new Round(this.messager);
     this.round.generateAnswerPool();
-    this.broadcastObjectives();
+    this.broadcastPrompt();
 
     console.log(`A new round has been initialized.  The objectives are: ${this.round.objective}`);
     console.log(this.round.objective);
@@ -101,7 +101,7 @@ class Room {
 
     // ... send the player a package with their credentials
     this.messager.sendClientMessage(this.serverMessageFormatter({message: "Hello from deep in the game!", clientId: newPlayer.clientId}, newPlayer.clientId, "incomingPlayerInitialization"));
-    this.broadcastObjectives(newPlayer.clientId);
+    this.broadcastPrompt(newPlayer.clientId);
 
     // ... send everyone else an alert with the new player's credentials.
     this.messager.broadcastMessage(this.serverMessageFormatter({message: `New player, ${newPlayer.handle}, has joined!`}, newPlayer.clientId, "incomingNewPlayer"), true)
@@ -109,16 +109,20 @@ class Room {
   }
 
   // Broadcasts the objectives of the current round.  If a target is given, instead sends the objectives to just that target.
-  broadcastObjectives(target) {
+  broadcastPrompt(target) {
+    const content = {
+      objective: this.round.objective,
+      rules: this.round.rules
+    }
     target ?
       this.messager.sendClientMessage(
         this.messager.serverMessageFormatter(
-          this.round.objective, target, "incomingPrompt")
+          content, target, "incomingPrompt")
         )
 
       : this.messager.broadcastMessage(
         this.messager.serverMessageFormatter(
-          this.this.round.objective, null, "incomingPrompt")
+          content, null, "incomingPrompt")
       );
   }
 

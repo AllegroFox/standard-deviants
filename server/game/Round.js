@@ -8,7 +8,8 @@ class Round {
     this.messager = messager;
     this.guesses = [];
     this.answerBank = [{id: "victory", status: "unguessed", pointValue: 0}, {id: "spoon", status: "unguessed", pointValue: 0}];
-    this.objective = "";
+    this.objective = [];
+    this.rules = "Guess synonyms of the words above.  (Pay close attention to the definitions!)";
   }
 
   checkGuess(guessObject) {
