@@ -5,7 +5,10 @@ class UserInRoom extends Component {
   render() {
     return (
 
-      <div>{this.props.player}</div>
+      <li className="list-group-item">
+        {this.props.player}
+        <span className="badge badge-primary badge-pill">18</span>
+      </li>
 
     );
   }

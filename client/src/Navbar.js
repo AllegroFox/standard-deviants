@@ -17,7 +17,7 @@ class NavBar extends Component {
           </ul>
           <ul className="nav justify-content-end">
             <li className="nav-item">
-              <span className="nav-link active">
+              <span className="nav-link">
                 <Clock time={this.props.timeLeft}/>
               </span>
             </li>

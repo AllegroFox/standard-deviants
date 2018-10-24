@@ -10,9 +10,9 @@ class Roster extends Component {
     return (
 
       <main className="players">
-        <div className="player">
+        <ul className="list-group">
           {playerItems}
-        </div>
+        </ul>
       </main>
 
     );
