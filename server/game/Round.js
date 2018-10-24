@@ -17,7 +17,7 @@ class Round {
 
     if (result) {
 
-      switch (results.status) {
+      switch (result.status) {
         case "unguessed":
           result.status = "unique";
           newGuess.status = "unique";

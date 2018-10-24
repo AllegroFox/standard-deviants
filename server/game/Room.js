@@ -39,10 +39,11 @@ class Room {
 
       case "demotedToPopular":
         // Send the original guesser their status.
-        this.messager.sendClientMessage(this.serverMessageFormatter({message: "You got it, but it's been guessed before.", guess: guess.guess, status: guess.status}, guessObject.clientId, "incomingGuessState"));
+        this.messager.sendClientMessage(this.serverMessageFormatter({message: "You got it, but it's been guessed before.", guess: guess.guess, status: "popular"}, guessObject.clientId, "incomingGuessState"));
         // ... Also send the other player (who thinks their guess is unique) the bad news.
         const playerToUpdate = (this.round.findGuess(guess));
-        this.messager.sendClientMessage(this.serverMessageFormatter({message: "Bad news, bub. Someone just guessed your unique successful guess.", guess: guess.guess, status: guess.status}, playerToUpdate.player, "incomingGuessState"));
+        console.log(`The player to update is: ${JSON.stringify(playerToUpdate)}`)
+        this.messager.sendClientMessage(this.serverMessageFormatter({message: "Bad news, bub. Someone just guessed your unique successful guess.", guess: guess.guess, status: "popular"}, playerToUpdate.player, "incomingGuessState"));
         break;
 
       case "popular":
