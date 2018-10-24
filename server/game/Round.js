@@ -1,24 +1,46 @@
+const Guess = require('./Guess.js');
+
 class Round {
 
   constructor (gameModule) {
     this.guesses = [];
     this.answerBank = [{id: "victory", status: "unguessed"}, {id: "spoon", status: "unguessed"}];
     this.objective = "";
-    // this.rules = gameModule.rules;
-    // this.generateAnswerBank = gameModule.generateAnswerBank;
   }
 
   checkGuess (guessObject) {
-    let result = false;
-    this.answerBank.forEach((answer) => {
-      if (guessObject.content.guess.toLowerCase() === answer.id) {
-        console.log(`${guessObject.clientId} got it!!!`);
-        result = true;
-      }
-    })
+    const newGuess = new Guess(guessObject);
+    const result = this.answerBank.find(answer => newGuess.guess.toLowerCase() === answer.id)
 
-    return result;
+    if (result) {
+      if (result.status === "unguessed") {
+        result.status = "unique";
+        newGuess.status = "unique";
+      } else if (result.status === "unique") {
+        result.status = "popular";
+        newGuess.status = "popular";
+      } else if (result.status === "popular") {
+        newGuess.status = "popular";
+      }
+
+    } else {
+      newGuess.status = "wrong";
     }
+
+    this.guesses.push(newGuess);
+    return newGuess;
+    }
+
+    checkAnswer (answerQuery) {
+      this.answerBank.forEach((answer) => {
+        if (answer.id === answerQuery) {
+          return answer.status;
+        }
+      })
+    }
+
+  buildGuess (guessObject) {
+  }
 
 }
 

@@ -23,20 +23,19 @@ class Room {
   }
 
   playerGuess (guessObject) {
-    if (this.round.checkGuess(guessObject)) {
-      this.messager.sendClientMessage(this.serverMessageFormatter({message: "You got it!!!"}, guessObject.clientId, "incomingGuessState"));
-    } else {
+    const guess = this.round.checkGuess(guessObject);
+    if (guess.status === "wrong") {
       this.messager.sendClientMessage(this.serverMessageFormatter({message: "No, you boob!!!"}, guessObject.clientId, "incomingGuessState"));
+    } else if (guess.status === "unique") {
+      this.messager.sendClientMessage(this.serverMessageFormatter({message: "You got it, and you were the first one!!!"}, guessObject.clientId, "incomingGuessState"));
+    } else if (guess.status === "popular") {
+      this.messager.sendClientMessage(this.serverMessageFormatter({message: "You got it, but it's been guessed before."}, guessObject.clientId, "incomingGuessState"));
     }
   }
 
   playerJoin (protoPlayerObject) {
-    // console.log(JSON.stringify(playerObject));
     const newPlayer = new Player(protoPlayerObject);
     this.players.push(newPlayer);
-    // const message = this.clientNotifier("Hello from DEEP INSIDE THE GAME.");
-    // message.id = playerObject.id;
-    // console.log(JSON.stringify(message));
     console.log(`sendClientMessage to ${newPlayer.clientId}`);
     this.messager.sendClientMessage(this.serverMessageFormatter({message: "Hello from deep in the game!", clientId: newPlayer.clientId}, newPlayer.clientId, "incomingPlayerInitialization"));
     this.messager.broadcastMessage(this.serverMessageFormatter({message: `New player, ${newPlayer.handle}, has joined!`}, newPlayer.clientId, "incomingNewPlayer"), true)
