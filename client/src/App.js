@@ -79,8 +79,12 @@ class App extends Component {
             let guessState = message.content.status;
 
             let foundGuessIndex = this.state.guesses.findIndex(guessObj => (guessObj.guess === guessWord));
+
+
+
             let modifiedGuess = {
               ...this.state.guesses[foundGuessIndex],
+              guess: guessWord,
               status: guessState
             };
 
