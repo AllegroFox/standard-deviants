@@ -19,18 +19,36 @@ class Room {
   }
 
   newRound () {
-    this.round = new Round;
+    this.round = new Round(this.messager);
     this.round.generateAnswerPool();
   }
 
   playerGuess (guessObject) {
     const guess = this.round.checkGuess(guessObject);
-    if (guess.status === "wrong") {
-      this.messager.sendClientMessage(this.serverMessageFormatter({message: "No, you boob!!!"}, guessObject.clientId, "incomingGuessState"));
-    } else if (guess.status === "unique") {
-      this.messager.sendClientMessage(this.serverMessageFormatter({message: "You got it, and you were the first one!!!"}, guessObject.clientId, "incomingGuessState"));
-    } else if (guess.status === "popular") {
-      this.messager.sendClientMessage(this.serverMessageFormatter({message: "You got it, but it's been guessed before."}, guessObject.clientId, "incomingGuessState"));
+
+    switch (guess.status) {
+      case "wrong":
+        // Send the guesser the news that their guess was wrong.
+        this.messager.sendClientMessage(this.serverMessageFormatter({message: "No, you boob!!!", guess: guess.guess, status: guess.status}, guessObject.clientId, "incomingGuess"));
+        break;
+
+      case "unique":
+        // Send the guesser the news that their guess was a hit.
+        this.messager.sendClientMessage(this.serverMessageFormatter({message: "You got it, and you were the first one!!!", guess: guess.guess, status: guess.status}, guessObject.clientId, "incomingGuess"));
+        break;
+
+      case "demotedToPopular":
+        // Send the original guesser their status.
+        this.messager.sendClientMessage(this.serverMessageFormatter({message: "You got it, but it's been guessed before.", guess: guess.guess, status: guess.status}, guessObject.clientId, "incomingGuessState"));
+        // ... Also send the other player (who thinks their guess is unique) the bad news.
+        const playerToUpdate = (this.round.findGuess(guess));
+        this.messager.sendClientMessage(this.serverMessageFormatter({message: "Bad news, bub. Someone just guessed your unique successful guess.", guess: guess.guess, status: guess.status}, playerToUpdate.player, "incomingGuessState"));
+        break;
+
+      case "popular":
+        this.messager.sendClientMessage(this.serverMessageFormatter({message: "You got it, but it's been guessed before.", guess: guess.guess, status: guess.status}, guessObject.clientId, "incomingGuessState"));
+        break;
+
     }
   }
 
