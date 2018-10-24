@@ -11,7 +11,7 @@ class Round {
     this.objective = "";
   }
 
-  checkGuess (guessObject) {
+  checkGuess(guessObject) {
     const newGuess = new Guess(guessObject);
     const result = this.answerBank.find(answer => newGuess.guess.toLowerCase() === answer.id)
 
@@ -39,7 +39,7 @@ class Round {
     return newGuess;
   }
 
-  checkAnswer (answerQuery) {
+  checkAnswer(answerQuery) {
     this.answerBank.forEach((answer) => {
       if (answer.id === answerQuery) {
         return answer.status;
@@ -47,12 +47,19 @@ class Round {
     })
   }
 
-  generateAnswerPool () {
+  generateAnswerPool() {
     const poolObject = buildPool(5);
     poolObject.bank.forEach((answer) => {
-      const newAnswer = new Answer (answer, 5);
+      const newAnswer = new Answer (answer, answer.length);
       this.answerBank.push(newAnswer);
     });
+    const target = poolObject.targets;
+    this.objective = [
+      {word: poolObject.targets[0].word, hint: poolObject.targets[0].definition},
+      {word: poolObject.targets[1].word, hint: poolObject.targets[1].definition}
+    ];
+
+    // broadcastObjectives();
     console.log(JSON.stringify(JSON.stringify(poolObject.targets)));
   }
 
