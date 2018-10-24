@@ -20,6 +20,7 @@ class Room {
 
   newRound () {
     this.round = new Round;
+    this.round.generateAnswerPool();
   }
 
   playerGuess (guessObject) {

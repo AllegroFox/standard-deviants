@@ -1,4 +1,6 @@
 const Guess = require('./Guess.js');
+const Answer = require('./Answer.js');
+const buildPool = require ('./gameModules/bank-gen-synonyms.js');
 
 class Round {
 
@@ -29,19 +31,27 @@ class Round {
 
     this.guesses.push(newGuess);
     return newGuess;
-    }
-
-    checkAnswer (answerQuery) {
-      this.answerBank.forEach((answer) => {
-        if (answer.id === answerQuery) {
-          return answer.status;
-        }
-      })
-    }
-
-  buildGuess (guessObject) {
   }
 
+  checkAnswer (answerQuery) {
+    this.answerBank.forEach((answer) => {
+      if (answer.id === answerQuery) {
+        return answer.status;
+      }
+    })
+  }
+
+  generateAnswerPool () {
+    const poolObject = buildPool(5);
+    poolObject.bank.forEach((answer) => {
+      const newAnswer = new Answer (answer, 5);
+      this.answerBank.push(newAnswer);
+    });
+    console.log(JSON.stringify(this.answerBank));
+  }
+
+
 }
+
 
 module.exports = Round;
