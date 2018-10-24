@@ -47,7 +47,7 @@ class Round {
       const newAnswer = new Answer (answer, 5);
       this.answerBank.push(newAnswer);
     });
-    console.log(JSON.stringify(this.answerBank));
+    console.log(JSON.stringify(JSON.stringify(poolObject.targets)));
   }
 
 
