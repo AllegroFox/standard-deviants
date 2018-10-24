@@ -19,14 +19,16 @@ class App extends Component {
                    timeLeft   : 180,
                    currentUser: "AllegroFox",
                    clientId   : "",
-                   guesses    : [{guess:'blue', status:'unique'},
+                   guesses    : [{guess:'green', status:'unique'},
                                  {guess:'red',  status:'wrong'},
                                  {guess:'grey', status: 'popular'}],
                    connectedPlayers: [{name:"AllegroFox"},
                                       {name:"StandardGiraffe"},
                                       {name:"CalmingManatee"}],
                    systemUpdates   : ["some", "system", "messages"],
-                   prompt     : {objective: "targetWord", rules: "Some rules" },
+                   prompt     : {objective: [{word: "word",
+                                              hint: "hint" }, {word: "word", hint: "hint"}],
+                                 rules: "Some rules" },
                    guessBarContent: ""
                  }
 
@@ -117,6 +119,16 @@ class App extends Component {
 
             break;
 
+          case "incomingPrompt":
+
+            console.log(`Type: ${message.type}; "${message.content}"`);
+
+            let newPrompt = message.content;
+
+            this.setState({prompt: newPrompt});
+
+            break;
+
           case "incomingScoreBoard":
 
             console.log(`Type: ${message.type}; "${message.content}"`);
@@ -147,9 +159,17 @@ class App extends Component {
 
   handleSubmit(event) {
     if (event.key === 'Enter') {
-      const guess = { guess: this.state.guessBarContent };
-      this.sendMessage(guess, "postGuess");
-      this.setState({guessBarContent: ""});
+
+      let foundGuess = this.state.guesses.find(guessObj => (guessObj.guess === this.state.guessBarContent));
+
+      if (foundGuess) {
+        console.log("You've already tried that.")
+      } else {
+        const guess = { guess: this.state.guessBarContent };
+
+        this.sendMessage(guess, "postGuess");
+        this.setState({guessBarContent: ""});
+      }
     }
   }
 

@@ -77,6 +77,7 @@ class Room {
             status: "popular"
           }, playerToUpdate.player, "incomingGuessState")
         );
+
         break;
 
       case "popular":
