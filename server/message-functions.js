@@ -47,7 +47,7 @@ class Messager {
     });
   }
 
-  serverMessageFormatter (content, addresseeId, type) {
+  parcelMessage (content, addresseeId, type) {
     return {
       content: content,
       clientId: addresseeId,
