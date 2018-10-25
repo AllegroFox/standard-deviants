@@ -68,7 +68,7 @@ class Room {
           }, playerToUpdate.player, "incomingGuessState")
         );
         // DONE? Change playerToUpdate.score by guess.pointValue
-        this.updateScoreByPlayer(playerToUpdate.clientId, guess.pointValue);
+        this.updateScoreByPlayer(playerToUpdate.player, guess.pointValue);
         break;
 
       case "popular":
@@ -96,7 +96,8 @@ class Room {
     this.broadcastPrompt(newPlayer.clientId);
 
     // ... send everyone else an alert with the new player's credentials.
-    this.messager.broadcastMessage(this.messager.parcelMessage({message: `New player, ${newPlayer.handle}, has joined!`}, newPlayer.clientId, "incomingNewPlayer"), true)
+    this.messager.broadcastMessage(this.messager.parcelMessage({message: `New player, ${newPlayer.handle}, has joined!`}, newPlayer.clientId, "incomingNewPlayer"), true);
+    this.broadcastScoreboard();
   }
 
   // Broadcasts the objectives of the current round.  If a target is given, instead sends the objectives to just that target.
