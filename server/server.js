@@ -2,12 +2,6 @@
 // # Import dependencies #
 // #######################
 
-"use strict";
-
-const {MongoClient} = require("mongodb");
-const MONGODB_URI = "mongodb://localhost:27017/standardDeviants";
-
-
 const express = require('express');
 // const SocketServer = require('ws').Server;
 const WebSocket = require('ws');
@@ -15,6 +9,8 @@ const uuidv4 = require('uuid/v4');
 const Room = require('./game/Room.js');
 const Messager = require('./message-functions.js');
 
+const {MongoClient} = require("mongodb");
+const MONGODB_URI = "mongodb://localhost:27017/standardDeviants";
 
 // ######################
 // # Initialize Server: #
@@ -37,6 +33,7 @@ const wss = new WebSocket.Server({ server });
 // #######################
 
 MongoClient.connect(MONGODB_URI, (err, db) => {
+
   if (err) {
     console.error(`Failed to connect: ${MONGODB_URI}`);
     throw err;
@@ -44,162 +41,158 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
 
   console.log(`Connected to mongodb: ${MONGODB_URI}`);
 
-  function getData(callback) {
-    db.collection("inventory").find().toArray(callback);
+  // Functions that access the database
+  const DBHelper = require("./game/gameModules/database-helpers.js")(db);
+
+
+
+
+
+
+  const messager = new Messager(wss);
+  const room = new Room(messager);
+  room.newRound();
+
+  // console.log(bob.hello);
+
+
+  // to find an existing player:
+  // DBHelper.getUser('abc', function (res) {
+  //     console.log(res);
+  //     foundPlayerArr = res;
+  // });
+
+  // to delete an existing player:
+  // let playerToDelete =  { playerId: '5bd0e2b1afabc4bd6719d30b' }
+  // DBHelper.deleteUser(playerToDelete);
+
+
+  // Processes incoming messages by type.  If recognized, re-types the message in preparation for broadcast.  (If a message is not re-typed in this way, it will be caught by the client and log an error message.)
+  const validateMessage = (messageObject) => {
+        switch (messageObject.type) {
+
+        // Log-in: Client sends a requested handle to Server
+        case "postLogin":
+          room.playerJoin(messageObject);
+        break;
+
+        // Submit Guess: Client sends a guess object to the Server
+        case "postUpdateHandleAvatar":
+          // to add a new user:
+          // let newUser = {
+          //   playerId: "Bobby12345678",
+          //   handle: "BobbysHandleName",
+          //   avatar: "www.example.com",
+          //   createdAt: new Date()
+          // };
+          // DBHelper.addUser(newUser);
+        break;
+
+        // Submit Guess: Client sends a guess object to the Server
+        case "postGuess":
+          room.playerGuess(messageObject);
+        break;
+
+        // Server announcement: new Player
+        case "incomingNewPlayer":
+          messageObject.type = "incomingNewPlayer"
+        break;
+
+        // New Game Notification: Server broadcasts rule modules for the game
+        case "incomingNewGame":
+          messageObject.type = "incomingNewGame";
+        break;
+
+        // New Round Notification: Server broadcasts rule modules for the game
+        case "incomingNewRound":
+          messageObject.type = "incomingNewRound";
+        break;
+
+        // Game-State Update Package: status type and timer value
+        case "incomingGameState":
+          messageObject.type = "incomingNewRound";
+        break;
+
+        // Player-Score Update: updated scoreboard
+        case "incomingScoreBoard":
+          messageObject.type = "incomingScoreBoard";
+        break;
+
+        // Guess-State Update: server sends a specific player an updated version of a particular guess
+        case "incomingGuessState":
+          messageObject.type = "incomingGuessState";
+        break;
+
+        // End of Round Notification: broadcast top 3 players, best words, and answer bank
+        case "incomingEndOfRound":
+          messageObject.type = "incomingGuessState";
+        break
+
+        default:
+          throw new Error(`Unknown event type: ${messageObject.type}`);
+
+      }
   }
 
-  // Saves new data `db`
-  function saveData(newData, callback) {
-    db.collection("inventory").insertOne(newData);
-    callback(null, true);
-  }
 
-  getData((err, data) => {
-    if (err) throw err;
 
-    console.log("Logging each data in inventory:");
-    for (let d of data) {
-      console.log(d);
+
+
+
+  // ##########################
+  // ##########################
+  // Server-Client Interactions
+  // ##########################
+  // ##########################
+
+
+  // ######################
+  // A new client connects:
+  // ######################
+
+  wss.on('connection', (ws) => {
+    // wss.broadcast(greeting);
+    console.log('Client connected');
+    let newPlayer = {
+      type: "postLogin",
+      clientId: uuidv4(),
+      avatar: "https://api.adorable.io/avatars/285/Bob.png"
     }
-    db.close();
+
+    ws.clientId = newPlayer.clientId;
+    validateMessage(newPlayer);
+    // broadcastMessage(`Please welcome ${newPlayer.handle} to the game!`);
+
+
+
+
+
+    // ######################################################
+    // A message package is received from a connected client.
+    // ######################################################
+
+    // Stamps the message with the client's ws identity, gives it a unique id to keep React happy, and sends it on to the switchboard.
+    ws.on('message', (data) => {
+      const dataObject = JSON.parse(data);
+      dataObject.id = uuidv4();
+      dataObject.clientId = ws.clientId;
+      validateMessage(dataObject);
+    });
+
+
+
+    // #####################
+    // A client disconnects:
+    // #####################
+
+    // Set up a callback for when a client closes the socket. This usually means they closed their browser.
+    ws.on('close', () => console.log('Client disconnected'));
+
   });
 
-  // Database testing:
-  let testData = {
-    "item": "test",
-    "qty": 25,
-    "status": "test",
-    "size": { "h" : 14, "w" : 21, "uom" : "cm" },
-    "tags": [ "blank", "red" ]
-  }
-  saveData(testData);
-  // getData();
-
-});
-
-
-
-const messager = new Messager(wss);
-const room = new Room(messager);
-room.newRound();
-
-// console.log(bob.hello);
-
-
-
-// Processes incoming messages by type.  If recognized, re-types the message in preparation for broadcast.  (If a message is not re-typed in this way, it will be caught by the client and log an error message.)
-const validateMessage = (messageObject) => {
-      switch (messageObject.type) {
-
-      // Log-in: Client sends a requested handle to Server
-      case "postLogin":
-        room.playerJoin(messageObject);
-      break;
-
-      // Submit Guess: Client sends a guess object to the Server
-      case "postUpdateHandleAvatar":
-        room.updateHandleAvatar(messageObject)
-      break;
-
-      // Submit Guess: Client sends a guess object to the Server
-      case "postGuess":
-        room.playerGuess(messageObject);
-      break;
-
-      // Server announcement: new Player
-      case "incomingNewPlayer":
-        messageObject.type = "incomingNewPlayer"
-      break;
-
-      // New Game Notification: Server broadcasts rule modules for the game
-      case "incomingNewGame":
-        messageObject.type = "incomingNewGame";
-      break;
-
-      // New Round Notification: Server broadcasts rule modules for the game
-      case "incomingNewRound":
-        messageObject.type = "incomingNewRound";
-      break;
-
-      // Game-State Update Package: status type and timer value
-      case "incomingGameState":
-        messageObject.type = "incomingNewRound";
-      break;
-
-      // Player-Score Update: updated scoreboard
-      case "incomingScoreBoard":
-        messageObject.type = "incomingScoreBoard";
-      break;
-
-      // Guess-State Update: server sends a specific player an updated version of a particular guess
-      case "incomingGuessState":
-        messageObject.type = "incomingGuessState";
-      break;
-
-      // End of Round Notification: broadcast top 3 players, best words, and answer bank
-      case "incomingEndOfRound":
-        messageObject.type = "incomingGuessState";
-      break
-
-      default:
-        throw new Error(`Unknown event type: ${messageObject.type}`);
-
-    }
-}
-
-
-
-
-
-
-// ##########################
-// ##########################
-// Server-Client Interactions
-// ##########################
-// ##########################
-
-
-// ######################
-// A new client connects:
-// ######################
-
-wss.on('connection', (ws) => {
-  // wss.broadcast(greeting);
-  console.log('Client connected');
-  let newPlayer = {
-    type: "postLogin",
-    clientId: uuidv4(),
-    avatar: "https://api.adorable.io/avatars/285/Bob.png"
-  }
-
-  ws.clientId = newPlayer.clientId;
-  validateMessage(newPlayer);
-  // broadcastMessage(`Please welcome ${newPlayer.handle} to the game!`);
-
-
-
-
-
-  // ######################################################
-  // A message package is received from a connected client.
-  // ######################################################
-
-  // Stamps the message with the client's ws identity, gives it a unique id to keep React happy, and sends it on to the switchboard.
-  ws.on('message', (data) => {
-    const dataObject = JSON.parse(data);
-    dataObject.id = uuidv4();
-    dataObject.clientId = ws.clientId;
-    validateMessage(dataObject);
-  });
-
-
-
-  // #####################
-  // A client disconnects:
-  // #####################
-
-  // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+// ######################################
+// Closing bracket for mongoDB connection
+// ######################################
 
 });
 
