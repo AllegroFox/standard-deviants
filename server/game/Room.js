@@ -5,7 +5,7 @@ class Room {
 
   constructor(messager) {
     this.messager = messager;
-    this.players = [];
+    this.players = [{handle: "dummyPlayer", score: 9000}, {handle: "Philbert", score: -5}];
     this.round = null;
   }
 
@@ -47,7 +47,6 @@ class Room {
         );
         // DONE? Change [logic] current player's score by guess.pointValue
         this.updateScoreByPlayer(guessObject.clientId, guess.pointValue);
-        this.broadcastScoreboard(guessObject.clientId);
         break;
 
       case "demotedToPopular":
@@ -69,8 +68,7 @@ class Room {
           }, playerToUpdate.player, "incomingGuessState")
         );
         // DONE? Change playerToUpdate.score by guess.pointValue
-        this.updateScoreByPlayer(playerToUpdate.clientId, guess.pointValue);
-        this.broadcastScoreboard(playerToUpdate.clientId);
+        this.updateScoreByPlayer(playerToUpdate.player, guess.pointValue);
         break;
 
       case "popular":
@@ -98,7 +96,8 @@ class Room {
     this.broadcastPrompt(newPlayer.clientId);
 
     // ... send everyone else an alert with the new player's credentials.
-    this.messager.broadcastMessage(this.messager.parcelMessage({message: `New player, ${newPlayer.handle}, has joined!`}, newPlayer.clientId, "incomingNewPlayer"), true)
+    this.messager.broadcastMessage(this.messager.parcelMessage({message: `New player, ${newPlayer.handle}, has joined!`}, newPlayer.clientId, "incomingNewPlayer"), true);
+    this.broadcastScoreboard();
   }
 
   // Broadcasts the objectives of the current round.  If a target is given, instead sends the objectives to just that target.
@@ -122,11 +121,10 @@ class Room {
 
   broadcastScoreboard(target) {
     let content = this.players.map((player) => { return {
-        player: player.handle,
+        name: player.handle,
         score: player.score
       }
     });
-
     target ?
       this.messager.sendClientMessage(
         this.messager.parcelMessage(
@@ -143,6 +141,7 @@ class Room {
   updateScoreByPlayer(clientId, scoreChange) {
     const result = this.players.find(player => clientId === player.clientId);
     result.score += scoreChange;
+    this.broadcastScoreboard();
   }
 
 }
