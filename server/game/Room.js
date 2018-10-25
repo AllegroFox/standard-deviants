@@ -45,7 +45,8 @@ class Room {
             status: "unique"
           }, guessObject.clientId, "incomingGuess")
         );
-        // TODO: Change [logic] current player's score by guess.pointValue
+        // DONE? Change [logic] current player's score by guess.pointValue
+        this.updateScoreByPlayer(guessObject.clientId, guess.pointValue);
         this.broadcastScoreboard(guessObject.clientId);
         break;
 
@@ -67,7 +68,8 @@ class Room {
             status: "popular"
           }, playerToUpdate.player, "incomingGuessState");
         );
-        // TODO: Change playerToUpdate.score by guess.pointValue
+        // DONE? Change playerToUpdate.score by guess.pointValue
+        this.updateScoreByPlayer(playerToUpdate.clientId, guess.pointValue);
         this.broadcastScoreboard(playerToUpdate.clientId);
         break;
 
