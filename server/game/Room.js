@@ -100,10 +100,16 @@ class Room {
     this.broadcastScoreboard();
   }
 
-  // When a player closes their connection, find and destroy their player object, then update the scoreboard.
+  // When a player closes their connection, remove their player object from the collection, then update the scoreboard.
   playerLeft(departedPlayerClientId) {
+    // Adapted from Stack Overflow: https://stackoverflow.com/questions/4755005/how-to-get-the-index-of-an-object-inside-an-array-of-objects
+    // Finds the index of the player object in the players array, based on the clientId inside it.
+    function getIndex(playersArray, clientId) {
+      const index = playersArray.map(function(e) { return e.clientId; }).indexOf(clientId);
+      return index;
+    }
 
-
+    this.players.splice(getIndex(this.players, departedPlayerClientId), 1);
     this.broadcastScoreboard();
   }
 
