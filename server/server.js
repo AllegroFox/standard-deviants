@@ -43,7 +43,7 @@ const validateMessage = (messageObject) => {
 
       // Log-in: Client sends a requested handle to Server
       case "postLogin":
-        room.playerJoin(messageObject);
+        room.playerJoined(messageObject);
       break;
 
       // Submit Guess: Client sends a guess object to the Server
