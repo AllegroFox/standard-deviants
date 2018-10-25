@@ -120,7 +120,7 @@ class Room {
   updateHandle(updateObject) {
     // Find the player object associated with the update request, then mutate the record accordingly.
     const result = this.players.filter(targetPlayer => (
-      targetPlayer.clientId === updateObject.clientId));
+      targetPlayer.clientId === updateObject.clientId))[0];
     result.handle = updateObject.content.handle;
 
     // Send the updated details to the player:
@@ -128,10 +128,10 @@ class Room {
       message: "Your handle has been updated!",
       clientId: result.clientId,
       handle: result.handle
-    }, result.clientId, "incomingPlayerInitialization"));
+    }, updateObject.clientId, "incomingPlayerInitialization"));
 
-    // Broadcast the scoreboard so that players see the updated name.
-    broadcastScoreboard();
+    // Broadcast the scoreb0oard so that players see the updated name.
+    this.broadcastScoreboard();
   }
 
   // Broadcasts the objectives of the current round.  If a target is given, instead sends the objectives to just that target.

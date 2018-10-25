@@ -35,11 +35,8 @@ class NavBar extends Component {
                   <button className="btn btn-info dropdown-toggle" type="button" id="userDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {this.props.handle}
                   </button>
-                  <form className="dropdown-menu dropdown-menu-right p-4" aria-labelledby="userDropdownButton">
-                    <span className="dropdown-item">
-                      <UserNameForm username={this.props.handle} handleNameChange={this.props.handleNameChange}/>
-                    </span>
-                  </form>
+
+                  <UserNameForm username={this.props.handle} handleNameChange={this.props.handleNameChange} inputValue={this.props.handleBarContent}/>
                 </div>
               </span>
             </li>
