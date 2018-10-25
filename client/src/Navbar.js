@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Marquee from './Marquee';
 import Clock from './Clock';
+import UserNameForm from './UserNameForm';
 
 class NavBar extends Component {
 
@@ -30,7 +31,14 @@ class NavBar extends Component {
             <li className="nav-item">
               <span className="nav-link disabled">
                 <img src={'https://api.adorable.io/avatars/60/' + this.props.currentUser + '.io.png'} className="profile-img"/>
-                <a href='#'>{this.props.currentUser}</a>
+                <div className="dropdown">
+                  <button className="btn btn-secondary dropdown-toggle" type="button" id="userDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {this.props.currentUser}
+                  </button>
+                  <div className="dropdown-menu" aria-labelledby="userDropdownButton">
+                    <UserNameForm/>
+                  </div>
+                </div>
               </span>
             </li>
           </ul>
