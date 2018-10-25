@@ -150,8 +150,9 @@ wss.on('connection', (ws) => {
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => {
-    this.room.playerLeft(ws.clientId);
-    console.log(`Player has left.  ws.clientId was ${ws.clientId}`)
+    const departingPlayerClientId = ws.clientId;
+    console.log(`Player has left.  ws.clientId was ${departingPlayerClientId}`)
+    room.playerLeft(departingPlayerClientId);
     });
 });
 

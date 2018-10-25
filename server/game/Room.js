@@ -101,7 +101,7 @@ class Room {
   }
 
   // When a player closes their connection, find and destroy their player object, then update the scoreboard.
-  playerLeft(leavingPlayerClientId) {
+  playerLeft(departedPlayerClientId) {
 
 
     this.broadcastScoreboard();
