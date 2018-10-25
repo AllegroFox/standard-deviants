@@ -22,10 +22,13 @@ class Round {
         case "unguessed":
           result.status = "unique";
           newGuess.status = "unique";
+          newGuess.pointValue = result.pointValue;
           break;
         case "unique":
           result.status = "popular";
           newGuess.status = "demotedToPopular";
+          newGuess.pointValue = -(result.pointValue);
+
           break;
         case "popular":
           newGuess.status = "popular";
