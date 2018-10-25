@@ -86,7 +86,7 @@ class Room {
   }
 
   // When a new client joins...
-  playerJoin(protoPlayerObject) {
+  playerJoined(protoPlayerObject) {
     // ... instantiate them as a new player object using information sent from the server
     const newPlayer = new Player(protoPlayerObject);
     this.players.push(newPlayer);
@@ -97,6 +97,13 @@ class Room {
 
     // ... send everyone else an alert with the new player's credentials.
     this.messager.broadcastMessage(this.messager.parcelMessage({message: `New player, ${newPlayer.handle}, has joined!`}, newPlayer.clientId, "incomingNewPlayer"), true);
+    this.broadcastScoreboard();
+  }
+
+  // When a player closes their connection, find and destroy their player object, then update the scoreboard.
+  playerLeft(departedPlayerClientId) {
+
+
     this.broadcastScoreboard();
   }
 
