@@ -132,6 +132,9 @@ class App extends Component {
           case "incomingScoreboard":
 
             console.log(`Type: ${message.type}; "${message.content}"`);
+            let updatedScoreboard = message.content;
+
+            this.setState({scoreBoard: updatedScoreboard});
 
             break;
 

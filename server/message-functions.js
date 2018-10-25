@@ -13,9 +13,6 @@ class Messager {
   broadcastMessage (messageObject, othersOnly) {
     // If the messageObject hasn't already been stamped with its own id, stamp it now.  This would only be true in the case of a message sent by the game, not by a user.
     messageObject.id = messageObject.id || uuidv4();
-
-    console.log(`The value of othersOnly is ${othersOnly}`);
-
     (othersOnly) ? this.broadcastOthers(messageObject) : this.broadcast(messageObject);
   }
 
