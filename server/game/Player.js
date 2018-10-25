@@ -5,7 +5,7 @@ class Player {
     this.avatar = playerObject.avatar;
     // this.clientObject = playerObject.clientObject;
 
-    this.handle = "Default";
+    this.handle = playerObject.handle;
     this.score = 0;
   }
 

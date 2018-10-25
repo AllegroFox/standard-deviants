@@ -17,7 +17,7 @@ class App extends Component {
     this.state = { gameType   : "Syllynyms",
                    gameState  : "Get Ready!",
                    timeLeft   : 180,
-                   handle     : "AllegroFox",
+                   handle     : "Default",
                    clientId   : "",
                    guesses    : [{guess:'green', status:'unique'},
                                  {guess:'red',  status:'wrong'},
@@ -29,7 +29,7 @@ class App extends Component {
                    prompt     : {objective: [{word: "word",
                                               hint: "hint" }, {word: "word", hint: "hint"}],
                                  rules: "Some rules" },
-                   guessBarContent: ""
+                   guessBarContent: "",
                  }
 
     this.handleChange = this.handleChange.bind(this);
@@ -147,9 +147,11 @@ class App extends Component {
 
           // Received when a player first connects and is initialized as an object within the game room.
           case "incomingPlayerInitialization":
-            this.setState({clientId: message.content.clientId});
-            this.setState({handle: message.content.handle});
-            console.log(`Player, you have been initialized by the game room!`);
+            this.setState({
+              clientId: message.content.clientId,
+              handle: message.content.handle
+            });
+            console.log(message.content.message);
             break;
 
           default:
@@ -200,7 +202,7 @@ class App extends Component {
   render() {
     return (
       <div className="game-window container-fluid">
-        <NavBar gameType={this.state.gameType} gameState={this.state.gameState} timeLeft={this.state.timeLeft} handle={this.state.handle} handleNameChange={this.handleNameChange}/>
+        <NavBar gameType={this.state.gameType} gameState={this.state.gameState} timeLeft={this.state.timeLeft} handle={this.state.handle} handleNameChange={this.handleNameChange} inputValue={this.state.handleBarContent}/>
         <div className="row">
           <div className="col-md-8">
             <h1> We are standard deviants.  Good. </h1>
