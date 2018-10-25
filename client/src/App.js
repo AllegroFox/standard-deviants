@@ -117,6 +117,10 @@ class App extends Component {
           case "incomingGameState":
 
             console.log(`Type: ${message.type}; "${message.content}"`);
+            let updatedState = message.content;
+
+            this.setState({gameState: updatedState});
+
 
             break;
 

@@ -5,15 +5,15 @@ class Guess extends Component {
   render() {
     if (this.props.status === "unique"){
       return (
-        <div className="text-success">{this.props.guess}: {this.props.status}</div>
+        <span className="badge badge-success">{this.props.guess}: {this.props.status}</span>
       )
     } else if (this.props.status === "popular"){
       return (
-        <div className="text-white-50">{this.props.guess}: {this.props.status}</div>
+        <span className="badge badge-secondary">{this.props.guess}: {this.props.status}</span>
       )
     } else {
       return (
-        <div className="text-danger">{this.props.guess}: {this.props.status}</div>
+        <span className="badge badge-danger">{this.props.guess}: {this.props.status}</span>
       )
     }
   }

@@ -3,7 +3,7 @@
       background: #1f4a5b;
       color: white;
       border-bottom: 1px solid black;
-      height: 100px;
+      height: 140px;
       left: 0;
       padding: 0 10px;
       position: fixed;
@@ -24,8 +24,12 @@
   text-decoration: none;
 }
 
+.display {
+  padding-top: 2em;
+}
+
 .row {
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .game-window {
@@ -33,7 +37,7 @@
   background: black;
   color: #9cc700;
   margin: 100px 0;
-  position: absolute;
+  position: fixed;
 }
 
 .game-input {
@@ -53,7 +57,6 @@
   display: block;
 
 }
-
 
 .form-signin {
   max-width: 330px;
@@ -96,8 +99,14 @@
   float: right;
 }
 
-.profile-img
-{
+.sysMessages {
+
+  position: fixed;
+  bottom: 40px;
+}
+
+.profile-img {
+
     width: 60px;
     height: 60px;
     margin: 0 auto 10px;

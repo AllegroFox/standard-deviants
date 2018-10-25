@@ -11,7 +11,7 @@ class Roster extends Component {
     return (
 
       <main className="players">
-        <ul onload={tinysort('ul#roster>li', {selector: 'badge', attr: 'value'})} className="list-group" id="roster">
+        <ul className="list-group" id="roster">
           {playerItems}
         </ul>
       </main>
