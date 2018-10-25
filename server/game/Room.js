@@ -86,7 +86,7 @@ class Room {
   }
 
   // When a new client joins...
-  playerJoin(protoPlayerObject) {
+  playerJoined(protoPlayerObject) {
     // ... instantiate them as a new player object using information sent from the server
     const newPlayer = new Player(protoPlayerObject);
     this.players.push(newPlayer);
@@ -97,6 +97,19 @@ class Room {
 
     // ... send everyone else an alert with the new player's credentials.
     this.messager.broadcastMessage(this.messager.parcelMessage({message: `New player, ${newPlayer.handle}, has joined!`}, newPlayer.clientId, "incomingNewPlayer"), true);
+    this.broadcastScoreboard();
+  }
+
+  // When a player closes their connection, remove their player object from the collection, then update the scoreboard.
+  playerLeft(departedPlayerClientId) {
+    // Adapted from Stack Overflow: https://stackoverflow.com/questions/4755005/how-to-get-the-index-of-an-object-inside-an-array-of-objects
+    // Finds the index of the player object in the players array, based on the clientId inside it.
+    function getIndex(playersArray, clientId) {
+      const index = playersArray.map(function(e) { return e.clientId; }).indexOf(clientId);
+      return index;
+    }
+
+    this.players.splice(getIndex(this.players, departedPlayerClientId), 1);
     this.broadcastScoreboard();
   }
 
