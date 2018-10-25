@@ -21,7 +21,6 @@ class Messager {
 
   // Delivers the message object to all connected users.
   broadcast (messageObject) {
-    console.log("You shouldn't see me.")
       this.wss.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify(messageObject));
@@ -40,15 +39,20 @@ class Messager {
   }
 
   // Sends a message to one particular Client.
-
   sendClientMessage (messageObject) {
     this.wss.clients.forEach(function each(client) {
-      // console.log(`client.id: ${client.id}\nmessageObject.content.id: ${messageObject.content.id}`);
       if (messageObject.clientId === client.clientId && client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify(messageObject))
-        // console.log(messageObject.content.message);
       }
     });
+  }
+
+  serverMessageFormatter (content, addresseeId, type) {
+    return {
+      content: content,
+      clientId: addresseeId,
+      type: type
+    }
   }
 
 }
