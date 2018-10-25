@@ -9,47 +9,126 @@ const uuidv4 = require('uuid/v4');
 const Room = require('./game/Room.js');
 const Messager = require('./message-functions.js');
 const app = express();
+const path = require("path")
 
 
-// ############################
-// # Passport Authentication: #
-// ############################
+// ###########################
+// # Initialize HTTP Server: #
+// ###########################
+
+const HTTP_PORT = 8080; // default port 8080
+
+  // ############################
+  // # Passport Authentication: #
+  // ############################
 
 
 const passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
+const flash = require('connect-flash');
+var session = require('express-session');
+
+app.use(session({ cookie: { maxAge: 60000 },
+                  secret: 'woot',
+                  resave: false,
+                  saveUninitialized: false}));
+
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+// require('./path/to/passport/config/file')(passport);
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
     User.findOne({ username: username }, function(err, user) {
+      console.log(`Initializing Passport check!`)
       if (err) { return done(err); }
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });
+        console.log(`Incorrect username!`)
       }
       if (!user.validPassword(password)) {
         return done(null, false, { message: 'Incorrect password.' });
+        console.log(`Incorrect password!`)
       }
       return done(null, user);
+      console.log(`Congratulations! You pass!`)
     });
   }
 ));
 
-app.get("/login", (req, res) => {
+passport.use('local-signup', new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password',
+  passReqToCallback: true
+}, (req, email, password, done) => {
+    User.findOne({
+      email: email
+    })
+    .then(user => {
+      if (user) {
+        return done(null, false);
+      } else {
+        User.create(req.body)
+        .then(userCreated => {
+          return done(null, userCreated);
+        })
+        .catch(err => {
+          return done(err)
+        });
+      }
+    })
+    .catch(err => {
+      return done(err)
+    });
+  }
+));
+
+  // ################
+  // # HTTP Routes: #
+  // ################
+
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/views'));
+
+app.get("/", (req, res) => {
   // let templateVars = { urls: urlDatabase, user_id: users[req.session.user_id] };
   res.render("login");
 })
 
+app.get("/register", (req, res) => {
+  // let templateVars = { urls: urlDatabase, user_id: users[req.session.user_id] };
+  res.render("register");
+})
+
+app.get("/game", (req, res) => {
+  // let templateVars = { urls: urlDatabase, user_id: users[req.session.user_id] };
+  res.render("game");
+})
 
 app.post('/login',
-  passport.authenticate('local', { successRedirect: '/',
-                                   failureRedirect: '/login',
+  passport.authenticate('local', { successRedirect: '/game',
+                                   failureRedirect: '/register',
                                    failureFlash: true })
 );
 
+app.post('/register',
+  passport.authenticate('local-signup', {
+    failureRedirect : '/register'
+  }), function(req, res) {
+    res.redirect('/game');
+  });
 
-// ######################
-// # Initialize Server: #
-// ######################
+
+app.listen(HTTP_PORT, () => {
+  console.log(`Standard Deviants (HTTP) listening on port ${HTTP_PORT}`);
+});
+
+
+// ################################
+// # Initialize WebSocket Server: #
+// ################################
 
 // Set the port to 3001
 const PORT = 3001;
@@ -58,7 +137,7 @@ const PORT = 3001;
 const server = express()
    // Make the express server serve static assets (html, javascript, css) from the /public folder
   .use(express.static('public'))
-  .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
+  .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Standard Deviants (WS) listening on port ${ PORT }`));
 
 // Create the WebSockets server
 const wss = new WebSocket.Server({ server });

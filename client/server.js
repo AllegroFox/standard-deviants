@@ -32,7 +32,7 @@ app.get("/login", (req, res) => {
 
 
 app.post('/login',
-  passport.authenticate('local', { successRedirect: '/',
+  passport.authenticate('local', { successRedirect: '/game',
                                    failureRedirect: '/login',
                                    failureFlash: true })
 );
