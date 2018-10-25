@@ -34,6 +34,12 @@ passport.use(new LocalStrategy(
   }
 ));
 
+app.get("/login", (req, res) => {
+  // let templateVars = { urls: urlDatabase, user_id: users[req.session.user_id] };
+  res.render("login");
+})
+
+
 app.post('/login',
   passport.authenticate('local', { successRedirect: '/',
                                    failureRedirect: '/login',
