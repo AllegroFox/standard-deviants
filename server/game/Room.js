@@ -5,7 +5,7 @@ class Room {
 
   constructor(messager) {
     this.messager = messager;
-    this.players = [];
+    this.players = [{handle: "dummyPlayer", score: 9000}, {handle: "Philbert", score: -5}];
     this.round = null;
   }
 
@@ -47,7 +47,6 @@ class Room {
         );
         // DONE? Change [logic] current player's score by guess.pointValue
         this.updateScoreByPlayer(guessObject.clientId, guess.pointValue);
-        this.broadcastScoreboard(guessObject.clientId);
         break;
 
       case "demotedToPopular":
@@ -70,7 +69,6 @@ class Room {
         );
         // DONE? Change playerToUpdate.score by guess.pointValue
         this.updateScoreByPlayer(playerToUpdate.clientId, guess.pointValue);
-        this.broadcastScoreboard(playerToUpdate.clientId);
         break;
 
       case "popular":
@@ -122,11 +120,10 @@ class Room {
 
   broadcastScoreboard(target) {
     let content = this.players.map((player) => { return {
-        player: player.handle,
+        name: player.handle,
         score: player.score
       }
     });
-
     target ?
       this.messager.sendClientMessage(
         this.messager.parcelMessage(
@@ -143,6 +140,7 @@ class Room {
   updateScoreByPlayer(clientId, scoreChange) {
     const result = this.players.find(player => clientId === player.clientId);
     result.score += scoreChange;
+    this.broadcastScoreboard();
   }
 
 }
