@@ -1,11 +1,12 @@
 const Player = require('./Player.js');
 const Round = require('./Round.js');
+const Countdown = require('./Countdown.js');
 
 class Room {
 
   constructor(messager) {
     this.messager = messager;
-    this.players = [{handle: "dummyPlayer", score: 9000}, {handle: "Philbert", score: -5}];
+    this.players = [{handle: "Aaron the Aamazing", score: -5}, {handle: "Philbert", score: 5}];
     this.round = null;
   }
 
@@ -158,7 +159,10 @@ class Room {
         name: player.handle,
         score: player.score
       }
+    }).sort(function (a, b) {
+      return b.score - a.score;
     });
+
     this.messager.broadcastMessage(
       this.messager.parcelMessage(content, null, "incomingScoreboard")
     );
