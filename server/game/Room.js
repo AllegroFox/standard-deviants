@@ -66,7 +66,7 @@ class Room {
             message: "Bad news, bub. Someone just guessed your unique successful guess.",
             guess: guess.guess,
             status: "popular"
-          }, playerToUpdate.player, "incomingGuessState");
+          }, playerToUpdate.player, "incomingGuessState")
         );
         // DONE? Change playerToUpdate.score by guess.pointValue
         this.updateScoreByPlayer(playerToUpdate.clientId, guess.pointValue);
@@ -130,12 +130,12 @@ class Room {
     target ?
       this.messager.sendClientMessage(
         this.messager.parcelMessage(
-          content, target, "incomingPrompt")
+          content, target, "incomingScoreboard")
         )
 
       : this.messager.broadcastMessage(
         this.messager.parcelMessage(
-          content, null, "incomingPrompt")
+          content, null, "incomingScoreboard")
       );
   }
 

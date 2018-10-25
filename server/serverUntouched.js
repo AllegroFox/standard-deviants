@@ -162,7 +162,7 @@ wss.on('connection', (ws) => {
   wss.broadcast(JSON.stringify(dataObject));
 
   // Player-Score Update: updated scoreboard
-  dataObject.type = "incomingScoreBoard";
+  dataObject.type = "incomingScoreboard";
   dataObject.scoreboard = ???;
   wss.broadcast(JSON.stringify(dataObject));
 

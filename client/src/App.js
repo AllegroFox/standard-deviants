@@ -129,7 +129,7 @@ class App extends Component {
 
             break;
 
-          case "incomingScoreBoard":
+          case "incomingScoreboard":
 
             console.log(`Type: ${message.type}; "${message.content}"`);
 

@@ -77,8 +77,8 @@ const validateMessage = (messageObject) => {
       break;
 
       // Player-Score Update: updated scoreboard
-      case "incomingScoreBoard":
-        messageObject.type = "incomingScoreBoard";
+      case "incomingScoreboard":
+        messageObject.type = "incomingScoreboard";
       break;
 
       // Guess-State Update: server sends a specific player an updated version of a particular guess
