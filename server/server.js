@@ -47,7 +47,7 @@ const validateMessage = (messageObject) => {
       break;
 
       // Submit Guess: Client sends a guess object to the Server
-      case "postUpdateHandleAvatar":
+      case "postUpdateHandle":
         room.updateHandleAvatar(messageObject)
       break;
 

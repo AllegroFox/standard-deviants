@@ -30,14 +30,16 @@ class NavBar extends Component {
             </li>
             <li className="nav-item">
               <span className="nav-link disabled">
-                <img src={'https://api.adorable.io/avatars/60/' + this.props.currentUser + '.io.png'} className="profile-img"/>
+                <img src={'https://api.adorable.io/avatars/60/' + this.props.handle + '.io.png'} className="profile-img"/>
                 <div className="dropdown">
-                  <button className="btn btn-secondary dropdown-toggle" type="button" id="userDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {this.props.currentUser}
+                  <button className="btn btn-info dropdown-toggle" type="button" id="userDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {this.props.handle}
                   </button>
-                  <div className="dropdown-menu" aria-labelledby="userDropdownButton">
-                    <UserNameForm/>
-                  </div>
+                  <form className="dropdown-menu dropdown-menu-right p-4" aria-labelledby="userDropdownButton">
+                    <span className="dropdown-item">
+                      <UserNameForm username={this.props.handle} handleNameChange={this.props.handleNameChange}/>
+                    </span>
+                  </form>
                 </div>
               </span>
             </li>
