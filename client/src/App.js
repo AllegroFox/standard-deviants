@@ -22,9 +22,9 @@ class App extends Component {
                    guesses    : [{guess:'green', status:'unique'},
                                  {guess:'red',  status:'wrong'},
                                  {guess:'grey', status: 'popular'}],
-                   connectedPlayers: [{name:"AllegroFox"},
-                                      {name:"StandardGiraffe"},
-                                      {name:"CalmingManatee"}],
+                   scoreBoard: [{name:"AllegroFox", score: 12},
+                                {name:"StandardGiraffe", score: 14},
+                                {name:"CalmingManatee", score: 9}],
                    systemUpdates   : ["some", "system", "messages"],
                    prompt     : {objective: [{word: "word",
                                               hint: "hint" }, {word: "word", hint: "hint"}],
@@ -199,7 +199,7 @@ class App extends Component {
               />
           </div>
           <div className="col-md-4">
-            <Roster players={this.state.connectedPlayers}/>
+            <Roster players={this.state.scoreBoard}/>
             <SystemUpdates systemUpdates={this.state.systemUpdates}/>
           </div>
           <footer className="fixed-bottom">

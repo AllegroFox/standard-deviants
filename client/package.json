@@ -5,7 +5,8 @@
   "dependencies": {
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-scripts": "2.0.5"
+    "react-scripts": "2.0.5",
+    "tinysort": "^2.3.6"
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",

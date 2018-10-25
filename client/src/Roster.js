@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import UserInRoom from './UserInRoom';
+import tinysort from 'tinysort'
 
 class Roster extends Component {
 
   render() {
     const  playerItems = this.props.players.map(player => (
-      <UserInRoom player={player.name} avatar={player.avatar}/>
+      <UserInRoom player={player.name} score={player.score}/>
       ));
     return (
 

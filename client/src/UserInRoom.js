@@ -7,7 +7,7 @@ class UserInRoom extends Component {
 
       <li className="list-group-item">
         {this.props.player}
-        <span className="badge badge-primary badge-pill">18</span>
+        <span className="badge badge-primary badge-pill">{this.props.score}</span>
       </li>
 
     );
