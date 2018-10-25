@@ -46,9 +46,9 @@ const validateMessage = (messageObject) => {
         room.playerJoined(messageObject);
       break;
 
-      // Submit Guess: Client sends a guess object to the Server
-      case "postUpdateHandleAvatar":
-        room.updateHandleAvatar(messageObject)
+      // Client sends an updated handle to the server.
+      case "postUpdateHandle":
+        room.updateHandle(messageObject);
       break;
 
       // Submit Guess: Client sends a guess object to the Server
@@ -119,6 +119,7 @@ wss.on('connection', (ws) => {
   let newPlayer = {
     type: "postLogin",
     clientId: uuidv4(),
+    handle: "default",
     avatar: "https://api.adorable.io/avatars/285/Bob.png"
   }
 

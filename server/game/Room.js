@@ -92,7 +92,11 @@ class Room {
     this.players.push(newPlayer);
 
     // ... send the player a package with their credentials
-    this.messager.sendClientMessage(this.messager.parcelMessage({message: "Hello from deep in the game!", clientId: newPlayer.clientId}, newPlayer.clientId, "incomingPlayerInitialization"));
+    this.messager.sendClientMessage(this.messager.parcelMessage({
+      message: "Hello from deep in the game!",
+      clientId: newPlayer.clientId,
+      handle: newPlayer.handle
+    }, newPlayer.clientId, "incomingPlayerInitialization"));
     this.broadcastPrompt(newPlayer.clientId);
 
     // ... send everyone else an alert with the new player's credentials.
@@ -111,6 +115,23 @@ class Room {
 
     this.players.splice(getIndex(this.players, departedPlayerClientId), 1);
     this.broadcastScoreboard();
+  }
+
+  updateHandle(updateObject) {
+    // Find the player object associated with the update request, then mutate the record accordingly.
+    const result = this.players.filter(targetPlayer => (
+      targetPlayer.clientId === updateObject.clientId));
+    result.handle = updateObject.content.handle;
+
+    // Send the updated details to the player:
+    this.messager.sendClientMessage(this.messager.parcelMessage({
+      message: "Your handle has been updated!",
+      clientId: result.clientId,
+      handle: result.handle
+    }, result.clientId, "incomingPlayerInitialization"));
+
+    // Broadcast the scoreboard so that players see the updated name.
+    broadcastScoreboard();
   }
 
   // Broadcasts the objectives of the current round.  If a target is given, instead sends the objectives to just that target.
@@ -132,22 +153,15 @@ class Room {
       );
   }
 
-  broadcastScoreboard(target) {
+  broadcastScoreboard() {
     let content = this.players.map((player) => { return {
         name: player.handle,
         score: player.score
       }
     });
-    target ?
-      this.messager.sendClientMessage(
-        this.messager.parcelMessage(
-          content, target, "incomingScoreboard")
-        )
-
-      : this.messager.broadcastMessage(
-        this.messager.parcelMessage(
-          content, null, "incomingScoreboard")
-      );
+    this.messager.broadcastMessage(
+      this.messager.parcelMessage(content, null, "incomingScoreboard")
+    );
   }
 
   // Mutates the score of the identified player
