@@ -20,7 +20,7 @@ class Room {
     this.zeroScoreboard();
     this.zeroGuesses();
     this.broadcastGameState(`Round ${this.roundNumber}: Guess the synonyms!`);
-    this.countDownFrom(15);
+    this.countDownFrom(75);
   }
 
   broadcastTimer(secondsLeft) {
