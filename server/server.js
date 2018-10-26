@@ -9,8 +9,10 @@ const uuidv4 = require('uuid/v4');
 const Room = require('./game/Room.js');
 const Messager = require('./message-functions.js');
 
+
 const {MongoClient} = require("mongodb");
 const MONGODB_URI = "mongodb://localhost:27017/standardDeviants";
+const Database = require('./database-functions.js');
 
 // ######################
 // # Initialize Server: #
@@ -38,13 +40,11 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
     console.error(`Failed to connect: ${MONGODB_URI}`);
     throw err;
   }
-
   console.log(`Connected to mongodb: ${MONGODB_URI}`);
-
-  // Functions that access the database
-  const DBHelper = require("./game/gameModules/database-helpers.js")(db);
+  // const dbHelper = require("./game/gameModules/database-helpers.js")(db);
 
 
+  const database = new Database(db);
   const messager = new Messager(wss);
   const room = new Room(messager);
   room.startNewRound();
@@ -53,14 +53,12 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
 
 
   // to find an existing player:
-  // DBHelper.getUser('abc', function (res) {
-  //     console.log(res);
-  //     foundPlayerArr = res;
-  // });
+  let query = {playerId: "asdf", type: "persistScoreboard", value: 9, timestamp: new Date(), word: "refrigerator"}
+  database.addData(query);
 
   // to delete an existing player:
   // let playerToDelete =  { playerId: '5bd0e2b1afabc4bd6719d30b' }
-  // DBHelper.deleteUser(playerToDelete);
+  // dbHelper.deleteUser(playerToDelete);
 
 
   // Processes incoming messages by type.  If recognized, re-types the message in preparation for broadcast.  (If a message is not re-typed in this way, it will be caught by the client and log an error message.)
@@ -86,7 +84,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
           //   avatar: "www.example.com",
           //   createdAt: new Date()
           // };
-          // DBHelper.addUser(newUser);
+          // dbHelper.addUser(newUser);
         break;
 
         // Submit Guess: Client sends a guess object to the Server
@@ -127,7 +125,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
         // End of Round Notification: broadcast top 3 players, best words, and answer bank
         case "incomingEndOfRound":
           messageObject.type = "incomingGuessState";
-        break
+        break;
 
         default:
           throw new Error(`Unknown event type: ${messageObject.type}`);
@@ -188,8 +186,8 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
       room.playerLeft(departingPlayerClientId);
     });
 
-  }); // closes wss.on('connection')
+  }); // closing bracket for wss.on('connection')
 
-}); // closes mongoDB connection
+}); // closing bracket for mongoDB connection
 
 // module.exports = {broadcast};
