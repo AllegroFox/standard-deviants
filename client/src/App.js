@@ -7,6 +7,8 @@ import Prompt from './Prompt';
 import GuessBank from './GuessBank';
 import Roster from './Roster';
 import SystemUpdates from './SystemUpdates';
+import RulesModal from './RulesModal';
+import ScoreModal from './ScoreModal';
 
 
 class App extends Component {
@@ -30,7 +32,9 @@ class App extends Component {
                                               hint: "hint" }, {word: "word", hint: "hint"}],
                                  rules: "Some rules" },
                    guessBarContent: "",
-                   guessBarColor: {"backgroundColor": "white"}
+                   guessBarColor: {"backgroundColor": "white"},
+                   scoreModalOn: false,
+                   rulesModalOn: false
                  }
 
     this.handleChange = this.handleChange.bind(this);
@@ -54,6 +58,15 @@ class App extends Component {
         const message = JSON.parse(event.data);
 
         switch(message.type) {
+
+          case "incomingNewRound":
+
+            break;
+
+          case "incomingEndOfRound":
+
+            break;
+
           case "incomingLogin":
 
             console.log(`Type: ${message.type}; "${message.content}"`);
@@ -166,8 +179,9 @@ class App extends Component {
       let foundGuess = this.state.guesses.find(guessObj => (guessObj.guess === this.state.guessBarContent));
 
       if (foundGuess) {
-        this.setState({guessBarColor: {"backgroundColor": "white"}, guessBarContent: ""});
-        console.log("You've already guessed that.")
+        this.setState({guessBarColor: {"backgroundColor": "tomato"}, guessBarContent: ""});
+
+        setTimeout(() => { this.setState({guessBarColor: {"backgroundColor": "white"}}) } , 150)
       } else {
         const guess = { guess: this.state.guessBarContent };
 
@@ -217,6 +231,7 @@ class App extends Component {
           </div>
           <footer className="fixed-bottom">
             <span>Standard-Deviants 2018</span>
+
           </footer>
         </div>
       </div>
