@@ -7,17 +7,20 @@ class Room {
     this.messager = messager;
     this.players = [{handle: "Aaron the Aamazing", score: -5}, {handle: "Philbert", score: 5}];
     this.round = null;
+    this.roundNumber = 0;
   }
 
   // Instantiate a new round and have it generate an answer pool.
   // In the future, it might be fed a rules module.
   startNewRound() {
     this.round = new Round(this.messager);
+    this.roundNumber++;
     this.round.generateAnswerPool();
     this.broadcastPrompt();
     this.zeroScoreboard();
     this.zeroGuesses();
-    this.countDownFrom(35);
+    this.broadcastGameState(`Round ${this.roundNumber}: Guess the synonyms!`);
+    this.countDownFrom(15);
   }
 
   broadcastTimer(secondsLeft) {
@@ -122,6 +125,7 @@ class Room {
       handle: newPlayer.handle
     }, newPlayer.clientId, "incomingPlayerInitialization"));
     this.broadcastPrompt(newPlayer.clientId);
+    this.broadcastGameState(`Round ${this.roundNumber}: Guess the synonyms!`);
 
     // ... send everyone else an alert with the new player's credentials.
     this.messager.broadcastMessage(this.messager.parcelMessage({message: `New player, ${newPlayer.handle}, has joined!`}, newPlayer.clientId, "incomingNewPlayer"), true);
@@ -189,6 +193,12 @@ class Room {
     this.messager.broadcastMessage(
       this.messager.parcelMessage(content, null, "incomingScoreboard")
     );
+  }
+
+  broadcastGameState(gameState) {
+    this.messager.broadcastMessage(
+      this.messager.parcelMessage(
+        {state: gameState}, null, "incomingGameState"));
   }
 
   // Mutates the score of the identified player
