@@ -35,7 +35,9 @@ class App extends Component {
                    guessBarContent: "",
                    guessBarColor: {"backgroundColor": "white"},
                    scoreModalOn: false,
-                   rulesModalOn: false
+                   rulesModalOn: false,
+                   NewPlayerModalOn: false,
+                   finalResults: {}
                  }
 
     this.handleChange = this.handleChange.bind(this);
@@ -65,7 +67,9 @@ class App extends Component {
             break;
 
           case "incomingEndOfRound":
+            let finalResults = message.content
 
+            this.setState({finalResults: finalResults})
             break;
 
           case "incomingLogin":
@@ -232,7 +236,7 @@ class App extends Component {
           </div>
           <footer className="fixed-bottom">
             <span>Standard-Deviants 2018</span>
-            <ScoreModal/>
+            <ScoreModal finalResults={this.state.finalResults}/>
           </footer>
         </div>
       </div>
@@ -242,4 +246,6 @@ class App extends Component {
 
 export default App;
 
+// <RulesModal prompt={this.state.prompt}/>
+// <ScoreModal finalResults={this.state.finalResults}/>
 // <NewPlayerModal handleNameChange={this.handleNameChange}/>
