@@ -47,7 +47,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
 
   const messager = new Messager(wss);
   const room = new Room(messager);
-  room.newRound();
+  room.startNewRound();
 
   // console.log(bob.hello);
 

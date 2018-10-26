@@ -41,7 +41,8 @@ class App extends Component {
   componentDidMount() {
 
     // Connection is attempted.
-    this.socket = new WebSocket("ws://localhost:3001");
+    // this.socket = new WebSocket("ws://localhost:3001");
+    this.socket = new WebSocket("ws://"+document.location.hostname+":3001");
 
     // Successful connection is reported to the client.
     this.socket.onopen = function (event) {
@@ -111,13 +112,13 @@ class App extends Component {
             break;
 
           case "incomingGameState":
-
             console.log(`Type: ${message.type}; "${message.content}"`);
-            let updatedState = message.content;
-
+            let updatedState = message.content.state;
             this.setState({gameState: updatedState});
+            break;
 
-
+          case "incomingGuessZero":
+            this.setState({guesses: []});
             break;
 
           case "incomingPrompt":
