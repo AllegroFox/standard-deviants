@@ -1,6 +1,5 @@
 const Player = require('./Player.js');
 const Round = require('./Round.js');
-// const Countdown = require('./Countdown.js');
 
 class Room {
 
@@ -12,12 +11,12 @@ class Room {
 
   // Instantiate a new round and have it generate an answer pool.
   // In the future, it might be fed a rules module.
-  newRound() {
+  startNewRound() {
     this.round = new Round(this.messager);
     this.round.generateAnswerPool();
     this.broadcastPrompt();
-    this.broadcastScoreboard();
-    this.startCountdown(180, this.broadcastTimer);
+    this.zeroScoreboard();
+    this.countDownFrom(35);
   }
 
   broadcastTimer(secondsLeft) {
@@ -25,24 +24,23 @@ class Room {
       this.messager.parcelMessage({timeLeft: secondsLeft}, null, "incomingTimeLeft"));
   }
 
-  startCountdown(seconds, callback) {
+  countDownFrom(seconds) {
     let timeLeft = (seconds * 1000);
 
     const startTimer = setInterval(() => {
-        // console.log("Tick... Tock...");
-        // console.log(timeLeft / 1000);
         this.broadcastTimer(timeLeft / 1000);
         timeLeft -= 1000;
-        if (timeLeft < 0) { stopTimer() }
+        if (timeLeft < 0) {
+          stopTimer()
+        }
       }, 1000);
 
-    function stopTimer() {
+    const stopTimer = () => {
       clearInterval(startTimer);
-      callback;
+      this.startNewRound();
     }
     startTimer;
   }
-
 
   // When a guess message is received from a player...
   playerGuess(guessObject) {
@@ -107,7 +105,6 @@ class Room {
           }, guessObject.clientId, "incomingGuess")
         );
         break;
-
     }
   }
 
@@ -197,6 +194,13 @@ class Room {
   updateScoreByPlayer(clientId, scoreChange) {
     const result = this.players.find(player => clientId === player.clientId);
     result.score += scoreChange;
+    this.broadcastScoreboard();
+  }
+
+  zeroScoreboard() {
+    this.players.forEach((player) => {
+      player.score = 0
+    })
     this.broadcastScoreboard();
   }
 
