@@ -28,7 +28,7 @@ class Room {
 
   startEndRound() {
     this.messager.broadcastMessage(this.messager.parcelMessage(
-      this.roundEndResults()), null, "incomingEndOfRound");
+      this.roundEndResults(), null, "incomingEndOfRound"));
     this.broadcastGameState(`Round ${this.roundNumber}: Results and missed opportunities...`);
     this.countDownFrom(25, this.startNewRound);
   }
@@ -58,13 +58,15 @@ class Room {
     }, roundStats.answerBank);
 
     // Finally, tack on the final scoreboard.
-    roundStats.finalScoreboard = this.players.map((player) => { return {
-        name: player.handle,
+    const finalScoreboard = this.players.map((player) => { return {
+        handle: player.handle,
         score: player.score
       }
     }).sort(function (a, b) {
       return b.score - a.score;
     });
+
+    roundStats.finalScoreboard = finalScoreboard;
 
     return roundStats;
   }

@@ -68,6 +68,7 @@ class App extends Component {
 
           case "incomingEndOfRound":
             let finalResults = message.content
+            console.log(finalResults);
 
             this.setState({finalResults: finalResults})
             break;
@@ -169,6 +170,7 @@ class App extends Component {
             break;
 
           default:
+            console.log(message);
             throw new Error("Unknown message type: " + message.type);
         }
       }
