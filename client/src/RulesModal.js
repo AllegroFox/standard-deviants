@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ModalPrompt from './ModalPrompt';
 
 class RulesModal extends Component {
 
@@ -8,10 +9,11 @@ class RulesModal extends Component {
 
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <h3 class="modal-title" id="exampleModalLongTitle">New Round</h3>
         </div>
         <div class="modal-body">
-          Modal Content
+          <h5>Here are your words for this round:</h5>
+          <ModalPrompt prompt={this.props.prompt}/>
         </div>
       </div>
 

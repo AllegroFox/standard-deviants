@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AnswerBank from './AnswerBank';
 
 class ScoreModal extends Component {
 
@@ -12,21 +13,30 @@ class ScoreModal extends Component {
         </div>
         <div class="modal-body">
           <div class="row">
+            <span>{this.props.finalResults.finalScoreboard[0].handle}: {this.props.finalResults.finalScoreboard[0].score}</span>
+            <span>{this.props.finalResults.finalScoreboard[1].handle}: {this.props.finalResults.finalScoreboard[1].score}</span>
+            <span>{this.props.finalResults.finalScoreboard[2].handle}: {this.props.finalResults.finalScoreboard[2].score}</span>
+          </div>
+          <div class="row">
             <div class="col-sm-6">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                  <h5 class="card-title">{this.props.finalResults.AnswerBank[0].target}</h5>
+                  <p class="card-text">{this.props.finalResults.AnswerBank[0].definition}</p>
+                  <div className="answerContainer">
+                    <AnswerBank answers={this.props.finalResults.AnswerBank[0].bank}/>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="card">
                 <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                  <h5 class="card-title">{this.props.finalResults.AnswerBank[1].target}</h5>
+                  <p class="card-text">{this.props.finalResults.AnswerBank[1].definition}</p>
+                  <div className="answerContainer">
+                    <AnswerBank answers={this.props.finalResults.AnswerBank[1].bank}/>
+                  </div>
                 </div>
               </div>
             </div>
