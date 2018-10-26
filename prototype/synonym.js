@@ -43,16 +43,19 @@ const buildPool = function (minimumPoolLength) {
   let seed = randomWords(1)[0];
   const lookup = thesaurus.search(seed);
   let bank = [];
-  let validationCriteria = element => !element.includes(" ") && !element.includes("-")
+  // let validationCriteria = element => !element.answer.includes(" ") && !element.answer.includes("-")
 
   if (lookup.antonyms.length < 1) {
     console.log(`Failed to find an antonym with the seed, ${seed}.  Trying again...`)
     return buildPool(minimumPoolLength);
   } else {
-    bank = bank.concat(lookup.synonyms).filter(validationCriteria);
+    bank = bank.concat(lookup.synonyms).map((word) => { return {answer: word, seed: 1}; });
     const antonym = lookup.antonyms.sample();
     const antonymLookup = thesaurus.search(antonym);
-    bank = bank.concat(antonymLookup.synonyms).filter(validationCriteria);
+
+    const antonymPool = antonymLookup.synonyms.map((word) => { return {answer: word, seed: 2}; }    );
+    bank = bank.concat(antonymPool);
+
     if (bank.length >= minimumPoolLength) {
       return {targets: [
         {word: seed, definition: lookup.definition},
