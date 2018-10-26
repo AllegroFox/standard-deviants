@@ -16,7 +16,7 @@ class App extends Component {
 
     this.state = { gameType   : "Syllynyms",
                    gameState  : "Get Ready!",
-                   timeLeft   : 180,
+                   timeLeft   : 0,
                    handle     : "Default",
                    clientId   : "",
                    guesses    : [{guess:'green', status:'unique'},
@@ -102,15 +102,11 @@ class App extends Component {
 
             break;
 
-          case "incomingNewGame":
+          case "incomingTimeLeft":
 
-            console.log(`Type: ${message.type}; "${message.content}"`);
-
-            break;
-
-          case "incomingNewRound":
-
-            console.log(`Type: ${message.type}; "${message.content}"`);
+            let updatedTimer = message.content.timeLeft;
+            console.log(updatedTimer);
+            this.setState({timeLeft: updatedTimer});
 
             break;
 
@@ -136,12 +132,6 @@ class App extends Component {
             let updatedScoreboard = message.content;
 
             this.setState({scoreBoard: updatedScoreboard});
-
-            break;
-
-          case "incomingEndOfRound":
-
-            console.log(`Type: ${message.type}; "${message.content}"`);
 
             break;
 

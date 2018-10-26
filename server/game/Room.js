@@ -1,6 +1,6 @@
 const Player = require('./Player.js');
 const Round = require('./Round.js');
-const Countdown = require('./Countdown.js');
+// const Countdown = require('./Countdown.js');
 
 class Room {
 
@@ -17,7 +17,32 @@ class Room {
     this.round.generateAnswerPool();
     this.broadcastPrompt();
     this.broadcastScoreboard();
+    this.startCountdown(180, this.broadcastTimer);
   }
+
+  broadcastTimer(secondsLeft) {
+    this.messager.broadcastMessage(
+      this.messager.parcelMessage({timeLeft: secondsLeft}, null, "incomingTimeLeft"));
+  }
+
+  startCountdown(seconds, callback) {
+    let timeLeft = (seconds * 1000);
+
+    const startTimer = setInterval(() => {
+        // console.log("Tick... Tock...");
+        // console.log(timeLeft / 1000);
+        this.broadcastTimer(timeLeft / 1000);
+        timeLeft -= 1000;
+        if (timeLeft < 0) { stopTimer() }
+      }, 1000);
+
+    function stopTimer() {
+      clearInterval(startTimer);
+      callback;
+    }
+    startTimer;
+  }
+
 
   // When a guess message is received from a player...
   playerGuess(guessObject) {
