@@ -164,7 +164,8 @@ class App extends Component {
       let foundGuess = this.state.guesses.find(guessObj => (guessObj.guess === this.state.guessBarContent));
 
       if (foundGuess) {
-        console.log("You've already tried that.")
+        this.setState({guessBarContent: ""});
+
       } else {
         const guess = { guess: this.state.guessBarContent };
 
