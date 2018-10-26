@@ -62,11 +62,12 @@ class App extends Component {
 
         switch(message.type) {
 
-          case "incomingNewRound":
+          case "incomingGetReady":
+            this.setState({finalResults: {}});
 
             break;
 
-          case "incomingEndOfRound":
+          case "incomingResults":
             let finalResults = message.content
             console.log(finalResults);
 

@@ -11,27 +11,42 @@ class Room {
 
     this.startNewRound = this.startNewRound.bind(this);
     this.startEndRound = this.startEndRound.bind(this);
+    this.startGetReady = this.startGetReady.bind(this);
+  }
+
+  // startFirstGame() {
+  //   this.round = new Round(this.messager);
+  //   this.broadcastPrompt();
+  //   this.countDownFrom(5, this.startGetReady);
+  // }
+
+  startGetReady() {
+    this.round = new Round(this.messager);
+    this.roundNumber++;
+    this.round.generateAnswerPool();
+    this.broadcastPrompt();
+    this.messager.broadcastMessage(this.messager.parcelMessage(
+      null, null, "incomingGetReady"));
+    this.broadcastGameState(`Get ready for Round ${this.roundNumber + 1}!`);
+    this.countDownFrom(7, this.startNewRound);
   }
 
   // Instantiate a new round and have it generate an answer pool.
   // In the future, it might be fed a rules module.
   startNewRound() {
-    this.round = new Round(this.messager);
-    this.roundNumber++;
-    this.round.generateAnswerPool();
-    this.broadcastPrompt();
-    this.zeroScoreboard();
-    this.zeroGuesses();
     this.broadcastGameState(`Round ${this.roundNumber}: Guess the synonyms!`);
     this.countDownFrom(15, this.startEndRound);
   }
 
   startEndRound() {
     this.messager.broadcastMessage(this.messager.parcelMessage(
-      this.roundEndResults(), null, "incomingEndOfRound"));
+      this.roundEndResults(), null, "incomingResults"));
     this.broadcastGameState(`Round ${this.roundNumber}: Results and missed opportunities...`);
-    this.countDownFrom(25, this.startNewRound);
+    this.zeroScoreboard();
+    this.zeroGuesses();
+    this.countDownFrom(15, this.startGetReady);
   }
+
 
   // Packages the round statistics.
   roundEndResults() {
