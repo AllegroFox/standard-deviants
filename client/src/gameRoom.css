@@ -3,10 +3,11 @@
       background: #1f4a5b;
       color: white;
       border-bottom: 1px solid black;
-      height: 100px;
+      height: 140px;
       left: 0;
       padding: 0 10px;
       position: fixed;
+      z-index: 1;
       right: 0;
       top: 0;
     }
@@ -23,8 +24,12 @@
   text-decoration: none;
 }
 
+.display {
+  padding-top: 2em;
+}
+
 .row {
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .game-window {
@@ -32,7 +37,7 @@
   background: black;
   color: #9cc700;
   margin: 100px 0;
-  position: absolute;
+  position: fixed;
 }
 
 .game-input {
@@ -52,7 +57,6 @@
   display: block;
 
 }
-
 
 .form-signin {
   max-width: 330px;
@@ -88,8 +92,25 @@
   border-top-right-radius: 0;
 }
 
-.profile-img
-{
+.list-group-item {
+  background-color: #333
+}
+.badge-primary {
+  float: right;
+}
+
+.sysMessages {
+
+  position: fixed;
+  bottom: 40px;
+}
+
+.prompt-rules {
+  color: black;
+}
+
+.profile-img {
+
     width: 60px;
     height: 60px;
     margin: 0 auto 10px;

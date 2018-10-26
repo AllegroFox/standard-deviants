@@ -4,8 +4,6 @@ class InputBar extends Component {
 
   render() {
 
-    // const handleChange = this.props.handleChange;
-
     return (
 
       <div className="game-input">

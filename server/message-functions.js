@@ -13,15 +13,11 @@ class Messager {
   broadcastMessage (messageObject, othersOnly) {
     // If the messageObject hasn't already been stamped with its own id, stamp it now.  This would only be true in the case of a message sent by the game, not by a user.
     messageObject.id = messageObject.id || uuidv4();
-
-    console.log(`The value of othersOnly is ${othersOnly}`);
-
     (othersOnly) ? this.broadcastOthers(messageObject) : this.broadcast(messageObject);
   }
 
   // Delivers the message object to all connected users.
   broadcast (messageObject) {
-    console.log("You shouldn't see me.")
       this.wss.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify(messageObject));
@@ -40,15 +36,20 @@ class Messager {
   }
 
   // Sends a message to one particular Client.
-
   sendClientMessage (messageObject) {
     this.wss.clients.forEach(function each(client) {
-      // console.log(`client.id: ${client.id}\nmessageObject.content.id: ${messageObject.content.id}`);
       if (messageObject.clientId === client.clientId && client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify(messageObject))
-        // console.log(messageObject.content.message);
       }
     });
+  }
+
+  parcelMessage (content, addresseeId, type) {
+    return {
+      content: content,
+      clientId: addresseeId,
+      type: type
+    }
   }
 
 }

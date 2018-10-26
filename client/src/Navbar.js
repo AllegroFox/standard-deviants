@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Marquee from './Marquee';
 import Clock from './Clock';
+import UserNameForm from './UserNameForm';
 
 class NavBar extends Component {
 
@@ -16,21 +17,27 @@ class NavBar extends Component {
             </li>
           </ul>
           <ul className="nav justify-content-end">
-            <li className="nav-item">
-              <span className="nav-link active">
+            <li className="align-middle">
+              <span className="nav-item">
                 <Clock time={this.props.timeLeft}/>
               </span>
             </li>
-            <li className="nav-item">
-              <span className="nav-link"> - </span>
+            <li className="align-middle nav-item">
+              <span className="nav-item"> - </span>
             </li>
-            <li className="nav-item">
+            <li className="align-middle nav-item">
               <a href="/" className="navbar-brand">{this.props.gameType}</a>
             </li>
             <li className="nav-item">
-              <span className="nav-link disabled">
-                <img src={'https://api.adorable.io/avatars/60/' + this.props.currentUser + '.io.png'} className="profile-img"/>
-                <a href='#'>{this.props.currentUser}</a>
+              <span className="nav-item">
+                <img src={'https://api.adorable.io/avatars/60/' + this.props.handle + '.io.png'} className="profile-img"/>
+                <div className="dropdown">
+                  <button className="btn btn-info dropdown-toggle" type="button" id="userDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {this.props.handle}
+                  </button>
+
+                  <UserNameForm username={this.props.handle} handleNameChange={this.props.handleNameChange} inputValue={this.props.handleBarContent}/>
+                </div>
               </span>
             </li>
           </ul>

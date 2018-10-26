@@ -3,11 +3,19 @@ import React, { Component } from 'react';
 class Guess extends Component {
 
   render() {
-    return (
-
-      <div>{this.props.guess}: {this.props.status}</div>
-
-    );
+    if (this.props.status === "unique"){
+      return (
+        <span className="badge badge-success">{this.props.guess}: {this.props.status}</span>
+      )
+    } else if (this.props.status === "popular"){
+      return (
+        <span className="badge badge-secondary">{this.props.guess}: {this.props.status}</span>
+      )
+    } else {
+      return (
+        <span className="badge badge-danger">{this.props.guess}: {this.props.status}</span>
+      )
+    }
   }
 }
 

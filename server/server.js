@@ -45,10 +45,6 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   const DBHelper = require("./game/gameModules/database-helpers.js")(db);
 
 
-
-
-
-
   const messager = new Messager(wss);
   const room = new Room(messager);
   room.newRound();
@@ -74,6 +70,11 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
         // Log-in: Client sends a requested handle to Server
         case "postLogin":
           room.playerJoin(messageObject);
+        break;
+
+        // Client sends an updated handle to the server.
+        case "postUpdateHandle":
+          room.updateHandle(messageObject);
         break;
 
         // Submit Guess: Client sends a guess object to the Server
@@ -114,8 +115,8 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
         break;
 
         // Player-Score Update: updated scoreboard
-        case "incomingScoreBoard":
-          messageObject.type = "incomingScoreBoard";
+        case "incomingScoreboard":
+          messageObject.type = "incomingScoreboard";
         break;
 
         // Guess-State Update: server sends a specific player an updated version of a particular guess
@@ -135,10 +136,6 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   }
 
 
-
-
-
-
   // ##########################
   // ##########################
   // Server-Client Interactions
@@ -151,20 +148,19 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   // ######################
 
   wss.on('connection', (ws) => {
-    // wss.broadcast(greeting);
-    console.log('Client connected');
-    let newPlayer = {
-      type: "postLogin",
-      clientId: uuidv4(),
-      avatar: "https://api.adorable.io/avatars/285/Bob.png"
-    }
+  // wss.broadcast(greeting);
+  console.log('Client connected');
+  let newPlayer = {
+    type: "postLogin",
+    clientId: uuidv4(),
+    handle: "default",
+    avatar: "https://api.adorable.io/avatars/285/Bob.png"
+
+  }
 
     ws.clientId = newPlayer.clientId;
     validateMessage(newPlayer);
     // broadcastMessage(`Please welcome ${newPlayer.handle} to the game!`);
-
-
-
 
 
     // ######################################################
@@ -186,14 +182,14 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
     // #####################
 
     // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-    ws.on('close', () => console.log('Client disconnected'));
+    ws.on('close', () => {
+      const departingPlayerClientId = ws.clientId;
+      console.log(`Player has left.  ws.clientId was ${departingPlayerClientId}`)
+      room.playerLeft(departingPlayerClientId);
+    });
 
-  });
+  }); // closes wss.on('connection')
 
-// ######################################
-// Closing bracket for mongoDB connection
-// ######################################
-
-});
+}); // closes mongoDB connection
 
 // module.exports = {broadcast};

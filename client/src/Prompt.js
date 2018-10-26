@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
+import TargetWord from './TargetWord';
 
 class Prompt extends Component {
   render() {
+    const targetWords = this.props.prompt.objective.map(target => (
+      <TargetWord word={target.word} hint={target.hint}/>
+      ));
     return (
-
       <div>
-        <div className="prompt">{this.props.prompt.objective}</div>
-        <button type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="right" data-content= {this.props.prompt.rules}>
-          What am I doing again?
-          {this.props.prompt.rules}
-        </button>
+        <div className="prompt-container d-inline-flex">
+          {targetWords}
+        </div>
+        <div>
+          <button type="button" className="btn btn-secondary" data-toggle="collapse" data-target="#collapseRules">
+            What am I doing again?
+          </button>
+        </div>
+        <div class="collapse" id="collapseRules">
+          <div class="card card-body prompt-rules">
+            {this.props.prompt.rules}
+          </div>
+        </div>
       </div>
 
     );

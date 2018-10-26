@@ -16,22 +16,25 @@ class App extends Component {
 
     this.state = { gameType   : "Syllynyms",
                    gameState  : "Get Ready!",
-                   timeLeft   : 180,
-                   currentUser: "AllegroFox",
+                   timeLeft   : 0,
+                   handle     : "Default",
                    clientId   : "",
-                   guesses    : [{guess:'blue', status:'unique'},
+                   guesses    : [{guess:'green', status:'unique'},
                                  {guess:'red',  status:'wrong'},
                                  {guess:'grey', status: 'popular'}],
-                   connectedPlayers: [{name:"AllegroFox"},
-                                      {name:"StandardGiraffe"},
-                                      {name:"CalmingManatee"}],
+                   scoreBoard: [{name:"AllegroFox", score: 12},
+                                {name:"StandardGiraffe", score: 14},
+                                {name:"CalmingManatee", score: 9}],
                    systemUpdates   : ["some", "system", "messages"],
-                   prompt     : {objective: "targetWord", rules: "Some rules" },
-                   guessBarContent: ""
+                   prompt     : {objective: [{word: "word",
+                                              hint: "hint" }, {word: "word", hint: "hint"}],
+                                 rules: "Some rules" },
+                   guessBarContent: "",
                  }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
     this.socket = null;
   }
 
@@ -99,40 +102,50 @@ class App extends Component {
 
             break;
 
-          case "incomingNewGame":
+          case "incomingTimeLeft":
 
-            console.log(`Type: ${message.type}; "${message.content}"`);
-
-            break;
-
-          case "incomingNewRound":
-
-            console.log(`Type: ${message.type}; "${message.content}"`);
+            let updatedTimer = message.content.timeLeft;
+            console.log(updatedTimer);
+            this.setState({timeLeft: updatedTimer});
 
             break;
 
           case "incomingGameState":
 
             console.log(`Type: ${message.type}; "${message.content}"`);
+            let updatedState = message.content;
+
+            this.setState({gameState: updatedState});
+
 
             break;
 
-          case "incomingScoreBoard":
+          case "incomingPrompt":
 
             console.log(`Type: ${message.type}; "${message.content}"`);
+
+            let newPrompt = message.content;
+
+            this.setState({prompt: newPrompt});
 
             break;
 
-          case "incomingEndOfRound":
+          case "incomingScoreboard":
 
             console.log(`Type: ${message.type}; "${message.content}"`);
+            let updatedScoreboard = message.content;
+
+            this.setState({scoreBoard: updatedScoreboard});
 
             break;
 
           // Received when a player first connects and is initialized as an object within the game room.
           case "incomingPlayerInitialization":
-            this.setState({clientId: message.content.clientId});
-            console.log(`Player, you have been initialized by the game room!`);
+            this.setState({
+              clientId: message.content.clientId,
+              handle: message.content.handle
+            });
+            console.log(message.content.message);
             break;
 
           default:
@@ -147,9 +160,26 @@ class App extends Component {
 
   handleSubmit(event) {
     if (event.key === 'Enter') {
-      const guess = { guess: this.state.guessBarContent };
-      this.sendMessage(guess, "postGuess");
-      this.setState({guessBarContent: ""});
+
+      let foundGuess = this.state.guesses.find(guessObj => (guessObj.guess === this.state.guessBarContent));
+
+      if (foundGuess) {
+        console.log("You've already tried that.")
+      } else {
+        const guess = { guess: this.state.guessBarContent };
+
+        this.sendMessage(guess, "postGuess");
+        this.setState({guessBarContent: ""});
+      }
+    }
+  }
+
+  handleNameChange(event) {
+    if (event.key === 'Enter') {
+      const newHandle = {
+        handle: event.target.value
+      }
+      this.sendMessage(newHandle, "postUpdateHandle");
     }
   }
 
@@ -166,10 +196,9 @@ class App extends Component {
   render() {
     return (
       <div className="game-window container-fluid">
-        <NavBar gameType={this.state.gameType} gameState={this.state.gameState} timeLeft={this.state.timeLeft} currentUser={this.state.currentUser}/>
+        <NavBar gameType={this.state.gameType} gameState={this.state.gameState} timeLeft={this.state.timeLeft} handle={this.state.handle} handleNameChange={this.handleNameChange} inputValue={this.state.handleBarContent}/>
         <div className="row">
           <div className="col-md-8">
-            <h1> We are standard deviants.  Good. </h1>
             <Prompt prompt={this.state.prompt}/>
             <GuessBank guesses={this.state.guesses}/>
             <InputBar
@@ -179,7 +208,7 @@ class App extends Component {
               />
           </div>
           <div className="col-md-4">
-            <Roster players={this.state.connectedPlayers}/>
+            <Roster players={this.state.scoreBoard}/>
             <SystemUpdates systemUpdates={this.state.systemUpdates}/>
           </div>
           <footer className="fixed-bottom">

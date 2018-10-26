@@ -5,7 +5,7 @@ Props
 - gameType  ("Synonyms", "Rhymes", "Etc.")
 - gameState (getReady/inputAnswers/gameResults/restPeriod)
 - timeLeft (integer)
-- currentUser ("handle")
+- handle ("handle")
 
 Logic:
 Game badge depending on gameType
