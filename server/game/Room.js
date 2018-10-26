@@ -16,6 +16,7 @@ class Room {
     this.round.generateAnswerPool();
     this.broadcastPrompt();
     this.zeroScoreboard();
+    this.zeroGuesses();
     this.countDownFrom(35);
   }
 
@@ -202,6 +203,12 @@ class Room {
       player.score = 0
     })
     this.broadcastScoreboard();
+  }
+
+  zeroGuesses() {
+    this.messager.broadcastMessage(
+      this.messager.parcelMessage(
+        null, null, "incomingGuessZero"));
   }
 
 }
