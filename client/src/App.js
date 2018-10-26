@@ -30,6 +30,7 @@ class App extends Component {
                                               hint: "hint" }, {word: "word", hint: "hint"}],
                                  rules: "Some rules" },
                    guessBarContent: "",
+                   guessBarColor: {"backgroundColor": "white"}
                  }
 
     this.handleChange = this.handleChange.bind(this);
@@ -164,8 +165,8 @@ class App extends Component {
       let foundGuess = this.state.guesses.find(guessObj => (guessObj.guess === this.state.guessBarContent));
 
       if (foundGuess) {
-        this.setState({guessBarContent: ""});
-
+        this.setState({guessBarColor: {"backgroundColor": "white"}, guessBarContent: ""});
+        console.log("You've already guessed that.")
       } else {
         const guess = { guess: this.state.guessBarContent };
 
@@ -204,6 +205,7 @@ class App extends Component {
             <GuessBank guesses={this.state.guesses}/>
             <InputBar
               value={this.state.guessBarContent}
+              backgroundColor={this.state.guessBarColor}
               handleChange={this.handleChange}
               handleSubmit={this.handleSubmit}
               />
