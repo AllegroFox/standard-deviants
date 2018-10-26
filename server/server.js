@@ -52,13 +52,27 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   // console.log(bob.hello);
 
 
-  // to find an existing player:
-  let query = {playerId: "asdf", type: "persistScoreboard", value: 9, timestamp: new Date(), word: "refrigerator"}
-  database.addData(query);
+  // to add data:
+  // let dataToAdd = {
+  //   playerId: "asdf",
+  //   type: "persistScoreboard",
+  //   value: 9, timestamp: new Date(),
+  //   word: "refrigerator"
+  // }
+  // database.addData(dataToAdd);
+
+  // to find data:
+  // let query = {
+  //   type: "persistScoreboard"
+  // }
+  // database.getData(query);
 
   // to delete an existing player:
-  // let playerToDelete =  { playerId: '5bd0e2b1afabc4bd6719d30b' }
-  // dbHelper.deleteUser(playerToDelete);
+  // let dataToDelete =  {
+  //   type: 'persistScoreboard',
+  //   criteria: { _id: '5bd37818f032c406a138dc4a' }
+  // }
+  // database.deleteData(dataToDelete);
 
 
   // Processes incoming messages by type.  If recognized, re-types the message in preparation for broadcast.  (If a message is not re-typed in this way, it will be caught by the client and log an error message.)
