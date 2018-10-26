@@ -8,6 +8,8 @@ class Room {
     this.players = [{handle: "Aaron the Aamazing", score: -5}, {handle: "Philbert", score: 5}];
     this.round = null;
     this.roundNumber = 0;
+
+    this.startNewRound = this.startNewRound.bind(this);
   }
 
   // Instantiate a new round and have it generate an answer pool.
@@ -20,7 +22,7 @@ class Room {
     this.zeroScoreboard();
     this.zeroGuesses();
     this.broadcastGameState(`Round ${this.roundNumber}: Guess the synonyms!`);
-    this.countDownFrom(75);
+    this.countDownFrom(75, this.startNewRound);
   }
 
   broadcastTimer(secondsLeft) {
@@ -28,7 +30,7 @@ class Room {
       this.messager.parcelMessage({timeLeft: secondsLeft}, null, "incomingTimeLeft"));
   }
 
-  countDownFrom(seconds) {
+  countDownFrom(seconds, callback) {
     let timeLeft = (seconds * 1000);
 
     const startTimer = setInterval(() => {
@@ -41,9 +43,9 @@ class Room {
 
     const stopTimer = () => {
       clearInterval(startTimer);
-      this.startNewRound();
+      callback();
     }
-    startTimer;
+    // startTimer;
   }
 
   // When a guess message is received from a player...
