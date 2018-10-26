@@ -111,13 +111,13 @@ class App extends Component {
             break;
 
           case "incomingGameState":
-
             console.log(`Type: ${message.type}; "${message.content}"`);
-            let updatedState = message.content;
-
+            let updatedState = message.content.state;
             this.setState({gameState: updatedState});
+            break;
 
-
+          case "incomingGuessZero":
+            this.setState({guesses: []});
             break;
 
           case "incomingPrompt":

@@ -31,7 +31,7 @@ const wss = new WebSocket.Server({ server });
 
 const messager = new Messager(wss);
 const room = new Room(messager);
-room.newRound();
+room.startNewRound();
 
 // console.log(bob.hello);
 
