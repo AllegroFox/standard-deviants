@@ -10,6 +10,7 @@ class Room {
     this.roundNumber = 0;
 
     this.startNewRound = this.startNewRound.bind(this);
+    this.startEndRound = this.startEndRound.bind(this);
   }
 
   // Instantiate a new round and have it generate an answer pool.
@@ -22,8 +23,52 @@ class Room {
     this.zeroScoreboard();
     this.zeroGuesses();
     this.broadcastGameState(`Round ${this.roundNumber}: Guess the synonyms!`);
-    this.countDownFrom(75, this.startNewRound);
+    this.countDownFrom(15, this.startEndRound);
   }
+
+  startEndRound() {
+    this.messager.broadcastMessage(this.messager.parcelMessage(
+      this.roundEndResults()), null, "incomingEndOfRound");
+    this.broadcastGameState(`Round ${this.roundNumber}: Results and missed opportunities...`);
+    this.countDownFrom(25, this.startNewRound);
+  }
+
+  // Packages the round statistics.
+  roundEndResults() {
+    const roundStats = {};
+    roundStats.answerBank = [];
+
+    // Pop in the objectives/defintions.
+    roundStats.answerBank[0] = {
+      target: this.round.objective[0].word,
+      definition: this.round.objective[0].hint
+    };
+    roundStats.answerBank[1] = {
+      target: this.round.objective[1].word,
+      definition: this.round.objective[1].hint
+    };
+
+    // Sort through the answer bank and sort the answers according to their initial seed.  This is my first ever array.reduce!  Whoop whoop. -D
+    roundStats.answerBank[0].bank = [];
+    roundStats.answerBank[1].bank = [];
+    roundStats.answerBank = this.round.answerBank.reduce( (acc, next) => {
+      (next.seed === 0) && acc[0].bank.push(next);
+      (next.seed === 1) && acc[1].bank.push(next);
+      return acc;
+    }, roundStats.answerBank);
+
+    // Finally, tack on the final scoreboard.
+    roundStats.finalScoreboard = this.players.map((player) => { return {
+        name: player.handle,
+        score: player.score
+      }
+    }).sort(function (a, b) {
+      return b.score - a.score;
+    });
+
+    return roundStats;
+  }
+
 
   broadcastTimer(secondsLeft) {
     this.messager.broadcastMessage(
