@@ -9,6 +9,7 @@ import Roster from './Roster';
 import SystemUpdates from './SystemUpdates';
 import RulesModal from './RulesModal';
 import ScoreModal from './ScoreModal';
+import NewPlayerModal from './NewPlayerModal';
 
 
 class App extends Component {
@@ -240,3 +241,6 @@ class App extends Component {
 }
 
 export default App;
+
+// <ScoreModal/>
+// <NewPlayerModal handleNameChange={this.handleNameChange}/>
