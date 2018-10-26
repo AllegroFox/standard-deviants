@@ -8,15 +8,16 @@ class Prompt extends Component {
       ));
     return (
       <div>
-        <div className="prompt-container">
+        <div className="prompt-container d-inline-flex">
           {targetWords}
         </div>
-
-        <button type="button" className="btn btn-secondary" data-toggle="collapse" data-target="#collapseRules">
-          What am I doing again?
-        </button>
+        <div>
+          <button type="button" className="btn btn-secondary" data-toggle="collapse" data-target="#collapseRules">
+            What am I doing again?
+          </button>
+        </div>
         <div class="collapse" id="collapseRules">
-          <div class="card card-body">
+          <div class="card card-body prompt-rules">
             {this.props.prompt.rules}
           </div>
         </div>

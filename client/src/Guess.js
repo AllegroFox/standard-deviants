@@ -20,6 +20,3 @@ class Guess extends Component {
 }
 
 export default Guess;
-
-
-// dynamic classes: red (.text-danger), green (.text-success), faded (.text-white-50)
