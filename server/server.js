@@ -69,7 +69,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
 
         // Log-in: Client sends a requested handle to Server
         case "postLogin":
-          room.playerJoin(messageObject);
+          room.playerJoined(messageObject);
         break;
 
         // Client sends an updated handle to the server.
