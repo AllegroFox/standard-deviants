@@ -52,9 +52,9 @@ class Round {
   }
 
   generateAnswerPool() {
-    const poolObject = buildPool(5);
+    const poolObject = buildPool(50);
     poolObject.bank.forEach((answer) => {
-      const newAnswer = new Answer (answer, answer.length);
+      const newAnswer = new Answer (answer.answer, answer.seed, answer.answer.length);
       this.answerBank.push(newAnswer);
     });
     const target = poolObject.targets;
