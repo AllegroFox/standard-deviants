@@ -11,7 +11,7 @@ class Roster extends Component {
     return (
 
       <main className="players">
-        <ul className="list-group">
+        <ul className="list-group" id="roster">
           {playerItems}
         </ul>
       </main>

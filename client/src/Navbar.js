@@ -17,19 +17,19 @@ class NavBar extends Component {
             </li>
           </ul>
           <ul className="nav justify-content-end">
-            <li className="nav-item">
-              <span className="nav-link">
+            <li className="align-middle">
+              <span className="nav-item">
                 <Clock time={this.props.timeLeft}/>
               </span>
             </li>
-            <li className="nav-item">
-              <span className="nav-link"> - </span>
+            <li className="align-middle nav-item">
+              <span className="nav-item"> - </span>
             </li>
-            <li className="nav-item">
+            <li className="align-middle nav-item">
               <a href="/" className="navbar-brand">{this.props.gameType}</a>
             </li>
             <li className="nav-item">
-              <span className="nav-link disabled">
+              <span className="nav-item">
                 <img src={'https://api.adorable.io/avatars/60/' + this.props.handle + '.io.png'} className="profile-img"/>
                 <div className="dropdown">
                   <button className="btn btn-info dropdown-toggle" type="button" id="userDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

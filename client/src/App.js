@@ -113,6 +113,10 @@ class App extends Component {
           case "incomingGameState":
 
             console.log(`Type: ${message.type}; "${message.content}"`);
+            let updatedState = message.content;
+
+            this.setState({gameState: updatedState});
+
 
             break;
 
@@ -195,7 +199,6 @@ class App extends Component {
         <NavBar gameType={this.state.gameType} gameState={this.state.gameState} timeLeft={this.state.timeLeft} handle={this.state.handle} handleNameChange={this.handleNameChange} inputValue={this.state.handleBarContent}/>
         <div className="row">
           <div className="col-md-8">
-            <h1> We are standard deviants.  Good. </h1>
             <Prompt prompt={this.state.prompt}/>
             <GuessBank guesses={this.state.guesses}/>
             <InputBar
