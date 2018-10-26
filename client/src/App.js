@@ -232,7 +232,7 @@ class App extends Component {
           </div>
           <footer className="fixed-bottom">
             <span>Standard-Deviants 2018</span>
-
+            <ScoreModal/>
           </footer>
         </div>
       </div>
@@ -242,5 +242,4 @@ class App extends Component {
 
 export default App;
 
-// <ScoreModal/>
 // <NewPlayerModal handleNameChange={this.handleNameChange}/>
