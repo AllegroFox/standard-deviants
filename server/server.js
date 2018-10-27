@@ -47,7 +47,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   const database = new Database(db);
   const messager = new Messager(wss);
   const room = new Room(messager);
-  room.startNewRound();
+  room.startGetReady();
 
   // console.log(bob.hello);
 
@@ -117,13 +117,13 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
         break;
 
         // New Round Notification: Server broadcasts rule modules for the game
-        case "incomingNewRound":
-          messageObject.type = "incomingNewRound";
+        case "incomingGetReady":
+          messageObject.type = "incomingGetReady";
         break;
 
         // Game-State Update Package: status type and timer value
         case "incomingGameState":
-          messageObject.type = "incomingNewRound";
+          messageObject.type = "incomingGetReady";
         break;
 
         // Player-Score Update: updated scoreboard
@@ -137,7 +137,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
         break;
 
         // End of Round Notification: broadcast top 3 players, best words, and answer bank
-        case "incomingEndOfRound":
+        case "incomingResults":
           messageObject.type = "incomingGuessState";
         break;
 

@@ -7,6 +7,9 @@ import Prompt from './Prompt';
 import GuessBank from './GuessBank';
 import Roster from './Roster';
 import SystemUpdates from './SystemUpdates';
+import RulesModal from './RulesModal';
+import ScoreModal from './ScoreModal';
+import NewPlayerModal from './NewPlayerModal';
 
 
 class App extends Component {
@@ -15,7 +18,8 @@ class App extends Component {
     super(props);
 
     this.state = { gameType   : "Syllynyms",
-                   gameState  : "Get Ready!",
+                   gameStateMessage  : "Get Ready!",
+                   gameState  : "",
                    timeLeft   : 0,
                    handle     : "Default",
                    clientId   : "",
@@ -30,6 +34,11 @@ class App extends Component {
                                               hint: "hint" }, {word: "word", hint: "hint"}],
                                  rules: "Some rules" },
                    guessBarContent: "",
+                   guessBarColor: {"backgroundColor": "white"},
+                   scoreModalOn: false,
+                   rulesModalOn: false,
+                   NewPlayerModalOn: false,
+                   finalResults: {}
                  }
 
     this.handleChange = this.handleChange.bind(this);
@@ -53,6 +62,19 @@ class App extends Component {
         const message = JSON.parse(event.data);
 
         switch(message.type) {
+
+          case "incomingGetReady":
+            this.setState({finalResults: {}});
+
+            break;
+
+          case "incomingResults":
+            let finalResults = message.content
+            console.log(finalResults);
+
+            this.setState({finalResults: finalResults})
+            break;
+
           case "incomingLogin":
 
             console.log(`Type: ${message.type}; "${message.content}"`);
@@ -113,8 +135,9 @@ class App extends Component {
 
           case "incomingGameState":
             console.log(`Type: ${message.type}; "${message.content}"`);
+            let updatedStateMessage = message.content.stateMessage;
             let updatedState = message.content.state;
-            this.setState({gameState: updatedState});
+            this.setState({gameStateMessage: updatedStateMessage, gameState: updatedState});
             break;
 
           case "incomingGuessZero":
@@ -150,6 +173,7 @@ class App extends Component {
             break;
 
           default:
+            console.log(message);
             throw new Error("Unknown message type: " + message.type);
         }
       }
@@ -165,7 +189,9 @@ class App extends Component {
       let foundGuess = this.state.guesses.find(guessObj => (guessObj.guess === this.state.guessBarContent));
 
       if (foundGuess) {
-        console.log("You've already tried that.")
+        this.setState({guessBarColor: {"backgroundColor": "tomato"}, guessBarContent: ""});
+
+        setTimeout(() => { this.setState({guessBarColor: {"backgroundColor": "white"}}) } , 150)
       } else {
         const guess = { guess: this.state.guessBarContent };
 
@@ -197,13 +223,14 @@ class App extends Component {
   render() {
     return (
       <div className="game-window container-fluid">
-        <NavBar gameType={this.state.gameType} gameState={this.state.gameState} timeLeft={this.state.timeLeft} handle={this.state.handle} handleNameChange={this.handleNameChange} inputValue={this.state.handleBarContent}/>
+        <NavBar gameType={this.state.gameType} gameStateMessage={this.state.gameStateMessage} timeLeft={this.state.timeLeft} handle={this.state.handle} handleNameChange={this.handleNameChange} inputValue={this.state.handleBarContent}/>
         <div className="row">
           <div className="col-md-8">
             <Prompt prompt={this.state.prompt}/>
             <GuessBank guesses={this.state.guesses}/>
             <InputBar
               value={this.state.guessBarContent}
+              backgroundColor={this.state.guessBarColor}
               handleChange={this.handleChange}
               handleSubmit={this.handleSubmit}
               />
@@ -214,6 +241,7 @@ class App extends Component {
           </div>
           <footer className="fixed-bottom">
             <span>Standard-Deviants 2018</span>
+            <ScoreModal finalResults={this.state.finalResults}/>
           </footer>
         </div>
       </div>
@@ -222,3 +250,7 @@ class App extends Component {
 }
 
 export default App;
+
+// <RulesModal prompt={this.state.prompt}/>
+// <ScoreModal finalResults={this.state.finalResults}/>
+// <NewPlayerModal handleNameChange={this.handleNameChange}/>

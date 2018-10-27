@@ -1,6 +1,7 @@
 class Answer {
-  constructor (correctAnswer, pointValue) {
+  constructor (correctAnswer, seed, pointValue) {
     this.id = correctAnswer;
+    this.seed = seed;
     this.status = "unguessed";
     this.pointValue = pointValue;
   }

@@ -9,7 +9,7 @@ class InputBar extends Component {
       <div className="game-input">
         <div className="form-group">
           <label for="gameInputForm">Try a Word!</label>
-          <input type="text" className="form-control" id="gameInputForm" placeholder="Input a word" value={this.props.value} onChange={this.props.handleChange} onKeyUp={this.props.handleSubmit}/>
+          <input type="text" className="form-control" id="gameInputForm" placeholder="Input a word" value={this.props.value} style={this.props.backgroundColor} onChange={this.props.handleChange} onKeyUp={this.props.handleSubmit}/>
         </div>
       </div>
     );
