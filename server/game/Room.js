@@ -27,7 +27,7 @@ class Room {
     this.broadcastPrompt();
     this.messager.broadcastMessage(this.messager.parcelMessage(
       null, null, "incomingGetReady"));
-    this.broadcastGameState(`Get ready for Round ${this.roundNumber + 1}!`);
+    this.broadcastGameState(`Get ready for Round ${this.roundNumber}!`);
     this.countDownFrom(7, this.startNewRound);
   }
 
@@ -35,7 +35,7 @@ class Room {
   // In the future, it might be fed a rules module.
   startNewRound() {
     this.broadcastGameState(`Round ${this.roundNumber}: Guess the synonyms!`);
-    this.countDownFrom(15, this.startEndRound);
+    this.countDownFrom(75, this.startEndRound);
   }
 
   startEndRound() {
