@@ -12,10 +12,10 @@ class Database {
   addData (data) {
     switch (data.type) {
 
-      case "persistScoreboard":
-        this.db.collection("scoreboard").insertOne(data, function(err, res) {
+      case "persistAnswer":
+        this.db.collection("answers").insertOne(data, function(err, res) {
           if (err) throw err;
-          console.log(`Added into collection scoreboard:`)
+          console.log(`Added into collection answers:`)
           console.log(res.ops[0]);
         });
         break;
