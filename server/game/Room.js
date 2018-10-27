@@ -27,21 +27,21 @@ class Room {
     this.broadcastPrompt();
     this.messager.broadcastMessage(this.messager.parcelMessage(
       null, null, "incomingGetReady"));
-    this.broadcastGameState(`Get ready for Round ${this.roundNumber + 1}!`);
+    this.broadcastGameState(`Get ready for Round ${this.roundNumber + 1}!`, "getReady");
     this.countDownFrom(7, this.startNewRound);
   }
 
   // Instantiate a new round and have it generate an answer pool.
   // In the future, it might be fed a rules module.
   startNewRound() {
-    this.broadcastGameState(`Round ${this.roundNumber}: Guess the synonyms!`);
+    this.broadcastGameState(`Round ${this.roundNumber}: Guess the synonyms!`, "getGuessing");
     this.countDownFrom(15, this.startEndRound);
   }
 
   startEndRound() {
     this.messager.broadcastMessage(this.messager.parcelMessage(
       this.roundEndResults(), null, "incomingResults"));
-    this.broadcastGameState(`Round ${this.roundNumber}: Results and missed opportunities...`);
+    this.broadcastGameState(`Round ${this.roundNumber}: Results and missed opportunities...`, "getResults");
     this.zeroScoreboard();
     this.zeroGuesses();
     this.countDownFrom(15, this.startGetReady);
@@ -189,10 +189,12 @@ class Room {
       handle: newPlayer.handle
     }, newPlayer.clientId, "incomingPlayerInitialization"));
     this.broadcastPrompt(newPlayer.clientId);
-    this.broadcastGameState(`Round ${this.roundNumber}: Guess the synonyms!`);
+    this.messager.sendClientMessage(this.messager.parcelMessage({
+      gameStateMessage: "Welcome to the game!", gameState: "getHandle"
+    }, newPlayer.clientId, "incomingGameState"));
 
     // ... send everyone else an alert with the new player's credentials.
-    this.messager.broadcastMessage(this.messager.parcelMessage({message: `New player, ${newPlayer.handle}, has joined!`}, newPlayer.clientId, "incomingNewPlayer"), true);
+    this.messager.broadcastMessage(this.messager.parcelMessage({message: `A new player has joined!`}, newPlayer.clientId, "incomingNewPlayer"), true);
     this.broadcastScoreboard();
   }
 
@@ -259,10 +261,10 @@ class Room {
     );
   }
 
-  broadcastGameState(gameState) {
+  broadcastGameState(gameStateMessage, gameState) {
     this.messager.broadcastMessage(
       this.messager.parcelMessage(
-        {state: gameState}, null, "incomingGameState"));
+        {stateMessage: gameStateMessage, state: gameState}, null, "incomingGameState"));
   }
 
   // Mutates the score of the identified player

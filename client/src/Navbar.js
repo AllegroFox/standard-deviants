@@ -13,7 +13,7 @@ class NavBar extends Component {
           <img src={require('./icons/connection.svg')} className="game-icon"/>
           <ul className="nav justify-content-center">
             <li className="nav-item">
-              <Marquee gameState={this.props.gameState}/>
+              <Marquee gameState={this.props.gameStateMessage}/>
             </li>
           </ul>
           <ul className="nav justify-content-end">
