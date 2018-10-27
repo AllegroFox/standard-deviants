@@ -44,7 +44,8 @@ class Database {
         break;
 
       case "persistStatistics":
-        this.db.collection("statistics").find({ statistic: id }).toArray(function (err, docs) {
+        this.db.collection("statistics").find({ word: query.word }).toArray(function (err, docs) {
+          console.log(`The data retreived from database is:`);
           console.log(docs);
           return docs;
         });

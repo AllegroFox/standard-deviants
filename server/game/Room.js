@@ -1,10 +1,14 @@
 const Player = require('./Player.js');
 const Round = require('./Round.js');
+const Database = require('../database-functions.js');
+
+
 
 class Room {
 
-  constructor(messager) {
+  constructor(messager, database) {
     this.messager = messager;
+    this.database = database;
     this.players = [{handle: "Aaron the Aamazing", score: -5}, {handle: "Philbert", score: 5}];
     this.round = null;
     this.roundNumber = 0;
@@ -26,6 +30,11 @@ class Room {
     this.round = new Round(this.messager);
     this.roundNumber++;
     this.round.generateAnswerPool();
+    let testObject = {
+      word: this.round.objective[0].word,
+      type: "persistStatistics"
+    }
+    this.database.addData(testObject)
     this.zeroScoreboard();
     this.zeroGuesses();
     this.broadcastPrompt();
@@ -53,6 +62,11 @@ class Room {
     this.marqueeText = `Round ${this.roundNumber}: Results and missed opportunities...`;
     this.gameState = "getResults";
     this.broadcastGameState();
+    let wordQuery = {
+      type: "persistStatistics",
+      word: this.round.objective[0].word
+    }
+    this.database.getData(wordQuery)
     this.zeroScoreboard();
     this.zeroGuesses();
     this.countDownFrom(15, this.startGetReady);

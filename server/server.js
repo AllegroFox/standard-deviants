@@ -46,7 +46,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
 
   const database = new Database(db);
   const messager = new Messager(wss);
-  const room = new Room(messager);
+  const room = new Room(messager, database);
   room.startGetReady();
 
   // console.log(bob.hello);
