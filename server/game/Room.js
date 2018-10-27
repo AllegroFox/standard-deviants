@@ -374,7 +374,8 @@ class Room {
         type: "persistAnswer",
         word: guess.word,
         handle: guess.handle,
-        pointValue: guess.pointValue
+        pointValue: guess.pointValue,
+        createdAt: new Date()
       }
       this.database.addData(answerToPersist);
     })
