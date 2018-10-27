@@ -1,10 +1,14 @@
 const Player = require('./Player.js');
 const Round = require('./Round.js');
+const Database = require('../database-functions.js');
+
+
 
 class Room {
 
-  constructor(messager) {
+  constructor(messager, database) {
     this.messager = messager;
+    this.database = database;
     this.players = [{handle: "Aaron the Aamazing", score: -5}, {handle: "Philbert", score: 5}];
     this.round = null;
     this.roundNumber = 0;
@@ -48,11 +52,14 @@ class Room {
   }
 
   startEndRound() {
+    const roundResults = this.roundEndResults();
+
     this.messager.broadcastMessage(this.messager.parcelMessage(
-      this.roundEndResults(), null, "incomingResults"));
+      roundResults, null, "incomingResults"));
     this.marqueeText = `Round ${this.roundNumber}: Results and missed opportunities...`;
     this.gameState = "getResults";
     this.broadcastGameState();
+    this.persistScoringGuesses(this.findScoringAnswersByPlayer());
     this.zeroScoreboard();
     this.zeroGuesses();
     this.countDownFrom(15, this.startGetReady);
@@ -63,6 +70,49 @@ class Room {
   //  Round Lifecycle Helpers
   // #########################
   // #########################
+
+  // Returns an array of scoring answers from the round with point value and player handle attached.
+  findScoringAnswersByPlayer() {
+
+    let uniqueAnswers = [];
+    let taggedUniqueAnswers = [];
+    this.round.answerBank.reduce((acc, next) => {
+      if (next.status === "unique") {
+        acc.push(next);
+      }
+      return acc;
+    }, uniqueAnswers);
+
+    uniqueAnswers.forEach(answer => {
+      this.round.guesses.forEach(guess => {
+        if (answer.id === guess.guess) {
+          const taggedAnswer = {
+            word: answer.id,
+            clientId: guess.player,
+            pointValue: answer.pointValue
+          }
+          taggedUniqueAnswers.push(taggedAnswer);
+        }
+      })
+    })
+
+    const namedUniqueAnswers = [];
+    taggedUniqueAnswers.forEach(answer => {
+      this.players.forEach(player => {
+        if (answer.clientId === player.clientId) {
+          const namedAnswer = {
+            handle: player.handle,
+            word: answer.word,
+            pointValue: answer.pointValue
+          }
+          namedUniqueAnswers.push(namedAnswer);
+        }
+      });
+    });
+
+    return namedUniqueAnswers;
+
+  }
 
   countDownFrom(seconds, callback) {
     let timeLeft = (seconds * 1000);
@@ -311,6 +361,24 @@ class Room {
 
     // Broadcast the scoreb0oard so that players see the updated name.
     this.broadcastScoreboard();
+  }
+  // #####################
+  // #####################
+  //  Database Persisters
+  // #####################
+  // #####################
+
+  persistScoringGuesses(guessArray) {
+    guessArray.forEach(guess => {
+      let answerToPersist = {
+        type: "persistAnswer",
+        word: guess.word,
+        handle: guess.handle,
+        pointValue: guess.pointValue,
+        createdAt: new Date()
+      }
+      this.database.addData(answerToPersist);
+    })
   }
 
 
