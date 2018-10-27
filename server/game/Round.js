@@ -1,6 +1,7 @@
 const Guess = require('./Guess.js');
 const Answer = require('./Answer.js');
 const buildPool = require ('./gameModules/bank-gen-synonyms.js');
+const scrabbleScore = require ('scrabble-score');
 
 class Round {
 
@@ -54,9 +55,10 @@ class Round {
   generateAnswerPool() {
     const poolObject = buildPool(50);
     poolObject.bank.forEach((answer) => {
-      const newAnswer = new Answer (answer.answer, answer.seed, answer.answer.length);
+      const newAnswer = new Answer (answer.answer, answer.seed, scrabbleScore(answer.answer));
       this.answerBank.push(newAnswer);
     });
+    this.answerBank.sort(function(a, b) {return b.pointValue - a.pointValue});
     const target = poolObject.targets;
     this.objective = [
       {word: poolObject.targets[0].word, hint: poolObject.targets[0].definition},

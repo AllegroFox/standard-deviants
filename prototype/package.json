@@ -12,6 +12,7 @@
     "cheerio": "^1.0.0-rc.2",
     "datamuse": "^1.0.5",
     "random-words": "^1.1.0",
+    "scrabble-score": "^1.1.0",
     "sync-request": "^6.0.0",
     "thesaurus-com": "^1.2.0"
   }
