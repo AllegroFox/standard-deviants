@@ -1,5 +1,6 @@
 const datamuse = require('datamuse');
-const thesaurus = require('thesaurus-com');
+const randomWords = require('random-words');
+// const thesaurus = require('thesaurus-com');
 
 function prompt(question) {
   return new Promise((resolve, reject) => {
@@ -16,15 +17,23 @@ function prompt(question) {
 
 // ############ Here begins the code ###############
 
-let input = process.argv[2];
-const getAnswerPool = (input) => {
-  datamuse.request(`/words?rel_rhy=${input}`)
-  .then((json) => {
-  console.log(json);
-  console.log(`... Found ${json.length} answers.`);
+// let input = process.argv[2];
+let input = randomWords(1)[0];
+const getAnswerPool = (input, minimumPool) => {
+  datamuse.request(`/words?rel_rhy=${input}&max=1000`)
+  .then((results) => {
+  if (results.length >= minimumPool) {
+    console.log(`... Found ${results.length} rhymes for ${input}.`);
+    console.log(results);
+    return JSON.stringify(results);
+  } else {
+    console.log(`Only found ${results.length} rhymes for ${input}.  Retrying...`)
+    getAnswerPool(randomWords(1)[0], minimumPool);
+  }
+
 })};
 
-getAnswerPool(input);
+getAnswerPool(input, 100);
 
 // prompt(`What is a synonym for ${target}?  (We've found ${wordBank.length} of them...)  `)
 //   .then((answer) => {
