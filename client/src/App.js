@@ -18,7 +18,8 @@ class App extends Component {
     super(props);
 
     this.state = { gameType   : "Syllynyms",
-                   gameState  : "Get Ready!",
+                   gameStateMessage  : "Get Ready!",
+                   gameState  : "",
                    timeLeft   : 0,
                    handle     : "Default",
                    clientId   : "",
@@ -134,8 +135,9 @@ class App extends Component {
 
           case "incomingGameState":
             console.log(`Type: ${message.type}; "${message.content}"`);
+            let updatedStateMessage = message.content.stateMessage;
             let updatedState = message.content.state;
-            this.setState({gameState: updatedState});
+            this.setState({gameStateMessage: updatedStateMessage, gameState: updatedState});
             break;
 
           case "incomingGuessZero":
@@ -221,7 +223,7 @@ class App extends Component {
   render() {
     return (
       <div className="game-window container-fluid">
-        <NavBar gameType={this.state.gameType} gameState={this.state.gameState} timeLeft={this.state.timeLeft} handle={this.state.handle} handleNameChange={this.handleNameChange} inputValue={this.state.handleBarContent}/>
+        <NavBar gameType={this.state.gameType} gameStateMessage={this.state.gameStateMessage} timeLeft={this.state.timeLeft} handle={this.state.handle} handleNameChange={this.handleNameChange} inputValue={this.state.handleBarContent}/>
         <div className="row">
           <div className="col-md-8">
             <Prompt prompt={this.state.prompt}/>
