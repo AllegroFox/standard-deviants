@@ -5,19 +5,24 @@ class RulesModal extends Component {
 
   render() {
 
-    return (
-
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title" id="exampleModalLongTitle">New Round</h3>
+    if (this.props.gameState === "getReady") {
+      return (
+        <div className="modal-backdrop">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3 className="modal-title" id="exampleModalLongTitle">New Round</h3>
+            </div>
+            <div className="modal-body">
+              <h5>Here are your words for this round:</h5>
+              <ModalPrompt prompt={this.props.prompt}/>
+            </div>
+          </div>
         </div>
-        <div class="modal-body">
-          <h5>Here are your words for this round:</h5>
-          <ModalPrompt prompt={this.props.prompt}/>
-        </div>
-      </div>
 
-    );
+      );
+    } else {
+      return null;
+    }
   }
 }
 

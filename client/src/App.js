@@ -223,6 +223,9 @@ class App extends Component {
   render() {
     return (
       <div className="game-window container-fluid">
+        <RulesModal prompt={this.state.prompt} gameState={this.state.gameState}/>
+        <ScoreModal finalResults={this.state.finalResults} gameState={this.state.gameState}/>
+        <NewPlayerModal handleNameChange={this.handleNameChange} gameState={this.state.gameState}/>
         <NavBar gameType={this.state.gameType} gameStateMessage={this.state.gameStateMessage} timeLeft={this.state.timeLeft} handle={this.state.handle} handleNameChange={this.handleNameChange} inputValue={this.state.handleBarContent}/>
         <div className="row">
           <div className="col-md-8">
@@ -241,7 +244,6 @@ class App extends Component {
           </div>
           <footer className="fixed-bottom">
             <span>Standard-Deviants 2018</span>
-            <ScoreModal finalResults={this.state.finalResults}/>
           </footer>
         </div>
       </div>

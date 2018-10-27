@@ -22,12 +22,6 @@ class NavBar extends Component {
                 <Clock time={this.props.timeLeft}/>
               </span>
             </li>
-            <li className="align-middle nav-item">
-              <span className="nav-item"> - </span>
-            </li>
-            <li className="align-middle nav-item">
-              <a href="/" className="navbar-brand">{this.props.gameType}</a>
-            </li>
             <li className="nav-item">
               <span className="nav-item">
                 <img src={'https://api.adorable.io/avatars/60/' + this.props.handle + '.io.png'} className="profile-img"/>
