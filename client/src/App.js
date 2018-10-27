@@ -240,7 +240,6 @@ class App extends Component {
           </div>
           <div className="col-md-4">
             <Roster players={this.state.scoreBoard}/>
-            <SystemUpdates systemUpdates={this.state.systemUpdates}/>
           </div>
           <footer className="fixed-bottom">
             <span>Standard-Deviants 2018</span>
