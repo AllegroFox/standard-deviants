@@ -8,6 +8,8 @@ class Room {
     this.players = [{handle: "Aaron the Aamazing", score: -5}, {handle: "Philbert", score: 5}];
     this.round = null;
     this.roundNumber = 0;
+    this.marqueeText = "";
+    this.gameState = "";
 
     this.startNewRound = this.startNewRound.bind(this);
     this.startEndRound = this.startEndRound.bind(this);
@@ -30,21 +32,27 @@ class Room {
     this.messager.broadcastMessage(this.messager.parcelMessage(
       null, null, "incomingGetReady"));
 
-    this.broadcastGameState(`Get ready for Round ${this.roundNumber}!`, "getReady");
+    this.marqueeText = `Get ready for Round ${this.roundNumber}!`;
+    this.gameState = "getReady";
+    this.broadcastGameState();
     this.countDownFrom(7, this.startNewRound);
   }
 
   // Instantiate a new round and have it generate an answer pool.
   // In the future, it might be fed a rules module.
   startNewRound() {
-    this.broadcastGameState(`Round ${this.roundNumber}: Guess the synonyms!`, "getGuessing");
-    this.countDownFrom(75, this.startEndRound);
+    this.marqueeText = `Round ${this.roundNumber}: Guess the synonyms!`;
+    this.gameState = "getGuessing";
+    this.broadcastGameState();
+    this.countDownFrom(15, this.startEndRound);
   }
 
   startEndRound() {
     this.messager.broadcastMessage(this.messager.parcelMessage(
       this.roundEndResults(), null, "incomingResults"));
-    this.broadcastGameState(`Round ${this.roundNumber}: Results and missed opportunities...`, "getResults");
+    this.marqueeText = `Round ${this.roundNumber}: Results and missed opportunities...`;
+    this.gameState = "getResults";
+    this.broadcastGameState();
     this.zeroScoreboard();
     this.zeroGuesses();
     this.countDownFrom(15, this.startGetReady);
@@ -116,8 +124,70 @@ class Room {
     return roundStats;
   }
 
+  // Broadcasts the objectives of the current round.  If a target is given, instead sends the objectives to just that target.
+  broadcastPrompt(target) {
+    const content = {
+      objective: this.round.objective,
+      rules: this.round.rules
+    }
 
+    target ?
+      this.messager.sendClientMessage(
+        this.messager.parcelMessage(
+          content, target, "incomingPrompt")
+        )
 
+      : this.messager.broadcastMessage(
+        this.messager.parcelMessage(
+          content, null, "incomingPrompt")
+      );
+  }
+
+  broadcastScoreboard() {
+    let content = this.players.map((player) => { return {
+        name: player.handle,
+        score: player.score
+      }
+    }).sort(function (a, b) {
+      return b.score - a.score;
+    });
+
+    this.messager.broadcastMessage(
+      this.messager.parcelMessage(content, null, "incomingScoreboard")
+    );
+  }
+
+  broadcastGameState() {
+    this.messager.broadcastMessage(
+      this.messager.parcelMessage(
+        {stateMessage: this.marqueeText, state: this.gameState}, null, "incomingGameState"));
+  }
+
+  // Mutates the score of the identified player
+  updateScoreByPlayer(clientId, scoreChange) {
+    const result = this.players.find(player => clientId === player.clientId);
+    result.score += scoreChange;
+    this.broadcastScoreboard();
+  }
+
+  zeroScoreboard() {
+    this.players.forEach((player) => {
+      player.score = 0
+    })
+    this.broadcastScoreboard();
+  }
+
+  zeroGuesses() {
+    this.messager.broadcastMessage(
+      this.messager.parcelMessage(
+        null, null, "incomingGuessZero"));
+  }
+
+  // #################################
+  // #################################
+  //  Player-Game Interaction Helpers
+  // #################################
+  // #################################
 
   // When a guess message is received from a player...
   playerGuess(guessObject) {
@@ -185,6 +255,12 @@ class Room {
     }
   }
 
+  // #################################
+  // #################################
+  //  Player-Room Interaction Helpers
+  // #################################
+  // #################################
+
   // When a new client joins...
   playerJoined(protoPlayerObject) {
     // ... instantiate them as a new player object using information sent from the server
@@ -237,64 +313,6 @@ class Room {
     this.broadcastScoreboard();
   }
 
-  // Broadcasts the objectives of the current round.  If a target is given, instead sends the objectives to just that target.
-  broadcastPrompt(target) {
-    const content = {
-      objective: this.round.objective,
-      rules: this.round.rules
-    }
-
-    target ?
-      this.messager.sendClientMessage(
-        this.messager.parcelMessage(
-          content, target, "incomingPrompt")
-        )
-
-      : this.messager.broadcastMessage(
-        this.messager.parcelMessage(
-          content, null, "incomingPrompt")
-      );
-  }
-
-  broadcastScoreboard() {
-    let content = this.players.map((player) => { return {
-        name: player.handle,
-        score: player.score
-      }
-    }).sort(function (a, b) {
-      return b.score - a.score;
-    });
-
-    this.messager.broadcastMessage(
-      this.messager.parcelMessage(content, null, "incomingScoreboard")
-    );
-  }
-
-  broadcastGameState(gameStateMessage, gameState) {
-    this.messager.broadcastMessage(
-      this.messager.parcelMessage(
-        {stateMessage: gameStateMessage, state: gameState}, null, "incomingGameState"));
-  }
-
-  // Mutates the score of the identified player
-  updateScoreByPlayer(clientId, scoreChange) {
-    const result = this.players.find(player => clientId === player.clientId);
-    result.score += scoreChange;
-    this.broadcastScoreboard();
-  }
-
-  zeroScoreboard() {
-    this.players.forEach((player) => {
-      player.score = 0
-    })
-    this.broadcastScoreboard();
-  }
-
-  zeroGuesses() {
-    this.messager.broadcastMessage(
-      this.messager.parcelMessage(
-        null, null, "incomingGuessZero"));
-  }
 
 }
 
