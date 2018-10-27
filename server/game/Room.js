@@ -14,16 +14,18 @@ class Room {
     this.startGetReady = this.startGetReady.bind(this);
   }
 
-  // startFirstGame() {
-  //   this.round = new Round(this.messager);
-  //   this.broadcastPrompt();
-  //   this.countDownFrom(5, this.startGetReady);
-  // }
+  // #############################
+  // #############################
+  //  Round Lifecycle Controllers
+  // #############################
+  // #############################
 
   startGetReady() {
     this.round = new Round(this.messager);
     this.roundNumber++;
     this.round.generateAnswerPool();
+    this.zeroScoreboard();
+    this.zeroGuesses();
     this.broadcastPrompt();
     this.messager.broadcastMessage(this.messager.parcelMessage(
       null, null, "incomingGetReady"));
@@ -48,6 +50,33 @@ class Room {
     this.countDownFrom(15, this.startGetReady);
   }
 
+  // #########################
+  // #########################
+  //  Round Lifecycle Helpers
+  // #########################
+  // #########################
+
+  countDownFrom(seconds, callback) {
+    let timeLeft = (seconds * 1000);
+
+    const startTimer = setInterval(() => {
+        this.broadcastTimer(timeLeft / 1000);
+        timeLeft -= 1000;
+        if (timeLeft < 0) {
+          stopTimer()
+        }
+      }, 1000);
+
+    const stopTimer = () => {
+      clearInterval(startTimer);
+      callback();
+    }
+  }
+
+  broadcastTimer(secondsLeft) {
+    this.messager.broadcastMessage(
+      this.messager.parcelMessage({timeLeft: secondsLeft}, null, "incomingTimeLeft"));
+  }
 
   // Packages the round statistics.
   roundEndResults() {
@@ -88,28 +117,7 @@ class Room {
   }
 
 
-  broadcastTimer(secondsLeft) {
-    this.messager.broadcastMessage(
-      this.messager.parcelMessage({timeLeft: secondsLeft}, null, "incomingTimeLeft"));
-  }
 
-  countDownFrom(seconds, callback) {
-    let timeLeft = (seconds * 1000);
-
-    const startTimer = setInterval(() => {
-        this.broadcastTimer(timeLeft / 1000);
-        timeLeft -= 1000;
-        if (timeLeft < 0) {
-          stopTimer()
-        }
-      }, 1000);
-
-    const stopTimer = () => {
-      clearInterval(startTimer);
-      callback();
-    }
-    // startTimer;
-  }
 
   // When a guess message is received from a player...
   playerGuess(guessObject) {
