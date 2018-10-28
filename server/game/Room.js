@@ -9,6 +9,7 @@ class Room {
   constructor(messager, database) {
     this.messager = messager;
     this.database = database;
+
     this.players = [{handle: "Aaron the Aamazing", score: -5}, {handle: "Philbert", score: 5}];
     this.round = null;
     this.roundNumber = 0;
@@ -111,7 +112,6 @@ class Room {
     });
 
     return namedUniqueAnswers;
-
   }
 
   countDownFrom(seconds, callback) {
@@ -177,6 +177,7 @@ class Room {
   // Broadcasts the objectives of the current round.  If a target is given, instead sends the objectives to just that target.
   broadcastPrompt(target) {
     const content = {
+      gameModule: this.round.gameModule,
       objective: this.round.objective,
       rules: this.round.rules
     }
