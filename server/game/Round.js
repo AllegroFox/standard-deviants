@@ -10,9 +10,9 @@ class Round {
     this.messager = messager;
     this.guesses = [];
     this.answerBank = [{id: "victory", status: "unguessed", pointValue: 0}, {id: "spoon", status: "unguessed", pointValue: 0}];
-    this.gameModule = "Syllynyms!"
+    this.gameModule = "Hit the Vein!"
     this.objective = [];
-    this.rules = "Guess synonyms of either of the above words.  (Pay close attention to the definitions and parts of speech!)";
+    this.rules = "Guess synonyms for either of the above words.  (Pay close attention to the definitions and parts of speech!)";
   }
 
   checkGuess(guessObject) {
@@ -55,7 +55,7 @@ class Round {
   }
 
   async generateAnswerPool() {
-    const poolObject = await buildPool(10);
+    const poolObject = await buildPool(50);
     poolObject.bank.forEach((answer) => {
       const newAnswer = new Answer (answer.answer, answer.seed, scrabbleScore(answer.answer));
       this.answerBank.push(newAnswer);

@@ -27,10 +27,10 @@ class Room {
   // #############################
   // #############################
 
-  startGetReady() {
+  async startGetReady() {
     this.round = new Round(this.messager);
     this.roundNumber++;
-    this.round.generateAnswerPool();
+    await this.round.generateAnswerPool();
     this.zeroScoreboard();
     this.zeroGuesses();
     this.broadcastPrompt();

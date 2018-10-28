@@ -9,12 +9,19 @@ Array.prototype.sample = function () {
 
 class Spooler {
 
-  constructor () {
+  constructor (desiredBufferSize) {
+    this.desiredBufferSize = desiredBufferSize;
     this.spool = [];
   }
 
   async spinUp() {
-
+    while (this.spool.length < this.desiredBufferSize) {
+      const bufferRound = new Round;
+      bufferRound.generateAnswerpool();
+      this.spool = this.spool.concat(newRound)
+    }
+      console.log("Spooler: The buffer's full.  Waiting for the next call.")
+    }
   }
 
 }
