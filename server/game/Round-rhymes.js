@@ -1,7 +1,7 @@
 const Guess = require('./Guess.js');
 const Answer = require('./Answer.js');
-// const buildPool = require ('./gameModules/bank-gen-rhymes.js');
-const buildPool = require ('./gameModules/bank-gen-synonyms.js');
+const buildPool = require ('./gameModules/bank-gen-rhymes.js');
+// const buildPool = require ('./gameModules/bank-gen-synonyms.js');
 const scrabbleScore = require ('scrabble-score');
 
 class Round {

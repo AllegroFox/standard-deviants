@@ -51,7 +51,7 @@ async function buildPool (halfMinimumPoolLength) {
   // console.log(firstPool);
 
   while (firstPool.length < halfMinimumPoolLength) {
-    console.log(`Failed to find a long enough rhyme pool with seed, ${seed}.  Trying again...`)
+    console.log(`Failed to find a large enough rhyme pool with seed, ${seed}.  Trying again...`)
     seed = randomWords(1)[0];
     firstPool = await getAnswerPool(seed, 0);
   }
@@ -64,7 +64,7 @@ async function buildPool (halfMinimumPoolLength) {
   let secondPool = await getAnswerPool(seed, 1);
 
   while (secondPool.length < halfMinimumPoolLength) {
-    console.log(`Failed to find a long enough rhyme pool with seed, ${seed}.  Trying again...`)
+    console.log(`Failed to find a large enough rhyme pool with seed, ${seed}.  Trying again...`)
     seed = randomWords(1)[0];
     secondPool = await getAnswerPool(seed, 1);
   }
@@ -85,7 +85,7 @@ async function tryIt () {
   console.log(`Bank's length = ${bob.bank.length}`);
   console.log(bob);
 }
-tryIt();
+// tryIt();
 // getPronunciation();
 
 

@@ -49,7 +49,7 @@ class Room {
     this.marqueeText = `Round ${this.roundNumber}: Guess the synonyms!`;
     this.gameState = "getGuessing";
     this.broadcastGameState();
-    this.countDownFrom(15, this.startEndRound);
+    this.countDownFrom(75, this.startEndRound);
   }
 
   startEndRound() {
