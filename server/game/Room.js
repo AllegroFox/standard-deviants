@@ -60,6 +60,8 @@ class Room {
     this.gameState = "getResults";
     this.broadcastGameState();
     this.persistScoringGuesses(this.findScoringAnswersByPlayer());
+    this.persistRoundWinnerStats(this.findGuessesByWinner());
+    this.findGuessesByWinner();
     this.zeroScoreboard();
     this.zeroGuesses();
     this.countDownFrom(15, this.startGetReady);
@@ -70,6 +72,25 @@ class Room {
   //  Round Lifecycle Helpers
   // #########################
   // #########################
+
+  // Returns an array of all guesses by the winner of the round with point value and player handle and score attached.
+  findGuessesByWinner() {
+    let roundEndResults = this.roundEndResults();
+    let guessesByWinner = [];
+    let winnerProfile = roundEndResults.finalScoreboard[0]
+    let winnerClientId = this.players.find( player => player.handle === winnerProfile.handle ).clientId;
+    this.round.guesses.forEach(guess => {
+      if (guess.player === winnerClientId) {
+        guessesByWinner.push(guess)
+      }
+    });
+    const winnerStats = {
+      handle: winnerProfile.handle,
+      score: winnerProfile.score,
+      guesses: guessesByWinner
+    }
+    return winnerStats;
+  }
 
   // Returns an array of scoring answers from the round with point value and player handle attached.
   findScoringAnswersByPlayer() {
@@ -379,6 +400,12 @@ class Room {
       }
       this.database.addData(answerToPersist);
     })
+  }
+
+  persistRoundWinnerStats(winnerStats) {
+    winnerStats.type = "persistStatistics";
+    winnerStats.createdAt = new Date();
+    this.database.addData(winnerStats);
   }
 
 
