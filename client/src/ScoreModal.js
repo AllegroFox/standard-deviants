@@ -23,7 +23,7 @@ class ScoreModal extends Component {
               <div className="row">
                 <div className="col-sm-6">
                   <div className="card">
-                    <div className="card-body">
+                    <div className="card-body answer-card">
                       <h5 className="card-title">{this.props.finalResults.answerBank[0].target}</h5>
                       <p className="card-text">{this.props.finalResults.answerBank[0].definition}</p>
                       <div className="answerContainer">
@@ -34,7 +34,7 @@ class ScoreModal extends Component {
                 </div>
                 <div className="col-sm-6">
                   <div className="card">
-                    <div className="card-body">
+                    <div className="card-body answer-card">
                       <h5 className="card-title">{this.props.finalResults.answerBank[1].target}</h5>
                       <p className="card-text">{this.props.finalResults.answerBank[1].definition}</p>
                       <div className="answerContainer">

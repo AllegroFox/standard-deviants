@@ -14,24 +14,17 @@ class NavBar extends Component {
           <ul className="nav justify-content-center">
             <li className="nav-item">
               <Marquee gameState={this.props.gameStateMessage}/>
+              <Clock time={this.props.timeLeft}/>
             </li>
           </ul>
           <ul className="nav justify-content-end">
-            <li className="align-middle">
-              <span className="nav-item">
-                <Clock time={this.props.timeLeft}/>
-              </span>
-            </li>
             <li className="nav-item">
               <span className="nav-item">
                 <img src={'https://api.adorable.io/avatars/60/' + this.props.handle + '.io.png'} className="profile-img"/>
-                <div className="dropdown">
                   <button className="btn btn-info dropdown-toggle" type="button" id="userDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {this.props.handle}
                   </button>
-
                   <UserNameForm username={this.props.handle} handleNameChange={this.props.handleNameChange} inputValue={this.props.handleBarContent}/>
-                </div>
               </span>
             </li>
           </ul>

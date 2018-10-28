@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import UserInRoom from './UserInRoom';
-import tinysort from 'tinysort'
+import FlipMove from 'react-flip-move';
 
 class Roster extends Component {
 
   render() {
     const  playerItems = this.props.players.map(player => (
-      <UserInRoom player={player.name} score={player.score}/>
+      <FlipMove enterAnimation='fade' leaveAnimation='fade'>
+        <UserInRoom key={player.name} player={player.name} score={player.score}/>
+      </FlipMove>
       ));
     return (
 
