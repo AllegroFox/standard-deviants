@@ -36,8 +36,8 @@ class Database {
   getData (query, callback) {
     switch (query.type) {
 
-      case "persistScoreboard":
-        this.db.collection("scoreboard").find().toArray(function (err, docs) {
+      case "persistAnswer":
+        this.db.collection("answers").find().toArray(function (err, docs) {
           console.log(docs);
           return docs;
         });
@@ -59,7 +59,7 @@ class Database {
   deleteData (query) {
     switch (query.type) {
 
-      case "persistScoreboard":
+      case "persistAnswer":
         console.log(`Criteria found: ${JSON.stringify(query.criteria)}`)
         this.db.collection("scoreboard").remove(query.criteria, function(err, obj) {
           if (err) throw err;
