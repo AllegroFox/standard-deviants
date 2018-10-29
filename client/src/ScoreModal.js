@@ -5,7 +5,7 @@ class ScoreModal extends Component {
 
   render() {
 
-    if (this.props.gameState === "getResults" && Object.keys(this.props.finalResults).length > 0 ) {
+    if (this.props.gameState === "getResults" && Object.keys(this.props.finalResults).length > 0 && this.props.finalResults.finalScoreboard[0]) {
 
       return (
 
@@ -16,9 +16,7 @@ class ScoreModal extends Component {
             </div>
             <div className="modal-body scrollable">
               <div className="row">
-                <span className="player-score">{this.props.finalResults.finalScoreboard[0].handle}: {this.props.finalResults.finalScoreboard[0].score} </span>
-                <span className="player-score">{this.props.finalResults.finalScoreboard[1].handle}: {this.props.finalResults.finalScoreboard[1].score} </span>
-                <span className="player-score">{this.props.finalResults.finalScoreboard[2].handle}: {this.props.finalResults.finalScoreboard[2].score} </span>
+                <h1>{this.props.finalResults.finalScoreboard[0].handle} won the round with {this.props.finalResults.finalScoreboard[0].score} points!</h1>
               </div>
               <div className="row">
                 <div className="col-sm-6">

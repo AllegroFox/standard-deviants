@@ -106,6 +106,10 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
           room.playerGuess(messageObject);
         break;
 
+        case "postGetLeaderboard":
+          room.updateLeaderboard(messageObject.clientId);
+        break;
+
         // Server announcement: new Player
         case "incomingNewPlayer":
           messageObject.type = "incomingNewPlayer"

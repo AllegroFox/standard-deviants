@@ -70,8 +70,13 @@ class Room {
     this.findGuessesByWinner();
     this.zeroScoreboard();
     this.zeroGuesses();
-    await this.updateLeaderboard();
     this.countDownFrom(this.round.resultsPeriod, this.startGetReady);
+    await this.updateLeaderboard();
+    // const myObject = {
+    //   createdAt: new Date()
+    // }
+    // console.log("Checking the checkdate function:");
+    // console.log(this.checkDate(myObject));
   }
 
   // #########################
@@ -385,45 +390,76 @@ class Room {
     }
   }
 
-  async updateLeaderboard() {
+  async updateLeaderboard(clientId) {
     const storedLeaderboard = await this.database.getData("persistAnswer");
     const storedStatistics = await this.database.getData("persistStatistics");
 
     const topScoringSynonyms = [];
     storedLeaderboard.reduce((acc, next) => {
-      if (next.gameModule === "Hit the Vein!") {
+      if (next.gameModule === "Vein Seeker") {
         acc.push(next);
       }
       return acc;
     }, topScoringSynonyms);
     topScoringSynonyms.sort(this.sortByPointValue);
+    const topScoringSynonymsToday = topScoringSynonyms.filter(each => this.checkDate(each) === true);
+    console.log("This is topScoringSynonymsToday:")
+    console.log(topScoringSynonymsToday)
 
     const topScoringRhymes = [];
     storedLeaderboard.reduce((acc, next) => {
-      if (next.gameModule === "Rhyme Shotgun!") {
+      if (next.gameModule === "Rhyme Shotgun") {
         acc.push(next);
       }
       return acc;
     }, topScoringRhymes);
     topScoringRhymes.sort(this.sortByPointValue);
+    const topScoringRhymesToday = topScoringRhymes.filter(each => this.checkDate(each) === true);
+    console.log("This is topScoringRhymesToday:")
+    console.log(topScoringRhymesToday)
 
-    const topSynonymsRound = [];
+    const topPlayerSynonyms = [];
     storedStatistics.reduce((acc, next) => {
-      if (next.gameModule === "Hit the Vein!") {
+      if (next.gameModule === "Vein Seeker") {
         acc.push(next);
       }
       return acc;
-    }, topSynonymsRound);
-    topSynonymsRound.sort(this.sortByScore)
+    }, topPlayerSynonyms);
+    topPlayerSynonyms.sort(this.sortByScore);
+    const topPlayerSynonymsToday = topPlayerSynonyms.filter(each => this.checkDate(each) === true);
+    console.log("This is topPlayerSynonymsToday:")
+    console.log(topPlayerSynonymsToday)
 
-    const topRhymesRound = [];
+    const topPlayerRhymes = [];
     storedStatistics.reduce((acc, next) => {
-      if (next.gameModule === "Rhyme Shotgun!") {
+      if (next.gameModule === "Rhyme Shotgun") {
         acc.push(next);
       }
       return acc;
-    }, topRhymesRound);
-    topRhymesRound.sort(this.sortByScore)
+    }, topPlayerRhymes);
+    topPlayerRhymes.sort(this.sortByScore);
+    const topPlayerRhymesToday = topPlayerRhymes.filter(each => this.checkDate(each) === true);
+    console.log("This is topPlayerRhymesToday:")
+    console.log(topPlayerRhymesToday)
+
+    const leaderboardAllTime = {
+      topScoringSynonyms: topScoringSynonyms,
+      topScoringRhymes: topScoringRhymes,
+      topPlayerSynonyms: topPlayerSynonyms[0],
+      topPlayerRhymes: topPlayerRhymes[0]
+    }
+
+    const leaderboardToday = {
+      topScoringSynonyms: topScoringSynonymsToday,
+      topScoringRhymes: topScoringRhymesToday,
+      topPlayerSynonyms: topPlayerSynonymsToday[0],
+      topPlayerRhymes: topPlayerRhymesToday[0]
+    }
+
+    const leaderboardContent = [];
+    leaderboardContent.push(leaderboardAllTime, leaderboardToday);
+
+    this.messager.broadcastMessage(this.messager.parcelMessage(leaderboardContent, clientId, "incomingLeaderboard"));
 
     // console.log("Top synonyms round:");
     // console.log(topSynonymsRound[0])
@@ -445,6 +481,14 @@ class Room {
     if (a.score < b.score)
       return 1;
     return 0;
+  }
+
+  checkDate(inputObject) {
+    const today = new Date();
+    const dd = today.getDate();
+    const mm = today.getMonth()+1;
+    const yyyy = today.getFullYear();
+    return (inputObject.createdAt.getDate() === dd && inputObject.createdAt.getMonth()+1 === mm && inputObject.createdAt.getFullYear() === yyyy)
   }
 
 }
