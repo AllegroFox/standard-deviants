@@ -13,11 +13,13 @@ class Round {
     this.marqueeForGetResults = "Top ten possible answers, plus the room's best efforts...";
     // this.guessingPeriod = 45;
     this.guessingPeriod = 15;
+    this.resultsPeriod = 7;
     this.objective = [];
     this.rules = {
       rules: "Find rhymes for either of the above words.",
       scoring: "Score massive bonuses for rhymes with more syllables."
-    }
+    };
+    this.resultsHelperLabel = "rhymes";
   }
 
   checkGuess(guessObject) {

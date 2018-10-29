@@ -16,6 +16,7 @@ class Room {
     this.roundNumber = 0;
     this.marqueeText = "";
     this.gameState = "";
+    this.roundEndResults = null;
 
     this.startNewRound = this.startNewRound.bind(this);
     this.startEndRound = this.startEndRound.bind(this);
@@ -44,6 +45,7 @@ class Room {
     this.gameState = "getReady";
     this.broadcastGameState();
     this.countDownFrom(7, this.startNewRound);
+    this.roundEndResults = require(`./gameModules/results-helper-${this.round.resultsHelperLabel}.js`);
   }
 
   // Instantiate a new round and have it generate an answer pool.
@@ -68,8 +70,8 @@ class Room {
     this.findGuessesByWinner();
     this.zeroScoreboard();
     this.zeroGuesses();
-    this.countDownFrom(15, this.startGetReady);
     await this.updateLeaderboard();
+    this.countDownFrom(this.round.resultsPeriod, this.startGetReady);
   }
 
   // #########################
@@ -159,44 +161,6 @@ class Room {
   broadcastTimer(secondsLeft) {
     this.messager.broadcastMessage(
       this.messager.parcelMessage({timeLeft: secondsLeft}, null, "incomingTimeLeft"));
-  }
-
-  // Packages the round statistics.
-  roundEndResults() {
-    const roundStats = {};
-    roundStats.answerBank = [];
-
-    // Pop in the objectives/defintions.
-    roundStats.answerBank[0] = {
-      target: this.round.objective[0].word,
-      definition: this.round.objective[0].hint
-    };
-    roundStats.answerBank[1] = {
-      target: this.round.objective[1].word,
-      definition: this.round.objective[1].hint
-    };
-
-    // Sort through the answer bank and sort the answers according to their initial seed.  This is my first ever array.reduce!  Whoop whoop. -D
-    roundStats.answerBank[0].bank = [];
-    roundStats.answerBank[1].bank = [];
-    roundStats.answerBank = this.round.answerBank.reduce( (acc, next) => {
-      (next.seed === 0) && acc[0].bank.push(next);
-      (next.seed === 1) && acc[1].bank.push(next);
-      return acc;
-    }, roundStats.answerBank);
-
-    // Finally, tack on the final scoreboard.
-    const finalScoreboard = this.players.map((player) => { return {
-        handle: player.handle,
-        score: player.score
-      }
-    }).sort(function (a, b) {
-      return b.score - a.score;
-    });
-
-    roundStats.finalScoreboard = finalScoreboard;
-
-    return roundStats;
   }
 
   // Broadcasts the objectives of the current round.  If a target is given, instead sends the objectives to just that target.
