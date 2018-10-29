@@ -45,7 +45,7 @@ class Room {
     this.gameState = "getReady";
     this.broadcastGameState();
     this.countDownFrom(7, this.startNewRound);
-    this.roundEndResults = require(`./gameModules/results-helper-${this.round.resultsHelperLabel}`);
+    this.roundEndResults = require(`./gameModules/results-helper-${this.round.resultsHelperLabel}.js`);
   }
 
   // Instantiate a new round and have it generate an answer pool.

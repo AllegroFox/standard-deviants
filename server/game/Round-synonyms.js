@@ -18,7 +18,7 @@ class Round {
     this.objective = [];
     this.rules = {
       rules: "Guess synonyms for either of the above words.  (Pay close attention to the definitions and parts of speech!)",
-      scoring: "Words are worth their Scrabble values, so length and obscure consonants are rewarded."
+      scoring: "Longer words with unusual letters score more points."
     };
     this.resultsHelperLabel = "synonyms";
 
