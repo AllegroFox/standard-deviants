@@ -7,14 +7,30 @@ class UserNameForm extends Component {
     const submissionOverride = event => {event.preventDefault()};
 
     return (
-      <form className="dropdown-menu dropdown-menu-right p-4" aria-labelledby="userDropdownButton" onSubmit={submissionOverride}>
-        <span className="dropdown-item">
-          <div className="form-group">
-            <label for="userNameInput">Enter a new handle:</label>
-            <input type="text" className="form-control" id="userNameInput" value={this.props.inputValue} placeholder={this.props.username} onKeyUp={this.props.handleNameChange}/>
+
+      <div className="modal fade" id="newUsernameForm" tabindex="-1" role="dialog" aria-labelledby="newUsernameForm" aria-hidden="true" focus="true">
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalCenterTitle">Enter a new handle:</h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={submissionOverride}>
+                <div className="form-group">
+                  <label for="userNameInput">What should we call you?</label>
+                  <input type="text" className="form-control" id="userNameInput" value={this.props.inputValue} placeholder={this.props.username} onKeyUp={this.props.handleNameChange}/>
+                </div>
+              </form>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
           </div>
-        </span>
-      </form>
+        </div>
+      </div>
 
     );
   }

@@ -8,11 +8,11 @@ class Round {
     this.messager = messager;
     this.guesses = [];
     this.answerBank = [{id: "victory", status: "unguessed", pointValue: 0}, {id: "spoon", status: "unguessed", pointValue: 0}];
-    this.gameModule = "Rhyme Shotgun!"
+    this.gameModule = "Rhyme Shotgun"
     this.marqueeForGetGuessing = "Guess the rhymes!"
-    this.marqueeForGetResults = "Top ten possible answers, plus the room's best efforts...";
-    // this.guessingPeriod = 45;
-    this.guessingPeriod = 15;
+    this.marqueeForGetResults = "Here's the room's best efforts...";
+    this.guessingPeriod = 45;
+    // this.guessingPeriod = 15;
     this.resultsPeriod = 7;
     this.objective = [];
     this.rules = {

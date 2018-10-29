@@ -460,6 +460,11 @@ class Room {
     leaderboardContent.push(leaderboardAllTime, leaderboardToday);
 
     this.messager.broadcastMessage(this.messager.parcelMessage(leaderboardContent, clientId, "incomingLeaderboard"));
+
+    // console.log("Top synonyms round:");
+    // console.log(topSynonymsRound[0])
+    // console.log("Top scoring rhymes:");
+    // console.log(topRhymesRound[0])
   }
 
   sortByPointValue(a,b) {
