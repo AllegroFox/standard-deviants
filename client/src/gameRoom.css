@@ -62,6 +62,12 @@
 
 }
 
+.stats-btn {
+  position: fixed;
+  bottom: 2em;
+  margin-left: 10%;
+}
+
 .chatbar {
 
   right: 0;
@@ -162,7 +168,7 @@
 }
 
 .prompt-container {
-  margin: auto;
+  margin-left: 14%;
 }
 
 .prompt-img {
@@ -212,7 +218,7 @@
 }
 
 .answer-card {
-  background-color: #eee;
+  background-color: #708090;
 }
 
 

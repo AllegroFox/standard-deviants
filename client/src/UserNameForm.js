@@ -8,7 +8,7 @@ class UserNameForm extends Component {
 
     return (
 
-      <div className="modal fade" id="newUsernameForm" tabindex="-1" role="dialog" aria-labelledby="newUsernameForm" aria-hidden="true" backdrop="false">
+      <div className="modal fade" id="newUsernameForm" tabindex="-1" role="dialog" aria-labelledby="newUsernameForm" aria-hidden="true" focus="true">
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
