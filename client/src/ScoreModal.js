@@ -12,14 +12,9 @@ class ScoreModal extends Component {
         <div className="modal-backdrop-custom">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">It's Over!</h5>
+              <h5 className="modal-title">It's Over!  {this.props.finalResults.finalScoreboard[0].handle} won the round with {this.props.finalResults.finalScoreboard[0].score} points!</h5>
             </div>
             <div className="modal-body">
-              <div className="row">
-                <span className="player-score">{this.props.finalResults.finalScoreboard[0].handle}: {this.props.finalResults.finalScoreboard[0].score} </span>
-                <span className="player-score">{this.props.finalResults.finalScoreboard[1].handle}: {this.props.finalResults.finalScoreboard[1].score} </span>
-                <span className="player-score">{this.props.finalResults.finalScoreboard[2].handle}: {this.props.finalResults.finalScoreboard[2].score} </span>
-              </div>
               <div className="row">
                 <div className="col-sm-6">
                   <div className="card" style={{color: 'white'}} >
