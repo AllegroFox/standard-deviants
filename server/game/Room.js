@@ -351,7 +351,8 @@ class Room {
     }, newPlayer.clientId, "incomingPlayerInitialization"));
     this.broadcastPrompt(newPlayer.clientId);
     this.messager.sendClientMessage(this.messager.parcelMessage({
-      gameStateMessage: "Welcome to the game!", gameState: "getHandle"
+      // gameStateMessage: "Welcome to the game!", gameState: "getHandle"
+      stateMessage: this.marqueeText, state: this.gameState
     }, newPlayer.clientId, "incomingGameState"));
 
     // ... send everyone else an alert with the new player's credentials.

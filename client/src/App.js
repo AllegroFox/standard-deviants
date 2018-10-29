@@ -185,7 +185,7 @@ class App extends Component {
   }
 
   handleSubmit(event) {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && this.state.gameState === "getGuessing") {
 
       let foundGuess = this.state.guesses.find(guessObj => (guessObj.guess === this.state.guessBarContent.trim().toLowerCase()));
 
