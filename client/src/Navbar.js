@@ -11,6 +11,11 @@ class NavBar extends Component {
       <div>
         <nav className="navbar">
           <img src={require('./icons/veinseeker.png')} className="game-icon" alt="Vein Seeker"/>
+          <div>
+            <button type="button" className="btn btn-secondary" data-toggle="collapse" data-target="#collapseRules">
+              <i class="fas fa-question-circle"></i>
+            </button>
+          </div>
           <ul className="nav justify-content-center">
             <li className="nav-item">
               <Marquee gameState={this.props.gameStateMessage}/>
