@@ -10,7 +10,7 @@ class NavBar extends Component {
 
       <div>
         <nav className="navbar">
-          <img src={require('./icons/connection.svg')} className="game-icon"/>
+          <img src={require('./icons/veinseeker.png')} className="game-icon" alt="Vein Seeker"/>
           <ul className="nav justify-content-center">
             <li className="nav-item">
               <Marquee gameState={this.props.gameStateMessage}/>
@@ -20,7 +20,7 @@ class NavBar extends Component {
           <ul className="nav justify-content-end">
             <li className="nav-item">
               <span className="nav-item">
-                <img src={'https://api.adorable.io/avatars/60/' + this.props.handle + '.io.png'} className="profile-img"/>
+                <img src={'https://api.adorable.io/avatars/60/' + this.props.handle + '.io.png'} className="profile-img" alt=""/>
                   <button className="btn btn-info dropdown-toggle" type="button" id="userDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {this.props.handle}
                   </button>

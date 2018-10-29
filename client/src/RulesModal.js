@@ -7,14 +7,14 @@ class RulesModal extends Component {
 
     if (this.props.gameState === "getReady") {
       return (
-        <div className="modal-backdrop">
+        <div className="modal-backdrop-custom">
           <div className="modal-content">
             <div className="modal-header">
               <h3 className="modal-title" id="exampleModalLongTitle">New Round</h3>
             </div>
             <div className="modal-body">
               <h5>Here are your words for this round:</h5>
-              <ModalPrompt prompt={this.props.prompt}/>
+              <ModalPrompt className="modal-prompt" prompt={this.props.prompt}/>
             </div>
           </div>
         </div>

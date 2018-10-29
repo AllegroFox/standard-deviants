@@ -13,6 +13,7 @@ class Roster extends Component {
     return (
 
       <main className="players">
+        <h4>~ Scoreboard ~</h4>
         <ul className="list-group" id="roster">
           {playerItems}
         </ul>
