@@ -11,7 +11,8 @@ class Room {
     this.database = database;
     this.gameModes = [RoundRhymes, RoundSynonyms];
 
-    this.players = [{handle: "Aaron the Aamazing", score: -5}, {handle: "Philbert", score: 5}];
+    // this.players = [{handle: "Aaron the Aamazing", score: -5}, {handle: "Philbert", score: 5}];
+    this.players = [];
     this.round = null;
     this.roundNumber = 0;
     this.marqueeText = "";

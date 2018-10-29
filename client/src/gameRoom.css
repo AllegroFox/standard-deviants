@@ -168,7 +168,7 @@ input:focus:-ms-input-placeholder { color:transparent; }
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
-
+  border: 0.15em solid black;
 }
 
 .prompt-container {
