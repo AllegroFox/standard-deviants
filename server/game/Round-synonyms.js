@@ -9,11 +9,11 @@ class Round {
     this.messager = messager;
     this.guesses = [];
     this.answerBank = [{id: "victory", status: "unguessed", pointValue: 0}, {id: "spoon", status: "unguessed", pointValue: 0}];
-    this.gameModule = "Hit the Vein!";
+    this.gameModule = "Vein Seeker";
     this.marqueeForGetGuessing = "Guess the synonyms!";
     this.marqueeForGetResults = "Results and missed opportunities...";
-    // this.guessingPeriod = 75;
-    this.guessingPeriod = 15;
+    this.guessingPeriod = 75;
+    // this.guessingPeriod = 15;
     this.resultsPeriod = 15;
     this.objective = [];
     this.rules = {
