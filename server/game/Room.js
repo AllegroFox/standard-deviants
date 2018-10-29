@@ -31,7 +31,7 @@ class Room {
   async startGetReady() {
     // const gameModeForRound = this.gameModes.sample;
     // console.log(`Today's game mode: ${JSON.parse(gameModeForRound)}`);
-    this.round = new this.gameModes[Math.floor(Math.random() * 2)](this.messager);
+    this.round = new this.gameModes[Math.floor(Math.random() * this.gameModes.length)](this.messager);
     this.roundNumber++;
     await this.round.generateAnswerPool();
     this.zeroScoreboard();
