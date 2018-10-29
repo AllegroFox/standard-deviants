@@ -164,6 +164,10 @@ class App extends Component {
 
             break;
 
+          case "incomingLeaderboard":
+
+            break;
+
           // Received when a player first connects and is initialized as an object within the game room.
           case "incomingPlayerInitialization":
             this.setState({
@@ -176,6 +180,7 @@ class App extends Component {
           default:
             console.log(message);
             throw new Error("Unknown message type: " + message.type);
+            break;
         }
       }
     };

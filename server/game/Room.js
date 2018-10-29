@@ -459,7 +459,7 @@ class Room {
     const leaderboardContent = [];
     leaderboardContent.push(leaderboardAllTime, leaderboardToday);
 
-    this.messager.broadcastMessage(leaderboardContent, clientId, "incomingLeaderboard")
+    this.messager.broadcastMessage(this.messager.parcelMessage(leaderboardContent, clientId, "incomingLeaderboard"));
   }
 
   sortByPointValue(a,b) {
