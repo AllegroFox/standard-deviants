@@ -12,12 +12,15 @@ class Round {
     this.gameModule = "Hit the Vein!";
     this.marqueeForGetGuessing = "Guess the synonyms!";
     this.marqueeForGetResults = "Results and missed opportunities...";
-    this.guessingPeriod = 75;
+    // this.guessingPeriod = 75;
+    this.guessingPeriod = 15;
+    this.resultsPeriod = 15;
     this.objective = [];
     this.rules = {
       rules: "Guess synonyms for either of the above words.  (Pay close attention to the definitions and parts of speech!)",
       scoring: "Words are worth their Scrabble values, so length and obscure consonants are rewarded."
     };
+    this.resultsHelperLabel = "synonyms";
 
   }
 
@@ -63,7 +66,7 @@ class Round {
   async generateAnswerPool() {
     const poolObject = await buildPool(50);
     poolObject.bank.forEach((answer) => {
-      const newAnswer = new Answer (answer.answer, answer.seed, scrabbleScore(answer.answer));
+      const newAnswer = new Answer (answer.answer, answer.seed, (scrabbleScore(answer.answer)) + answer.answer.length);
       this.answerBank.push(newAnswer);
     });
     this.answerBank.sort(function(a, b) {return b.pointValue - a.pointValue});
