@@ -57,7 +57,7 @@ class Room {
     this.countDownFrom(this.round.guessingPeriod, this.startEndRound);
   }
 
-  startEndRound() {
+  async startEndRound() {
     const roundResults = this.roundEndResults();
 
     this.messager.broadcastMessage(this.messager.parcelMessage(
@@ -70,6 +70,7 @@ class Room {
     this.findGuessesByWinner();
     this.zeroScoreboard();
     this.zeroGuesses();
+    await this.updateLeaderboard();
     this.countDownFrom(this.round.resultsPeriod, this.startGetReady);
   }
 
@@ -355,7 +356,7 @@ class Room {
   }
   // #####################
   // #####################
-  //  Database Persisters
+  //  Database Interaction
   // #####################
   // #####################
 
@@ -366,18 +367,85 @@ class Room {
         word: guess.word,
         handle: guess.handle,
         pointValue: guess.pointValue,
+        gameModule: this.round.gameModule,
         createdAt: new Date()
       }
       this.database.addData(answerToPersist);
-    })
+    });
   }
 
   persistRoundWinnerStats(winnerStats) {
     winnerStats.type = "persistStatistics";
+    winnerStats.gameModule = this.round.gameModule;
     winnerStats.createdAt = new Date();
-    this.database.addData(winnerStats);
+    if (winnerStats.score > 0) {
+      this.database.addData(winnerStats);
+    } else {
+      console.log("Nobody scored any points! (Nothing persisted into database)")
+    }
   }
 
+  async updateLeaderboard() {
+    const storedLeaderboard = await this.database.getData("persistAnswer");
+    const storedStatistics = await this.database.getData("persistStatistics");
+
+    const topScoringSynonyms = [];
+    storedLeaderboard.reduce((acc, next) => {
+      if (next.gameModule === "Hit the Vein!") {
+        acc.push(next);
+      }
+      return acc;
+    }, topScoringSynonyms);
+    topScoringSynonyms.sort(this.sortByPointValue);
+
+    const topScoringRhymes = [];
+    storedLeaderboard.reduce((acc, next) => {
+      if (next.gameModule === "Rhyme Shotgun!") {
+        acc.push(next);
+      }
+      return acc;
+    }, topScoringRhymes);
+    topScoringRhymes.sort(this.sortByPointValue);
+
+    const topSynonymsRound = [];
+    storedStatistics.reduce((acc, next) => {
+      if (next.gameModule === "Hit the Vein!") {
+        acc.push(next);
+      }
+      return acc;
+    }, topSynonymsRound);
+    topSynonymsRound.sort(this.sortByScore)
+
+    const topRhymesRound = [];
+    storedStatistics.reduce((acc, next) => {
+      if (next.gameModule === "Rhyme Shotgun!") {
+        acc.push(next);
+      }
+      return acc;
+    }, topRhymesRound);
+    topRhymesRound.sort(this.sortByScore)
+
+    console.log("Top synonyms round:");
+    console.log(topSynonymsRound[0])
+    console.log("Top scoring rhymes:");
+    console.log(topRhymesRound[0])
+  }
+
+  sortByPointValue(a,b) {
+    if (a.pointValue > b.pointValue)
+      return -1;
+    if (a.pointValue < b.pointValue)
+      return 1;
+    return 0;
+  }
+
+  sortByScore(a,b) {
+    if (a.score > b.score)
+      return -1;
+    if (a.score < b.score)
+      return 1;
+    return 0;
+  }
 
 }
 
