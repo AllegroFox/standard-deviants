@@ -34,22 +34,13 @@ class Database {
   // Get data in `db`, pushed to an array
 
   getData (query, callback) {
-    switch (query.type) {
+    switch (query) {
 
       case "persistAnswer":
-        this.db.collection("answers").find().toArray(function (err, docs) {
-          console.log(docs);
-          return docs;
-        });
-        break;
+        return this.db.collection("answers").find().toArray();
 
       case "persistStatistics":
-        this.db.collection("statistics").find({ word: query.word }).toArray(function (err, docs) {
-          console.log(`The data retreived from database is:`);
-          console.log(docs);
-          return docs;
-        });
-        break;
+        return this.db.collection("statistics").find().toArray();
 
     }
   }

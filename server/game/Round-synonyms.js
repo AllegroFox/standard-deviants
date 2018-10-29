@@ -12,7 +12,8 @@ class Round {
     this.gameModule = "Hit the Vein!";
     this.marqueeForGetGuessing = "Guess the synonyms!";
     this.marqueeForGetResults = "Results and missed opportunities...";
-    this.guessingPeriod = 75;
+    // this.guessingPeriod = 75;
+    this.guessingPeriod = 15;
     this.objective = [];
     this.rules = {
       rules: "Guess synonyms for either of the above words.  (Pay close attention to the definitions and parts of speech!)",

@@ -11,7 +11,8 @@ class Round {
     this.gameModule = "Rhyme Shotgun!"
     this.marqueeForGetGuessing = "Guess the rhymes!"
     this.marqueeForGetResults = "Top ten possible answers, plus the room's best efforts...";
-    this.guessingPeriod = 45;
+    // this.guessingPeriod = 45;
+    this.guessingPeriod = 15;
     this.objective = [];
     this.rules = {
       rules: "Find rhymes for either of the above words.",
