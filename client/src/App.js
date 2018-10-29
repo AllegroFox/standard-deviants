@@ -241,7 +241,7 @@ class App extends Component {
           </div>
           <div className="col-md-4">
             <Roster players={this.state.scoreBoard}/>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#stats">
               Statistics!
             </button>
             <StatsBoardModal/>

@@ -21,10 +21,10 @@ class NavBar extends Component {
             <li className="nav-item">
               <span className="nav-item">
                 <img src={'https://api.adorable.io/avatars/60/' + this.props.handle + '.io.png'} className="profile-img" alt=""/>
-                  <button className="btn btn-info dropdown-toggle" type="button" id="userDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {this.props.handle}
-                  </button>
-                  <UserNameForm username={this.props.handle} handleNameChange={this.props.handleNameChange} inputValue={this.props.handleBarContent}/>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newUsernameForm">
+                  {this.props.handle}
+                </button>
+                <UserNameForm username={this.props.handle} handleNameChange={this.props.handleNameChange} inputValue={this.props.handleBarContent}/>
               </span>
             </li>
           </ul>

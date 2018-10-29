@@ -5,7 +5,7 @@ class StatsBoardModal extends Component {
   render() {
 
     return (
-      <div className="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" backdrop="false">
+      <div className="modal fade" id="stats" tabindex="-1" role="dialog" aria-labelledby="stats" aria-hidden="true" backdrop="false">
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
