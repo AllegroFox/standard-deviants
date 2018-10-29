@@ -1,6 +1,5 @@
 const Guess = require('./Guess.js');
 const Answer = require('./Answer.js');
-// const buildPool = require ('./gameModules/bank-gen-rhymes.js');
 const buildPool = require ('./gameModules/bank-gen-synonyms.js');
 const scrabbleScore = require ('scrabble-score');
 
@@ -11,8 +10,13 @@ class Round {
     this.guesses = [];
     this.answerBank = [{id: "victory", status: "unguessed", pointValue: 0}, {id: "spoon", status: "unguessed", pointValue: 0}];
     this.gameModule = "Hit the Vein!"
+    this.guessingInstructions = "Guess the synonyms!"
     this.objective = [];
-    this.rules = "Guess synonyms for either of the above words.  (Pay close attention to the definitions and parts of speech!)";
+    this.rules = {
+      rules: "Guess synonyms for either of the above words.  (Pay close attention to the definitions and parts of speech!)",
+      scoring: "Words are worth their Scrabble values, so length and obscure consonants are rewarded."
+    }
+
   }
 
   checkGuess(guessObject) {

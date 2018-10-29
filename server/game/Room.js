@@ -1,7 +1,7 @@
 const Player = require('./Player.js');
-const Round = require('./Round.js');
+const RoundRhymes = require('./Round-rhymes.js');
+const RoundSynonyms = require('./Round-synonyms.js');
 const Database = require('../database-functions.js');
-
 
 
 class Room {
@@ -9,6 +9,7 @@ class Room {
   constructor(messager, database) {
     this.messager = messager;
     this.database = database;
+    this.gameModes = [RoundRhymes, RoundSynonyms];
 
     this.players = [{handle: "Aaron the Aamazing", score: -5}, {handle: "Philbert", score: 5}];
     this.round = null;
@@ -28,7 +29,9 @@ class Room {
   // #############################
 
   async startGetReady() {
-    this.round = new Round(this.messager);
+    // const gameModeForRound = this.gameModes.sample;
+    // console.log(`Today's game mode: ${JSON.parse(gameModeForRound)}`);
+    this.round = new this.gameModes[Math.floor(Math.random() * 2)](this.messager);
     this.roundNumber++;
     await this.round.generateAnswerPool();
     this.zeroScoreboard();
@@ -46,7 +49,7 @@ class Room {
   // Instantiate a new round and have it generate an answer pool.
   // In the future, it might be fed a rules module.
   startNewRound() {
-    this.marqueeText = `Round ${this.roundNumber}: Guess the synonyms!`;
+    this.marqueeText = `Round ${this.roundNumber}: ${this.round.guessingInstructions}`;
     this.gameState = "getGuessing";
     this.broadcastGameState();
     this.countDownFrom(75, this.startEndRound);
@@ -200,7 +203,8 @@ class Room {
     const content = {
       gameModule: this.round.gameModule,
       objective: this.round.objective,
-      rules: this.round.rules
+      rules: this.round.rules.rules,
+      scoring: this.round.rules.scoring
     }
 
     target ?
