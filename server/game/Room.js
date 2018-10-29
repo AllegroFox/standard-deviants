@@ -49,10 +49,10 @@ class Room {
   // Instantiate a new round and have it generate an answer pool.
   // In the future, it might be fed a rules module.
   startNewRound() {
-    this.marqueeText = `Round ${this.roundNumber}: ${this.round.guessingInstructions}`;
+    this.marqueeText = `Round ${this.roundNumber}: ${this.round.marqueeForGetGuessing}`;
     this.gameState = "getGuessing";
     this.broadcastGameState();
-    this.countDownFrom(75, this.startEndRound);
+    this.countDownFrom(this.round.guessingPeriod, this.startEndRound);
   }
 
   startEndRound() {
@@ -60,7 +60,7 @@ class Room {
 
     this.messager.broadcastMessage(this.messager.parcelMessage(
       roundResults, null, "incomingResults"));
-    this.marqueeText = `Round ${this.roundNumber}: Results and missed opportunities...`;
+    this.marqueeText = `Round ${this.roundNumber}: ${this.round.marqueeForGetResults}`;
     this.gameState = "getResults";
     this.broadcastGameState();
     this.persistScoringGuesses(this.findScoringAnswersByPlayer());

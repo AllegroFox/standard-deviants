@@ -9,13 +9,15 @@ class Round {
     this.messager = messager;
     this.guesses = [];
     this.answerBank = [{id: "victory", status: "unguessed", pointValue: 0}, {id: "spoon", status: "unguessed", pointValue: 0}];
-    this.gameModule = "Hit the Vein!"
-    this.guessingInstructions = "Guess the synonyms!"
+    this.gameModule = "Hit the Vein!";
+    this.marqueeForGetGuessing = "Guess the synonyms!";
+    this.marqueeForGetResults = "Results and missed opportunities...";
+    this.guessingPeriod = 75;
     this.objective = [];
     this.rules = {
       rules: "Guess synonyms for either of the above words.  (Pay close attention to the definitions and parts of speech!)",
       scoring: "Words are worth their Scrabble values, so length and obscure consonants are rewarded."
-    }
+    };
 
   }
 
