@@ -232,7 +232,7 @@ class App extends Component {
         <NavBar gameType={this.state.gameType} gameStateMessage={this.state.gameStateMessage} timeLeft={this.state.timeLeft} handle={this.state.handle} handleNameChange={this.handleNameChange} inputValue={this.state.handleBarContent} gameModule={this.state.prompt.gameModule}/>
         <div className="row">
           <div className="col-md-8">
-            <Prompt prompt={this.state.prompt}/>
+            <Prompt prompt={this.state.prompt} gameModule={this.state.prompt.gameModule}/>
             <GuessBank guesses={this.state.guesses}/>
             <InputBar
               value={this.state.guessBarContent}

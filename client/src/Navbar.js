@@ -10,10 +10,10 @@ class NavBar extends Component {
 
       <div>
         <nav className="navbar">
+          <div className="d-flex justify-content-start">
           <img src={require('./icons/' + this.props.gameModule + '.png')} className="game-icon" alt="Vein Seeker"/>
-          <div>
-            <button type="button" className="btn btn-secondary" data-toggle="collapse" data-target="#collapseRules" style={{float: 'left'}}>
-              <i class="fas fa-question-circle"></i>
+            <button type="button" className="btn btn-secondary" data-toggle="modal" data-target="#RulesReminder">
+              <i className="fas fa-question-circle"></i>
             </button>
           </div>
           <ul className="nav justify-content-center">
@@ -26,7 +26,7 @@ class NavBar extends Component {
             <li className="nav-item">
               <span className="nav-item">
                 <img src={'https://api.adorable.io/avatars/60/' + this.props.handle + '.io.png'} className="profile-img" alt=""/>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newUsernameForm">
+                <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#newUsernameForm">
                   {this.props.handle}
                 </button>
                 <UserNameForm username={this.props.handle} handleNameChange={this.props.handleNameChange} inputValue={this.props.handleBarContent}/>
