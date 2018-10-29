@@ -187,14 +187,14 @@ class App extends Component {
   handleSubmit(event) {
     if (event.key === 'Enter') {
 
-      let foundGuess = this.state.guesses.find(guessObj => (guessObj.guess === this.state.guessBarContent));
+      let foundGuess = this.state.guesses.find(guessObj => (guessObj.guess === this.state.guessBarContent.trim().toLowerCase()));
 
       if (foundGuess) {
         this.setState({guessBarColor: {"backgroundColor": "tomato"}, guessBarContent: ""});
 
         setTimeout(() => { this.setState({guessBarColor: {"backgroundColor": "white"}}) } , 90)
       } else {
-        const guess = { guess: this.state.guessBarContent.trim() };
+        const guess = { guess: this.state.guessBarContent.trim().toLowerCase() };
 
         this.sendMessage(guess, "postGuess");
         this.setState({guessBarContent: ""});
