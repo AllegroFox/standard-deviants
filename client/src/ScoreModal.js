@@ -9,7 +9,7 @@ class ScoreModal extends Component {
 
       return (
 
-        <div className="modal-backdrop">
+        <div className="modal-backdrop-custom">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">It's Over!</h5>

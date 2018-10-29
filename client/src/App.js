@@ -10,7 +10,7 @@ import SystemUpdates from './SystemUpdates';
 import RulesModal from './RulesModal';
 import ScoreModal from './ScoreModal';
 import NewPlayerModal from './NewPlayerModal';
-import StatsBoard from './StatsBoard'
+import StatsBoardModal from './StatsBoard'
 
 
 class App extends Component {
@@ -241,19 +241,10 @@ class App extends Component {
           </div>
           <div className="col-md-4">
             <Roster players={this.state.scoreBoard}/>
-            <button className="btn btn-info dropdown-toggle" type="button" id="statsDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Statistics
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+              Statistics!
             </button>
-            <div className="dropdown-menu dropdown-menu-right p-4" aria-labelledby="statsDropdownButton">
-              <span className="dropdown-item">
-                <ul class="dropdown-menu list-group">
-                  <li class="dropdown-item list-group-item active">Cras justo odio</li>
-                  <li class="dropdown-item list-group-item">Dapibus ac facilisis in</li>
-                  <li class="dropdown-item list-group-item">Morbi leo risus</li>
-                  <li class="dropdown-item list-group-item">Porta ac consectetur ac</li>
-                  <li class="dropdown-item list-group-item">Vestibulum at eros</li>
-                </ul>
-              </span>
-            </div>
+            <StatsBoardModal/>
           </div>
           <footer className="fixed-bottom">
             <span>Standard-Deviants 2018</span>
