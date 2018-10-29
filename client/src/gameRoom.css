@@ -186,6 +186,10 @@
     margin: 10px 0;
 }
 
+.player-score {
+  margin: 1em;
+}
+
 /* Modal Styles */
 
 .modal-backdrop-custom {

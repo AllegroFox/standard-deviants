@@ -10,14 +10,14 @@ class RulesModal extends Component {
         <div className="modal-backdrop-custom">
           <div className="modal-content">
             <div className="modal-header">
-              <h3 className="modal-title" id="exampleModalLongTitle">New Round : {this.props.prompt.gameModule}</h3>
+              <h3 className="modal-title" id="exampleModalLongTitle">New Round : {this.props.prompt.gameModule}!</h3>
             </div>
             <div className="modal-body">
               <div className="row">
                 <div className="col-md-4">
-                  <img className="prompt-img" src={require('./icons/veinseeker.png')}/>
+                  <img className="prompt-img" src={require('./icons/' + this.props.prompt.gameModule + '.png')}/>
                 </div>
-                <div className="col-md-8">
+                <div className="rules-modal col-md-8">
                   <h5>Here are your words for this round:</h5>
                   <ModalPrompt className="modal-prompt" prompt={this.props.prompt}/>
                   <ul>

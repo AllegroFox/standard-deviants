@@ -10,9 +10,9 @@ class NavBar extends Component {
 
       <div>
         <nav className="navbar">
-          <img src={require('./icons/veinseeker.png')} className="game-icon" alt="Vein Seeker"/>
+          <img src={require('./icons/' + this.props.gameModule + '.png')} className="game-icon" alt="Vein Seeker"/>
           <div>
-            <button type="button" className="btn btn-secondary" data-toggle="collapse" data-target="#collapseRules">
+            <button type="button" className="btn btn-secondary" data-toggle="collapse" data-target="#collapseRules" style={{float: 'left'}}>
               <i class="fas fa-question-circle"></i>
             </button>
           </div>

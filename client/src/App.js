@@ -33,7 +33,9 @@ class App extends Component {
                    systemUpdates   : ["some", "system", "messages"],
                    prompt     : {objective: [{word: "word",
                                               hint: "hint" }, {word: "word", hint: "hint"}],
-                                 rules: "Some rules" },
+                                 rules: "Some rules",
+                                 gameModule: "Rhyme Shotgun",
+                                 scoring: "" },
                    guessBarContent: "",
                    guessBarColor: {"backgroundColor": "white"},
                    scoreModalOn: false,
@@ -227,7 +229,7 @@ class App extends Component {
         <RulesModal prompt={this.state.prompt} gameState={this.state.gameState}/>
         <ScoreModal finalResults={this.state.finalResults} gameState={this.state.gameState}/>
         <NewPlayerModal handleNameChange={this.handleNameChange} gameState={this.state.gameState}/>
-        <NavBar gameType={this.state.gameType} gameStateMessage={this.state.gameStateMessage} timeLeft={this.state.timeLeft} handle={this.state.handle} handleNameChange={this.handleNameChange} inputValue={this.state.handleBarContent}/>
+        <NavBar gameType={this.state.gameType} gameStateMessage={this.state.gameStateMessage} timeLeft={this.state.timeLeft} handle={this.state.handle} handleNameChange={this.handleNameChange} inputValue={this.state.handleBarContent} gameModule={this.state.prompt.gameModule}/>
         <div className="row">
           <div className="col-md-8">
             <Prompt prompt={this.state.prompt}/>

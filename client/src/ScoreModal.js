@@ -16,13 +16,13 @@ class ScoreModal extends Component {
             </div>
             <div className="modal-body">
               <div className="row">
-                <span>{this.props.finalResults.finalScoreboard[0].handle}: {this.props.finalResults.finalScoreboard[0].score} </span>
-                <span>{this.props.finalResults.finalScoreboard[1].handle}: {this.props.finalResults.finalScoreboard[1].score} </span>
-                <span>{this.props.finalResults.finalScoreboard[2].handle}: {this.props.finalResults.finalScoreboard[2].score} </span>
+                <span className="player-score">{this.props.finalResults.finalScoreboard[0].handle}: {this.props.finalResults.finalScoreboard[0].score} </span>
+                <span className="player-score">{this.props.finalResults.finalScoreboard[1].handle}: {this.props.finalResults.finalScoreboard[1].score} </span>
+                <span className="player-score">{this.props.finalResults.finalScoreboard[2].handle}: {this.props.finalResults.finalScoreboard[2].score} </span>
               </div>
               <div className="row">
                 <div className="col-sm-6">
-                  <div className="card">
+                  <div className="card" style={{color: 'white'}} >
                     <div className="card-body answer-card">
                       <h5 className="card-title">{this.props.finalResults.answerBank[0].target}</h5>
                       <p className="card-text">{this.props.finalResults.answerBank[0].definition}</p>
@@ -33,7 +33,7 @@ class ScoreModal extends Component {
                   </div>
                 </div>
                 <div className="col-sm-6">
-                  <div className="card">
+                  <div className="card" style={{color: 'black'}} >
                     <div className="card-body answer-card">
                       <h5 className="card-title">{this.props.finalResults.answerBank[1].target}</h5>
                       <p className="card-text">{this.props.finalResults.answerBank[1].definition}</p>
