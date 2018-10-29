@@ -10,7 +10,7 @@ import SystemUpdates from './SystemUpdates';
 import RulesModal from './RulesModal';
 import ScoreModal from './ScoreModal';
 import NewPlayerModal from './NewPlayerModal';
-import StatsBoardModal from './StatsBoard'
+import LeaderBoardModal from './LeaderBoard'
 
 
 class App extends Component {
@@ -41,8 +41,42 @@ class App extends Component {
                    scoreModalOn: false,
                    rulesModalOn: false,
                    NewPlayerModalOn: false,
-                   finalResults: {}
-                 }
+                   finalResults: {},
+                   leaderBoard: [{topScoringSynonyms: [{word:'',
+                                                        handle:'',
+                                                        pointValue: 0,
+                                                        gameModule:'',
+                                                        createdAt:'date'}],
+                                  topScoringRhymes: [{word:'',
+                                                        handle:'',
+                                                        pointValue: 0,
+                                                        gameModule:'',
+                                                        createdAt:'date'}],
+                                  topPlayerSynonyms: {handle: '',
+                                                      score: 0,
+                                                      gameModule: ''},
+                                  topPlayerRhymes: {handle: '',
+                                                      score: 0,
+                                                      gameModule: ''}
+                                  },
+                                  {topScoringSynonyms: [{word:'',
+                                                        handle:'',
+                                                        pointValue: 0,
+                                                        gameModule:'',
+                                                        createdAt:'date'}],
+                                  topScoringRhymes: [{word:'',
+                                                        handle:'',
+                                                        pointValue: 0,
+                                                        gameModule:'',
+                                                        createdAt:'date'}],
+                                  topPlayerSynonyms: {handle: '',
+                                                      score: 0,
+                                                      gameModule: ''},
+                                  topPlayerRhymes: {handle: '',
+                                                      score: 0,
+                                                      gameModule: ''}
+                                  }]
+                  }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -168,6 +202,10 @@ class App extends Component {
 
           case "incomingLeaderboard":
 
+            let updatedLeaderBoard = message.content;
+
+            this.setState({leaderBoard: updatedLeaderBoard});
+
             break;
 
           // Received when a player first connects and is initialized as an object within the game room.
@@ -251,7 +289,7 @@ class App extends Component {
             <button type="button" className="stats-btn btn btn-primary" data-toggle="modal" data-target="#stats">
               Statistics!
             </button>
-            <StatsBoardModal/>
+            <LeaderBoardModal leaderBoard={this.state.leaderBoard}/>
           </div>
           <footer className="fixed-bottom">
             <span>Standard-Deviants 2018</span>
