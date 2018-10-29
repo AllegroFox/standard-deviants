@@ -43,11 +43,12 @@
 .game-input {
   bottom: 40px;
   display: block;
-  height: 60px;
+  height: 80px;
   line-height: 60px;
   position: fixed;
   margin-bottom: 60px;
   width: 60%;
+  text-align: center;
 }
 
 .chatbar {
@@ -183,8 +184,14 @@
   border-radius: 10px;
 }
 
+.modal-prompt, .prompt {
+  justify-content: center;
+}
+
 .answer-card {
   background-color: #eee;
 }
+
+
 
 

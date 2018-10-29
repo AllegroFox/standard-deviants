@@ -16,9 +16,9 @@ class ScoreModal extends Component {
             </div>
             <div className="modal-body">
               <div className="row">
-                <span>{this.props.finalResults.finalScoreboard[0].handle}: {this.props.finalResults.finalScoreboard[0].score}</span>
-                <span>{this.props.finalResults.finalScoreboard[1].handle}: {this.props.finalResults.finalScoreboard[1].score}</span>
-                <span>{this.props.finalResults.finalScoreboard[2].handle}: {this.props.finalResults.finalScoreboard[2].score}</span>
+                <span>{this.props.finalResults.finalScoreboard[0].handle}: {this.props.finalResults.finalScoreboard[0].score} </span>
+                <span>{this.props.finalResults.finalScoreboard[1].handle}: {this.props.finalResults.finalScoreboard[1].score} </span>
+                <span>{this.props.finalResults.finalScoreboard[2].handle}: {this.props.finalResults.finalScoreboard[2].score} </span>
               </div>
               <div className="row">
                 <div className="col-sm-6">

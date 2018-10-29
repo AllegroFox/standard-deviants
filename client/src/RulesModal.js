@@ -14,7 +14,7 @@ class RulesModal extends Component {
             </div>
             <div className="modal-body">
               <h5>Here are your words for this round:</h5>
-              <ModalPrompt prompt={this.props.prompt}/>
+              <ModalPrompt className="modal-prompt" prompt={this.props.prompt}/>
             </div>
           </div>
         </div>
