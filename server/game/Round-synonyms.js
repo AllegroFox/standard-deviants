@@ -1,6 +1,7 @@
 const Guess = require('./Guess.js');
 const Answer = require('./Answer.js');
 const buildPool = require ('./gameModules/bank-gen-synonyms.js');
+const scrabbleScore = require ('scrabble-score');
 
 class Round {
 
@@ -8,8 +9,16 @@ class Round {
     this.messager = messager;
     this.guesses = [];
     this.answerBank = [{id: "victory", status: "unguessed", pointValue: 0}, {id: "spoon", status: "unguessed", pointValue: 0}];
+    this.gameModule = "Hit the Vein!";
+    this.marqueeForGetGuessing = "Guess the synonyms!";
+    this.marqueeForGetResults = "Results and missed opportunities...";
+    this.guessingPeriod = 75;
     this.objective = [];
-    this.rules = "Guess synonyms of either of the above words.  (Pay close attention to the definitions!)";
+    this.rules = {
+      rules: "Guess synonyms for either of the above words.  (Pay close attention to the definitions and parts of speech!)",
+      scoring: "Words are worth their Scrabble values, so length and obscure consonants are rewarded."
+    };
+
   }
 
   checkGuess(guessObject) {
@@ -51,12 +60,13 @@ class Round {
     })
   }
 
-  generateAnswerPool() {
-    const poolObject = buildPool(50);
+  async generateAnswerPool() {
+    const poolObject = await buildPool(50);
     poolObject.bank.forEach((answer) => {
-      const newAnswer = new Answer (answer.answer, answer.seed, answer.answer.length);
+      const newAnswer = new Answer (answer.answer, answer.seed, scrabbleScore(answer.answer));
       this.answerBank.push(newAnswer);
     });
+    this.answerBank.sort(function(a, b) {return b.pointValue - a.pointValue});
     const target = poolObject.targets;
     this.objective = [
       {word: poolObject.targets[0].word, hint: poolObject.targets[0].definition},

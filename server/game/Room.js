@@ -1,7 +1,7 @@
 const Player = require('./Player.js');
-const Round = require('./Round.js');
+const RoundRhymes = require('./Round-rhymes.js');
+const RoundSynonyms = require('./Round-synonyms.js');
 const Database = require('../database-functions.js');
-
 
 
 class Room {
@@ -9,6 +9,8 @@ class Room {
   constructor(messager, database) {
     this.messager = messager;
     this.database = database;
+    this.gameModes = [RoundRhymes, RoundSynonyms];
+
     this.players = [{handle: "Aaron the Aamazing", score: -5}, {handle: "Philbert", score: 5}];
     this.round = null;
     this.roundNumber = 0;
@@ -26,10 +28,12 @@ class Room {
   // #############################
   // #############################
 
-  startGetReady() {
-    this.round = new Round(this.messager);
+  async startGetReady() {
+    // const gameModeForRound = this.gameModes.sample;
+    // console.log(`Today's game mode: ${JSON.parse(gameModeForRound)}`);
+    this.round = new this.gameModes[Math.floor(Math.random() * this.gameModes.length)](this.messager);
     this.roundNumber++;
-    this.round.generateAnswerPool();
+    await this.round.generateAnswerPool();
     this.zeroScoreboard();
     this.zeroGuesses();
     this.broadcastPrompt();
@@ -45,10 +49,10 @@ class Room {
   // Instantiate a new round and have it generate an answer pool.
   // In the future, it might be fed a rules module.
   startNewRound() {
-    this.marqueeText = `Round ${this.roundNumber}: Guess the synonyms!`;
+    this.marqueeText = `Round ${this.roundNumber}: ${this.round.marqueeForGetGuessing}`;
     this.gameState = "getGuessing";
     this.broadcastGameState();
-    this.countDownFrom(15, this.startEndRound);
+    this.countDownFrom(this.round.guessingPeriod, this.startEndRound);
   }
 
   startEndRound() {
@@ -56,10 +60,12 @@ class Room {
 
     this.messager.broadcastMessage(this.messager.parcelMessage(
       roundResults, null, "incomingResults"));
-    this.marqueeText = `Round ${this.roundNumber}: Results and missed opportunities...`;
+    this.marqueeText = `Round ${this.roundNumber}: ${this.round.marqueeForGetResults}`;
     this.gameState = "getResults";
     this.broadcastGameState();
     this.persistScoringGuesses(this.findScoringAnswersByPlayer());
+    this.persistRoundWinnerStats(this.findGuessesByWinner());
+    this.findGuessesByWinner();
     this.zeroScoreboard();
     this.zeroGuesses();
     this.countDownFrom(15, this.startGetReady);
@@ -70,6 +76,25 @@ class Room {
   //  Round Lifecycle Helpers
   // #########################
   // #########################
+
+  // Returns an array of all guesses by the winner of the round with point value and player handle and score attached.
+  findGuessesByWinner() {
+    let roundEndResults = this.roundEndResults();
+    let guessesByWinner = [];
+    let winnerProfile = roundEndResults.finalScoreboard[0]
+    let winnerClientId = this.players.find( player => player.handle === winnerProfile.handle ).clientId;
+    this.round.guesses.forEach(guess => {
+      if (guess.player === winnerClientId) {
+        guessesByWinner.push(guess)
+      }
+    });
+    const winnerStats = {
+      handle: winnerProfile.handle,
+      score: winnerProfile.score,
+      guesses: guessesByWinner
+    }
+    return winnerStats;
+  }
 
   // Returns an array of scoring answers from the round with point value and player handle attached.
   findScoringAnswersByPlayer() {
@@ -111,7 +136,6 @@ class Room {
     });
 
     return namedUniqueAnswers;
-
   }
 
   countDownFrom(seconds, callback) {
@@ -177,8 +201,10 @@ class Room {
   // Broadcasts the objectives of the current round.  If a target is given, instead sends the objectives to just that target.
   broadcastPrompt(target) {
     const content = {
+      gameModule: this.round.gameModule,
       objective: this.round.objective,
-      rules: this.round.rules
+      rules: this.round.rules.rules,
+      scoring: this.round.rules.scoring
     }
 
     target ?
@@ -325,7 +351,8 @@ class Room {
     }, newPlayer.clientId, "incomingPlayerInitialization"));
     this.broadcastPrompt(newPlayer.clientId);
     this.messager.sendClientMessage(this.messager.parcelMessage({
-      gameStateMessage: "Welcome to the game!", gameState: "getHandle"
+      // gameStateMessage: "Welcome to the game!", gameState: "getHandle"
+      stateMessage: this.marqueeText, state: this.gameState
     }, newPlayer.clientId, "incomingGameState"));
 
     // ... send everyone else an alert with the new player's credentials.
@@ -379,6 +406,12 @@ class Room {
       }
       this.database.addData(answerToPersist);
     })
+  }
+
+  persistRoundWinnerStats(winnerStats) {
+    winnerStats.type = "persistStatistics";
+    winnerStats.createdAt = new Date();
+    this.database.addData(winnerStats);
   }
 
 

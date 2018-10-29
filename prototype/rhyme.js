@@ -20,7 +20,7 @@ function prompt(question) {
 // let input = process.argv[2];
 let input = randomWords(1)[0];
 const getAnswerPool = (input, minimumPool) => {
-  datamuse.request(`/words?rel_rhy=${input}&max=1000`)
+  datamuse.request(`/words?rel_rhy=${input}&max=1000&md=r&ipa=1`)
   .then((results) => {
   if (results.length >= minimumPool) {
     console.log(`... Found ${results.length} rhymes for ${input}.`);
