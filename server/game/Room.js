@@ -11,7 +11,8 @@ class Room {
     this.database = database;
     this.gameModes = [RoundRhymes, RoundSynonyms];
 
-    this.players = [{handle: "Aaron the Aamazing", score: -5}, {handle: "Philbert", score: 5}];
+    // this.players = [{handle: "Aaron the Aamazing", score: -5}, {handle: "Philbert", score: 5}];
+    this.players = [];
     this.round = null;
     this.roundNumber = 0;
     this.marqueeText = "";
@@ -192,7 +193,8 @@ class Room {
   broadcastScoreboard() {
     let content = this.players.map((player) => { return {
         name: player.handle,
-        score: player.score
+        score: player.score,
+        clientId: player.clientId
       }
     }).sort(function (a, b) {
       return b.score - a.score;
@@ -308,7 +310,7 @@ class Room {
   // #################################
 
   // When a new client joins...
-  playerJoined(protoPlayerObject) {
+  async playerJoined(protoPlayerObject) {
     // ... instantiate them as a new player object using information sent from the server
     const newPlayer = new Player(protoPlayerObject);
     this.players.push(newPlayer);
@@ -328,6 +330,7 @@ class Room {
     // ... send everyone else an alert with the new player's credentials.
     this.messager.broadcastMessage(this.messager.parcelMessage({message: `A new player has joined!`}, newPlayer.clientId, "incomingNewPlayer"), true);
     this.broadcastScoreboard();
+    await this.updateLeaderboard();
   }
 
   // When a player closes their connection, remove their player object from the collection, then update the scoreboard.

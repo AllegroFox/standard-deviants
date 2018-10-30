@@ -115,8 +115,13 @@ input:focus:-ms-input-placeholder { color:transparent; }
 }
 
 .list-group-item {
-  background-color: #333
+  background-color: #333;
 }
+
+#active-player {
+  background-color: #666;
+}
+
 .badge-primary {
   float: right;
 }
@@ -168,7 +173,7 @@ input:focus:-ms-input-placeholder { color:transparent; }
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
-
+  border: 0.15em solid black;
 }
 
 .prompt-container {
