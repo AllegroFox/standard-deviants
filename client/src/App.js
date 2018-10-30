@@ -312,8 +312,8 @@ class App extends Component {
   render() {
     return (
       <div className="game-window container-fluid">
-        <RulesModal prompt={this.state.prompt} gameState={this.state.gameState}/>
-        <ResultsModal finalResults={this.state.finalResults} gameState={this.state.gameState}/>
+        <RulesModal prompt={this.state.prompt} gameState={this.state.gameState} timeLeft={this.state.timeLeft}/>
+        <ResultsModal finalResults={this.state.finalResults} gameState={this.state.gameState} timeLeft={this.state.timeLeft}/>
         <NewPlayerModal handleNameChange={this.handleNameChange} gameState={this.state.gameState}/>
         <NavBar gameType={this.state.gameType} gameStateMessage={this.state.gameStateMessage} timeLeft={this.state.timeLeft} handle={this.state.handle} handleNameChange={this.handleNameChange} inputValue={this.state.handleBarContent} gameModule={this.state.prompt.gameModule}/>
         <div className="row">

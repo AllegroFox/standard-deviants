@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ModalPrompt from './ModalPrompt';
+import ModalClock from './ModalClock';
 
 class RulesModal extends Component {
 
@@ -13,6 +14,7 @@ class RulesModal extends Component {
             <div class="modal-content">
               <div className="modal-header">
                 <h3 className="modal-title" id="exampleModalLongTitle">New Round : {this.props.prompt.gameModule}!</h3>
+                <ModalClock time={this.props.timeLeft} position="modal"/>
               </div>
               <div className="modal-body">
                 <div className="row">

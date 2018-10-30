@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Clock extends React.Component {
+class ModalClock extends React.Component {
   format(time) {
     let seconds = time % 60;
     let minutes = Math.floor(time / 60);
@@ -12,10 +12,10 @@ class Clock extends React.Component {
     const {time} = this.props;
     return (
       <div>
-        <h1 className="displayedTime nav-clock" >{this.format(time)}</h1>
+        <h1 className="displayedTime" >{this.format(time)}</h1>
       </div>
     )
   }
 }
 
-export default Clock;
+export default ModalClock;

@@ -20,7 +20,7 @@ class Roster extends Component {
       <main className="players">
         <h4>
           ~ Scoreboard ~
-          <button type="button" className="stats-btn btn btn-primary" data-toggle="modal" data-target="#stats">
+          <button type="button" className="stats-btn btn btn-primary" data-toggle="modal" data-target="#stats" style={{marginLeft: '37.8%'}}>
             Statistics!
           </button>
         </h4>

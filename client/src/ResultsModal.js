@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AnswerBank from './AnswerBank';
+import ModalClock from './ModalClock';
 
 class ResultsModal extends Component {
 
@@ -18,8 +19,8 @@ class ResultsModal extends Component {
     } else {
       return (
         <div className="row">
-                  <h1 className="prompt-banner">No one scored this round.  Too difficult...?</h1>
-                </div>
+          <h1 className="prompt-banner">No one scored this round.  Too difficult...?</h1>
+        </div>
         );
       }
     }
@@ -32,7 +33,8 @@ class ResultsModal extends Component {
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">It's Over!</h5>
+                <h3 className="modal-title">It's Over!</h3>
+                <ModalClock time={this.props.timeLeft} position="modal"/>
               </div>
               <div className="modal-body">
                 {displayWinnerText()}

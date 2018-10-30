@@ -47,9 +47,12 @@
   font-size: 2.75em;
   margin: 0em;
   vertical-align: middle;
+  /*color: #9cc700;*/
+}
+
+.nav-clock {
   line-height: 140px;
   width: 130px;
-  /*color: #9cc700;*/
 }
 
 .display {
@@ -157,7 +160,7 @@ input:focus:-ms-input-placeholder { color:transparent; }
   margin: 0.2em;
 }
 
-.badge-dark {
+.badge-info {
   margin: auto;
 }
 
@@ -269,7 +272,7 @@ input:focus:-ms-input-placeholder { color:transparent; }
   bottom: 0;
   left: 0;
   z-index: 1050;
-  overflow: scroll;
+  overflow: auto;
   -webkit-overflow-scrolling: touch;
   outline: 0;
 }

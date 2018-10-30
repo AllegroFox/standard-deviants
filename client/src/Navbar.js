@@ -23,7 +23,7 @@ class NavBar extends Component {
               <Marquee gameState={this.props.gameStateMessage}/>
             </span>
             <span className="navbar-text">
-              <Clock time={this.props.timeLeft}/>
+              <Clock time={this.props.timeLeft} position="nav"/>
             </span>
           </div>
           <ul className="nav justify-content-end">
