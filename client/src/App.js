@@ -7,8 +7,8 @@ import Prompt from './Prompt';
 import GuessBank from './GuessBank';
 import Roster from './Roster';
 import SystemUpdates from './SystemUpdates';
-import RulesModal from './RulesModal';
-import ScoreModal from './ScoreModal';
+import RulesModal from './RulesModalNew';
+import ResultsModal from './ResultsModal';
 import NewPlayerModal from './NewPlayerModal';
 import LeaderBoardModal from './LeaderBoard'
 
@@ -38,9 +38,8 @@ class App extends Component {
                                  scoring: "" },
                    guessBarContent: "",
                    guessBarColor: {"backgroundColor": "white"},
-                   scoreModalOn: false,
+                   resultsModalOn: false,
                    rulesModalOn: false,
-                   NewPlayerModalOn: false,
                    finalResults: {},
                    leaderBoard: [{topScoringSynonyms: [{word:'?',
                                                         handle:'?',
@@ -310,7 +309,7 @@ class App extends Component {
     return (
       <div className="game-window container-fluid">
         <RulesModal prompt={this.state.prompt} gameState={this.state.gameState}/>
-        <ScoreModal finalResults={this.state.finalResults} gameState={this.state.gameState}/>
+        <ResultsModal finalResults={this.state.finalResults} gameState={this.state.gameState}/>
         <NewPlayerModal handleNameChange={this.handleNameChange} gameState={this.state.gameState}/>
         <NavBar gameType={this.state.gameType} gameStateMessage={this.state.gameStateMessage} timeLeft={this.state.timeLeft} handle={this.state.handle} handleNameChange={this.handleNameChange} inputValue={this.state.handleBarContent} gameModule={this.state.prompt.gameModule}/>
         <div className="row">

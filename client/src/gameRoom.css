@@ -24,6 +24,15 @@
   text-decoration: none;
 }
 
+.marquee {
+  font-size: 3em;
+  margin-right: 1em;
+}
+
+.displayedTime {
+  font-size: 3em;
+}
+
 .display {
   padding-top: 2em;
 }

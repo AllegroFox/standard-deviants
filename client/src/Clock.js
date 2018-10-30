@@ -11,8 +11,8 @@ class Clock extends React.Component {
   render () {
     const {time} = this.props;
     return (
-      <div className="displayedTime">
-        <h1>{this.format(time)}</h1>
+      <div>
+        <h1 className="displayedTime" >{this.format(time)}</h1>
       </div>
     )
   }

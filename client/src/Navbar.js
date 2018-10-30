@@ -16,12 +16,14 @@ class NavBar extends Component {
               <i className="fas fa-question-circle"></i>
             </button>
           </div>
-          <ul className="nav justify-content-center">
-            <li className="nav-item">
+          <div className="nav justify-content-center">
+            <span className="navbar-text">
               <Marquee gameState={this.props.gameStateMessage}/>
+            </span>
+            <span className="navbar-text">
               <Clock time={this.props.timeLeft}/>
-            </li>
-          </ul>
+            </span>
+          </div>
           <ul className="nav justify-content-end">
             <li className="nav-item">
               <span className="nav-item">

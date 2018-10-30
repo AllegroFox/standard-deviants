@@ -45,20 +45,20 @@ class LeaderBoardModal extends Component {
                   <div class="card">
                     <div class="card-body">
                       <div class="card-header">
-                        word: {(this.props.leaderBoard[1].topScoringSynonyms[0].word) || "Still populating..."}
-                        player: {(this.props.leaderBoard[1].topScoringSynonyms[0].handle) || "Still populating..."}
-                        worth {(this.props.leaderBoard[1].topScoringSynonyms[0].pointValue) || "unknown"} points
+                        word: {(this.props.leaderBoard[0].topScoringSynonyms[0].word) || "Still populating..."}
+                        player: {(this.props.leaderBoard[0].topScoringSynonyms[0].handle) || "Still populating..."}
+                        worth {(this.props.leaderBoard[0].topScoringSynonyms[0].pointValue) || "unknown"} points
                       </div>
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                          word: {(this.props.leaderBoard[1].topScoringSynonyms[1].word) || "Still populating..."}
-                          player: {(this.props.leaderBoard[1].topScoringSynonyms[1].handle) || "Still populating..."}
-                          worth {(this.props.leaderBoard[1].topScoringSynonyms[1].pointValue) || "unknown"} points
+                          word: {(this.props.leaderBoard[0].topScoringSynonyms[1].word) || "Still populating..."}
+                          player: {(this.props.leaderBoard[0].topScoringSynonyms[1].handle) || "Still populating..."}
+                          worth {(this.props.leaderBoard[0].topScoringSynonyms[1].pointValue) || "unknown"} points
                         </li>
                         <li class="list-group-item">
-                          word: {(this.props.leaderBoard[1].topScoringSynonyms[2].word) || "Still populating..."}
-                          player: {(this.props.leaderBoard[1].topScoringSynonyms[2].handle) || "Still populating..."}
-                          worth {(this.props.leaderBoard[1].topScoringSynonyms[2].pointValue) || "unknown"} points
+                          word: {(this.props.leaderBoard[0].topScoringSynonyms[2].word) || "Still populating..."}
+                          player: {(this.props.leaderBoard[0].topScoringSynonyms[2].handle) || "Still populating..."}
+                          worth {(this.props.leaderBoard[0].topScoringSynonyms[2].pointValue) || "unknown"} points
                         </li>
                       </ul>
                     </div>
@@ -95,20 +95,20 @@ class LeaderBoardModal extends Component {
                   <div class="card">
                     <div class="card-body">
                       <div class="card-header">
-                        word: {(this.props.leaderBoard[1].topScoringSynonyms[0].word) || "Still populating..."}
-                        player: {(this.props.leaderBoard[1].topScoringSynonyms[0].handle) || "Still populating..."}
-                        worth {(this.props.leaderBoard[1].topScoringSynonyms[0].pointValue) || "unknown"} points
+                        word: {(this.props.leaderBoard[0].topScoringSynonyms[0].word) || "Still populating..."}
+                        player: {(this.props.leaderBoard[0].topScoringSynonyms[0].handle) || "Still populating..."}
+                        worth {(this.props.leaderBoard[0].topScoringSynonyms[0].pointValue) || "unknown"} points
                       </div>
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                          word: {(this.props.leaderBoard[1].topScoringSynonyms[1].word) || "Still populating..."}
-                          player: {(this.props.leaderBoard[1].topScoringSynonyms[1].handle) || "Still populating..."}
-                          worth {(this.props.leaderBoard[1].topScoringSynonyms[1].pointValue) || "unknown"} points
+                          word: {(this.props.leaderBoard[0].topScoringSynonyms[1].word) || "Still populating..."}
+                          player: {(this.props.leaderBoard[0].topScoringSynonyms[1].handle) || "Still populating..."}
+                          worth {(this.props.leaderBoard[0].topScoringSynonyms[1].pointValue) || "unknown"} points
                         </li>
                         <li class="list-group-item">
-                          word: {(this.props.leaderBoard[1].topScoringSynonyms[2].word) || "Still populating..."}
-                          player: {(this.props.leaderBoard[1].topScoringSynonyms[2].handle) || "Still populating..."}
-                          worth {(this.props.leaderBoard[1].topScoringSynonyms[2].pointValue) || "unknown"} points
+                          word: {(this.props.leaderBoard[0].topScoringSynonyms[2].word) || "Still populating..."}
+                          player: {(this.props.leaderBoard[0].topScoringSynonyms[2].handle) || "Still populating..."}
+                          worth {(this.props.leaderBoard[0].topScoringSynonyms[2].pointValue) || "unknown"} points
                         </li>
                       </ul>
                     </div>

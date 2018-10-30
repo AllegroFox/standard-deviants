@@ -6,7 +6,7 @@ class Marquee extends Component {
     return (
 
       <span className="nav justify-content-center">
-        <h4>{this.props.gameState}</h4>
+        <h4 className="marquee">{this.props.gameState}</h4>
       </span>
 
     );
