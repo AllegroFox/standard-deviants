@@ -20,7 +20,7 @@ class RulesModal extends Component {
                     <img className="prompt-img" src={require('./icons/' + this.props.prompt.gameModule + '.png')}/>
                   </div>
                   <div className="rules-modal col-md-8">
-                    <h1>{this.props.prompt.promptBanner}</h1>
+                    <h1 className="prompt-banner">{this.props.prompt.promptBanner}</h1>
                     <ModalPrompt className="modal-prompt" prompt={this.props.prompt}/>
                     <ul>
                       <li>Rules: {this.props.prompt.rules}</li>

@@ -13,8 +13,8 @@ class Round {
     this.marqueeForGetGuessing = "Guess the synonyms!";
     this.marqueeForGetResults = "Everyone's results...";
     this.inputBarMessage = "Guess a synonym!";
-    this.guessingPeriod = 75;  // Standard game length
-    // this.guessingPeriod = 15;  // Testing game length
+    // this.guessingPeriod = 75;  // Standard game length
+    this.guessingPeriod = 15;  // Testing game length
     this.resultsPeriod = 15;
     this.objective = [];
     this.rules = {

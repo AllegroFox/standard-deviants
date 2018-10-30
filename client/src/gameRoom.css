@@ -255,6 +255,8 @@ input:focus:-ms-input-placeholder { color:transparent; }
   background-color: #708090;
 }
 
-
+.prompt-banner {
+  margin-left: 0.4em;
+}
 
 

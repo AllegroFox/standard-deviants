@@ -409,8 +409,6 @@ class Room {
     }, topScoringSynonyms);
     topScoringSynonyms.sort(this.sortByPointValue);
     const topScoringSynonymsToday = topScoringSynonyms.filter(each => this.checkDate(each) === true);
-    console.log("This is topScoringSynonymsToday:")
-    console.log(topScoringSynonymsToday)
 
     const topScoringRhymes = [];
     storedLeaderboard.reduce((acc, next) => {
@@ -421,8 +419,6 @@ class Room {
     }, topScoringRhymes);
     topScoringRhymes.sort(this.sortByPointValue);
     const topScoringRhymesToday = topScoringRhymes.filter(each => this.checkDate(each) === true);
-    console.log("This is topScoringRhymesToday:")
-    console.log(topScoringRhymesToday)
 
     const topPlayerSynonyms = [];
     storedStatistics.reduce((acc, next) => {
@@ -433,8 +429,6 @@ class Room {
     }, topPlayerSynonyms);
     topPlayerSynonyms.sort(this.sortByScore);
     const topPlayerSynonymsToday = topPlayerSynonyms.filter(each => this.checkDate(each) === true);
-    console.log("This is topPlayerSynonymsToday:")
-    console.log(topPlayerSynonymsToday)
 
     const topPlayerRhymes = [];
     storedStatistics.reduce((acc, next) => {
@@ -445,8 +439,6 @@ class Room {
     }, topPlayerRhymes);
     topPlayerRhymes.sort(this.sortByScore);
     const topPlayerRhymesToday = topPlayerRhymes.filter(each => this.checkDate(each) === true);
-    console.log("This is topPlayerRhymesToday:")
-    console.log(topPlayerRhymesToday)
 
     const leaderboardAllTime = {
       topScoringSynonyms: topScoringSynonyms,
