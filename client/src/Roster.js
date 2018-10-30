@@ -18,7 +18,12 @@ class Roster extends Component {
     return (
 
       <main className="players">
-        <h4>~ Scoreboard ~</h4>
+        <h4>
+          ~ Scoreboard ~
+          <button type="button" className="stats-btn btn btn-primary" data-toggle="modal" data-target="#stats">
+            Statistics!
+          </button>
+        </h4>
         <ul className="list-group" id="roster">
           <FlipMove
             enterAnimation='fade'

@@ -12,8 +12,8 @@ class Round {
     this.marqueeForGetGuessing = "Guess the rhymes!"
     this.marqueeForGetResults = "Here's the room's best efforts...";
     this.inputBarMessage = "Guess a rhyme!";
-    this.guessingPeriod = 60;
-    // this.guessingPeriod = 15;
+    // this.guessingPeriod = 60;
+    this.guessingPeriod = 15;
     this.resultsPeriod = 7;
     this.objective = [];
     this.rules = {
