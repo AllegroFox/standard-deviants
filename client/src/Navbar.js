@@ -29,7 +29,7 @@ class NavBar extends Component {
           <ul className="nav justify-content-end">
             <li className="nav-item">
               <span className="nav-item">
-                <img src={'https://api.adorable.io/avatars/60/' + this.props.handle + '.io.png'} className="profile-img" alt=""/>
+                <img src={'https://api.adorable.io/avatars/200/' + this.props.handle + '.io.png'} className="profile-img" alt=""/>
                 <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#newUsernameForm">
                   {this.props.handle}
                 </button>

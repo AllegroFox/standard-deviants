@@ -12,9 +12,9 @@ class Round {
     this.marqueeForGetGuessing = "Guess the rhymes!"
     this.marqueeForGetResults = "Everyone's results...";
     this.inputBarMessage = "Guess a rhyme!";
-    // this.guessingPeriod = 60;  // Standard game length
-    this.guessingPeriod = 15;  // Testing game length
-    this.resultsPeriod = 7;
+    this.guessingPeriod = 60;  // Standard game length
+    // this.guessingPeriod = 15;  // Testing game length
+    this.resultsPeriod = 10;
     this.objective = [];
     this.rules = {
       rules: "Find rhymes for either of the above words.",
@@ -64,7 +64,7 @@ class Round {
   }
 
   async generateAnswerPool() {
-    const poolObject = await buildPool(200);
+    const poolObject = await buildPool(100);
     poolObject.bank.forEach((answer) => {
       const pointValue = (answer.numSyllables * answer.numSyllables * answer.numSyllables) + 1;
       const newAnswer = new Answer (answer.answer, answer.seed, pointValue);
