@@ -11,12 +11,14 @@ class NavBar extends Component {
       <div>
         <nav className="navbar">
           <div className="d-flex justify-content-start">
-          <img src={require('./icons/' + this.props.gameModule + '.png')} className="game-icon" alt="Vein Seeker"/>
-            <button type="button" className="btn btn-secondary" data-toggle="modal" data-target="#RulesReminder">
-              <i className="fas fa-question-circle"></i>
-            </button>
+            <ul className="navbar-title">
+              <li>The Platform</li>
+              <li>for Hosting</li>
+              <li>Infinite Generativity</li>
+            </ul>
           </div>
           <div className="nav justify-content-center">
+            <img src={require('./icons/' + this.props.gameModule + '.png')} className="game-icon" alt="Vein Seeker"/>
             <span className="navbar-text">
               <Marquee gameState={this.props.gameStateMessage}/>
             </span>

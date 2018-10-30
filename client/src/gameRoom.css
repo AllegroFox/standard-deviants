@@ -24,13 +24,32 @@
   text-decoration: none;
 }
 
+.navbar-title {
+  list-style-type: none;
+  font-size: 1.5em;
+  padding: 0;
+  margin: 0;
+  font-family: 'Gloria Hallelujah', cursive;
+  color: #9cc700;
+}
+
 .marquee {
-  font-size: 3em;
-  margin-right: 1em;
+  font-size: 2.75em;
+  margin-right: 0.4em;
+  margin-left: 0.4em;
+  margin-top: 0em;
+  margin-bottom: 0em;
+  line-height: 140px;
+  vertical-align: middle;
 }
 
 .displayedTime {
-  font-size: 3em;
+  font-size: 2.75em;
+  margin: 0em;
+  vertical-align: middle;
+  line-height: 140px;
+  width: 130px;
+  /*color: #9cc700;*/
 }
 
 .display {
@@ -197,19 +216,23 @@ input:focus:-ms-input-placeholder { color:transparent; }
 
 .game-icon {
 
-  width: 100px;
-  height: 100px;
+  width: 85px;
+  height: 85px;
   margin: 0px;
-  line-height: 3em;
+  line-height: 140px;
   display: block;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
   border: 0.15em solid black;
+  vertical-align: midde;
+  margin-top: 35px;
+
 }
 
 .prompt-container {
-  margin-left: 14%;
+  margin-left: 15%;
+  /*justify-content: center;*/
 }
 
 .prompt-img {

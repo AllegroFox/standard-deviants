@@ -8,9 +8,13 @@ class Prompt extends Component {
       ));
     return (
       <div>
+
         <div className="prompt-container d-inline-flex">
           {targetWords}
         </div>
+        <button type="button" className="btn btn-secondary" data-toggle="modal" data-target="#RulesReminder">
+          <i className="fas fa-question-circle"></i>
+        </button>
         <div className="modal fade" id="RulesReminder" tabindex="-1" role="dialog" aria-labelledby="RulesReminder" aria-hidden="true" focus="true">
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
