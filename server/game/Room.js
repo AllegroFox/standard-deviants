@@ -72,7 +72,7 @@ class Room {
     this.zeroScoreboard();
     this.zeroGuesses();
     this.countDownFrom(this.round.resultsPeriod, this.startGetReady);
-    // await this.updateLeaderboard();
+    await this.updateLeaderboard();
 
     // const myObject = {
     //   createdAt: new Date()
@@ -332,7 +332,7 @@ class Room {
     // ... send everyone else an alert with the new player's credentials.
     this.messager.broadcastMessage(this.messager.parcelMessage({message: `A new player has joined!`}, newPlayer.clientId, "incomingNewPlayer"), true);
     this.broadcastScoreboard();
-    // await this.updateLeaderboard();
+    await this.updateLeaderboard();
   }
 
   // When a player closes their connection, remove their player object from the collection, then update the scoreboard.

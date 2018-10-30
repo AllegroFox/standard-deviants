@@ -7,10 +7,10 @@ import Prompt from './Prompt';
 import GuessBank from './GuessBank';
 import Roster from './Roster';
 import SystemUpdates from './SystemUpdates';
-// import RulesModal from './RulesModalNew';
-import RulesModal from './RulesModal';
-// import ResultsModal from './ResultsModal';
-import ResultsModal from './ScoreModal';
+import RulesModal from './RulesModalNew';
+// import RulesModal from './RulesModal';
+import ResultsModal from './ResultsModal';
+// import ResultsModal from './ScoreModal';
 import NewPlayerModal from './NewPlayerModal';
 import LeaderBoardModal from './LeaderBoard'
 
@@ -44,7 +44,7 @@ class App extends Component {
                    resultsModalOn: false,
                    rulesModalOn: false,
                    finalResults: {},
-                   leaderBoard: [{topScoringSynonyms: [{word:'?',
+                   leaderBoard: [{topScoringSynonyms: [null, {word:'?',
                                                         handle:'?',
                                                         pointValue: '?',
                                                         gameModule:'?',
@@ -56,7 +56,7 @@ class App extends Component {
                                                         createdAt:'?'},
                                                         {word:'?',
                                                         handle:'?',
-                                                        pointValue: '?',
+                                                        pointValue: false,
                                                         gameModule:'?',
                                                         createdAt:'?'}],
                                   topScoringRhymes: [{word:'?',
@@ -329,9 +329,6 @@ class App extends Component {
           </div>
           <div className="col-md-4">
             <Roster players={this.state.scoreBoard} me={this.state.clientId}/>
-            <button type="button" className="stats-btn btn btn-primary" data-toggle="modal" data-target="#stats">
-              Statistics!
-            </button>
             <LeaderBoardModal leaderBoard={this.state.leaderBoard}/>
           </div>
           <footer className="fixed-bottom">

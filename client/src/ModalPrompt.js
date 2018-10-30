@@ -8,7 +8,7 @@ class ModalPrompt extends Component {
       ));
     return (
       <div>
-        <div className="prompt-container d-inline-flex">
+        <div className="d-inline-flex">
           {targetWords}
         </div>
       </div>
