@@ -193,7 +193,8 @@ class Room {
   broadcastScoreboard() {
     let content = this.players.map((player) => { return {
         name: player.handle,
-        score: player.score
+        score: player.score,
+        clientId: player.clientId
       }
     }).sort(function (a, b) {
       return b.score - a.score;

@@ -325,7 +325,7 @@ class App extends Component {
               />
           </div>
           <div className="col-md-4">
-            <Roster players={this.state.scoreBoard} me={this.state.handle}/>
+            <Roster players={this.state.scoreBoard} me={this.state.clientId}/>
             <button type="button" className="stats-btn btn btn-primary" data-toggle="modal" data-target="#stats">
               Statistics!
             </button>

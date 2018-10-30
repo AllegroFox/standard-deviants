@@ -9,7 +9,7 @@ class Roster extends Component {
 
     const playerItems = this.props.players.map(player => {
 
-        if (player.name !== this.props.me || player.name === 'default') {
+        if (player.clientId !== this.props.me) {
           return <FlipMove enterAnimation='fade' leaveAnimation='fade'>
           <UserInRoom key={player.name} player={player.name} score={player.score}/>
           </FlipMove>;
