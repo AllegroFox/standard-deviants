@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
 import UserInRoom from './UserInRoom';
+import UserInRoomActive from './UserInRoomActive';
 import FlipMove from 'react-flip-move';
 
 class Roster extends Component {
 
   render() {
-    const playerItems = this.props.players.map(player => (
-      <FlipMove
-        enterAnimation='fade'
-        leaveAnimation='fade'
-      >
-        <UserInRoom key={player.name} player={player.name} score={player.score}/>
-      </FlipMove>
-      ));
+
+    const playerItems = this.props.players.map(player => {
+
+        if (player.name !== this.props.me || player.name === 'default') {
+          return <FlipMove enterAnimation='fade' leaveAnimation='fade'>
+          <UserInRoom key={player.name} player={player.name} score={player.score}/>
+          </FlipMove>;
+        } else {
+          return <FlipMove enterAnimation='fade' leaveAnimation='fade'>
+          <UserInRoomActive key={player.name} player={player.name} score={player.score}/>
+        </FlipMove>;
+      }
+      });
     return (
 
       <main className="players">
