@@ -3,7 +3,26 @@ import AnswerBank from './AnswerBank';
 
 class ResultsModal extends Component {
 
+
   render() {
+
+    console.log("The Fated Object:");
+    console.log(this.props.finalResults.finalScoreboard);
+
+    // Checks to see if anyone scored this round, and prints an appropriate banner.
+    const displayWinnerText = () => {
+      if (this.props.finalResults.finalScoreboard[0].score) {
+      return ( <div className="row">
+                  <h1 className="prompt-banner">{this.props.finalResults.finalScoreboard[0].handle} won the round with {this.props.finalResults.finalScoreboard[0].score} points!</h1>
+                </div> )
+    } else {
+      return (
+        <div className="row">
+                  <h1 className="prompt-banner">No one scored this round.  Too difficult...?</h1>
+                </div>
+        );
+      }
+    }
 
     if (this.props.gameState === "getResults" && Object.keys(this.props.finalResults).length > 0 && this.props.finalResults.finalScoreboard[0]) {
 
@@ -16,9 +35,7 @@ class ResultsModal extends Component {
                 <h5 className="modal-title">It's Over!</h5>
               </div>
               <div className="modal-body">
-                <div className="row">
-                  <h1>{this.props.finalResults.finalScoreboard[0].handle} won the round with {this.props.finalResults.finalScoreboard[0].score} points!</h1>
-                </div>
+                {displayWinnerText()}
                 <div className="row">
                   <div className="col-sm-6">
                     <div className="card" style={{color: 'white'}} >
