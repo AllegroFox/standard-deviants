@@ -13,17 +13,23 @@ class LeaderBoardCard extends Component {
     }
 
     return (
-                  <div className="card">
+                  <div className="card leaderboard-card">
                     <div className="card-body">
-                      <ul>
+                      <ul className="list-unstyled">
                         <li>
-                          {conditionalContent(this.props.leaderBoard[0])}
+                          <span className="badge badge-dark first-place">
+                            {conditionalContent(this.props.leaderBoard[0])}
+                          </span>
                         </li>
                         <li>
-                          {conditionalContent(this.props.leaderBoard[1])}
+                          <span className="badge badge-dark second-place">
+                            {conditionalContent(this.props.leaderBoard[1])}
+                          </span>
                         </li>
                         <li>
-                          {conditionalContent(this.props.leaderBoard[2])}
+                          <span className="badge badge-dark third-place">
+                            {conditionalContent(this.props.leaderBoard[2])}
+                          </span>
                         </li>
                       </ul>
                     </div>

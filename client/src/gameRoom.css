@@ -138,6 +138,30 @@ input:focus:-ms-input-placeholder { color:transparent; }
   margin: 0.2em;
 }
 
+.badge-dark {
+  margin: auto;
+}
+
+.leaderboard {
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.leaderboard-card {
+  background-color: #333;
+  border: none;
+}
+
+.first-place {
+  background-color: GoldenRod;
+}
+.second-place {
+  background-color: LightSlateGrey;
+}
+.third-place {
+  background-color: Peru;
+}
+
 .sysMessages {
 
   position: fixed;
