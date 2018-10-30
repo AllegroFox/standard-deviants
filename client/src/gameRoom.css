@@ -208,7 +208,8 @@ input:focus:-ms-input-placeholder { color:transparent; }
 }
 
 .prompt-container {
-  margin-left: 14%;
+  margin-left: 15%;
+  /*justify-content: center;*/
 }
 
 .prompt-img {

@@ -12,8 +12,8 @@ class NavBar extends Component {
         <nav className="navbar">
           <div className="d-flex justify-content-start">
             <ul className="navbar-title">
-              <li>Platform for</li>
-              <li>Hosting</li>
+              <li>The Platform</li>
+              <li>for Hosting</li>
               <li>Infinite Generativity</li>
             </ul>
           </div>
