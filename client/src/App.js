@@ -35,7 +35,8 @@ class App extends Component {
                                               hint: "hint" }, {word: "word", hint: "hint"}],
                                  rules: "Some rules",
                                  gameModule: "Rhyme Shotgun",
-                                 scoring: "" },
+                                 scoring: "",
+                                 inputBar: "" },
                    guessBarContent: "",
                    guessBarColor: {"backgroundColor": "white"},
                    resultsModalOn: false,
@@ -321,6 +322,7 @@ class App extends Component {
               backgroundColor={this.state.guessBarColor}
               handleChange={this.handleChange}
               handleSubmit={this.handleSubmit}
+              placeholder={this.state.prompt.inputBar}
               />
           </div>
           <div className="col-md-4">

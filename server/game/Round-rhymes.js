@@ -11,7 +11,8 @@ class Round {
     this.gameModule = "Rhyme Shotgun"
     this.marqueeForGetGuessing = "Guess the rhymes!"
     this.marqueeForGetResults = "Here's the room's best efforts...";
-    this.guessingPeriod = 45;
+    this.inputBarMessage = "Guess a rhyme!";
+    this.guessingPeriod = 60;
     // this.guessingPeriod = 15;
     this.resultsPeriod = 7;
     this.objective = [];
