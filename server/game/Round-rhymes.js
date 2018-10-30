@@ -10,15 +10,16 @@ class Round {
     this.answerBank = [{id: "victory", status: "unguessed", pointValue: 0}, {id: "spoon", status: "unguessed", pointValue: 0}];
     this.gameModule = "Rhyme Shotgun"
     this.marqueeForGetGuessing = "Guess the rhymes!"
-    this.marqueeForGetResults = "Here's the room's best efforts...";
+    this.marqueeForGetResults = "Everyone's results...";
     this.inputBarMessage = "Guess a rhyme!";
-    // this.guessingPeriod = 60;
-    this.guessingPeriod = 15;
+    this.guessingPeriod = 60;  // Standard game length
+    // this.guessingPeriod = 15;  // Testing game length
     this.resultsPeriod = 7;
     this.objective = [];
     this.rules = {
       rules: "Find rhymes for either of the above words.",
-      scoring: "Score massive bonuses for rhymes with more syllables."
+      scoring: "Score massive bonuses for rhymes with more syllables.",
+      promptBanner: "RHYMES ROUND!"
     };
     this.resultsHelperLabel = "rhymes";
   }

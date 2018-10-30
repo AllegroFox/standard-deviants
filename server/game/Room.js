@@ -177,7 +177,8 @@ class Room {
       objective: this.round.objective,
       rules: this.round.rules.rules,
       scoring: this.round.rules.scoring,
-      inputBar: this.round.inputBarMessage
+      inputBar: this.round.inputBarMessage,
+      promptBanner: this.round.rules.promptBanner
     }
 
     target ?
