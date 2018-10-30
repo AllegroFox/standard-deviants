@@ -10,13 +10,9 @@ class Roster extends Component {
     const playerItems = this.props.players.map(player => {
 
         if (player.clientId !== this.props.me) {
-          return <FlipMove enterAnimation='fade' leaveAnimation='fade'>
-          <UserInRoom key={player.name} player={player.name} score={player.score}/>
-          </FlipMove>;
+          return <UserInRoom key={player.clientId} player={player.name} score={player.score}/>
         } else {
-          return <FlipMove enterAnimation='fade' leaveAnimation='fade'>
-          <UserInRoomActive key={player.name} player={player.name} score={player.score}/>
-        </FlipMove>;
+          return <UserInRoomActive key={player.clientId} player={player.name} score={player.score}/>
       }
       });
     return (
@@ -24,7 +20,17 @@ class Roster extends Component {
       <main className="players">
         <h4>~ Scoreboard ~</h4>
         <ul className="list-group" id="roster">
-          {playerItems}
+          <FlipMove
+            enterAnimation='fade'
+            leaveAnimation='fade'
+            duration='400'
+            delay='0'
+            easing='ease'
+            staggerDurationBy='15'
+            staggerDelayBy='20'
+          >
+            {playerItems}
+          </FlipMove>
         </ul>
       </main>
 
