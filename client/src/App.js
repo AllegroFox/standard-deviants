@@ -7,10 +7,8 @@ import Prompt from './Prompt';
 import GuessBank from './GuessBank';
 import Roster from './Roster';
 import SystemUpdates from './SystemUpdates';
-import RulesModal from './RulesModalNew';
-// import RulesModal from './RulesModal';
+import RulesModal from './RulesModal';
 import ResultsModal from './ResultsModal';
-// import ResultsModal from './ScoreModal';
 import NewPlayerModal from './NewPlayerModal';
 import LeaderBoardModal from './LeaderBoard'
 
