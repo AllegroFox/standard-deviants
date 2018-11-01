@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import AnswerBank from './AnswerBank';
 import ModalClock from './ModalClock';
 
+// Import modules for the Tim Johns Confetti Period
+import Confetti from 'react-confetti';
+
+
 class ResultsModal extends Component {
 
 
@@ -30,6 +34,15 @@ class ResultsModal extends Component {
       return (
 
         <div class="fade show modal-custom" tabindex="-1" role="dialog" data-show="true" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+
+          <Confetti
+            width="1500%"
+            height="900%"
+            numberOfPieces={this.props.confettiQuantity}
+            recycle={false}
+          />
+
+
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div className="modal-header">

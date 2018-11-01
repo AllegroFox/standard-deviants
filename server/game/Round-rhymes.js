@@ -64,7 +64,7 @@ class Round {
   }
 
   async generateAnswerPool() {
-    const poolObject = await buildPool(100);
+    const poolObject = await buildPool(50);
     poolObject.bank.forEach((answer) => {
       const pointValue = (answer.numSyllables * answer.numSyllables * answer.numSyllables) + 1;
       const newAnswer = new Answer (answer.answer, answer.seed, pointValue);
