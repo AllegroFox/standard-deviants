@@ -31,9 +31,20 @@ class Room {
   // #############################
 
   async startGetReady() {
-    // const gameModeForRound = this.gameModes.sample;
-    // console.log(`Today's game mode: ${JSON.parse(gameModeForRound)}`);
-    this.round = new this.gameModes[Math.floor(Math.random() * this.gameModes.length)](this.messager);
+    // Normal, random mode:
+    // this.round = new this.gameModes[Math.floor(Math.random() * this.gameModes.length)](this.messager);
+
+    // Rhyme-mode only, for n3wbz:
+    this.round = new RoundRhymes(this.messager);
+
+    // Synonym-mode only, for l33tz:
+    // this.round = new RoundSynonyms(this.messager);
+
+    // Alternating modes:
+    // this.round = (this.roundNumber % 2) ? new RoundRhymes(this.messager) : new RoundSynonyms(this.messager);
+
+
+
     this.roundNumber++;
     await this.round.generateAnswerPool();
     this.zeroScoreboard();

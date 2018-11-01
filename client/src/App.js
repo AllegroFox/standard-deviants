@@ -7,10 +7,8 @@ import Prompt from './Prompt';
 import GuessBank from './GuessBank';
 import Roster from './Roster';
 import SystemUpdates from './SystemUpdates';
-import RulesModal from './RulesModalNew';
-// import RulesModal from './RulesModal';
+import RulesModal from './RulesModal';
 import ResultsModal from './ResultsModal';
-// import ResultsModal from './ScoreModal';
 import NewPlayerModal from './NewPlayerModal';
 import LeaderBoardModal from './LeaderBoard'
 
@@ -43,6 +41,7 @@ class App extends Component {
                    resultsModalOn: false,
                    rulesModalOn: false,
                    finalResults: {},
+                   confettiQuantity: 0,
                    leaderBoard: [{topScoringSynonyms: [null, {word:'?',
                                                         handle:'?',
                                                         pointValue: '?',
@@ -122,6 +121,7 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.sumFinalResultsScore = this.sumFinalResultsScore.bind(this);
     this.socket = null;
   }
 
@@ -150,7 +150,7 @@ class App extends Component {
             let finalResults = message.content
             console.log(finalResults);
 
-            this.setState({finalResults: finalResults})
+            this.setState({finalResults: finalResults, confettiQuantity: this.sumFinalResultsScore(finalResults)})
             break;
 
           case "incomingLogin":
@@ -297,6 +297,15 @@ class App extends Component {
     }
   }
 
+  //  Calculates the total score of the round and sets the confetti amount accordingly.
+  sumFinalResultsScore(finalResults) {
+    let confettiQuantity = 0;
+    finalResults.finalScoreboard.forEach((result) => {
+      confettiQuantity += result.score;
+    });
+    return Math.floor(confettiQuantity / 2);
+  }
+
   // Formats a message package with type and id, and then sends it on to the server.
   sendMessage (messageObject, messageType) {
     const message = {
@@ -308,10 +317,17 @@ class App extends Component {
   }
 
   render() {
+
+    // Tim Johns Confetti Period Logic
+          // <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+            // <Confetti {...this.props.size} />
+          // </div>
+
+
     return (
       <div className="game-window container-fluid">
         <RulesModal prompt={this.state.prompt} gameState={this.state.gameState} timeLeft={this.state.timeLeft}/>
-        <ResultsModal finalResults={this.state.finalResults} gameState={this.state.gameState} timeLeft={this.state.timeLeft}/>
+        <ResultsModal finalResults={this.state.finalResults} gameState={this.state.gameState} timeLeft={this.state.timeLeft} confettiQuantity={this.state.confettiQuantity}/>
         <NewPlayerModal handleNameChange={this.handleNameChange} gameState={this.state.gameState}/>
         <NavBar gameType={this.state.gameType} gameStateMessage={this.state.gameStateMessage} timeLeft={this.state.timeLeft} handle={this.state.handle} handleNameChange={this.handleNameChange} inputValue={this.state.handleBarContent} gameModule={this.state.prompt.gameModule}/>
         <div className="row">

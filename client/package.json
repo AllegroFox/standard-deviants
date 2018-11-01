@@ -5,6 +5,7 @@
   "dependencies": {
     "popper.js": "^1.14.4",
     "react": "^16.5.2",
+    "react-confetti": "^2.3.0",
     "react-dom": "^16.5.2",
     "react-flip-move": "^3.0.3",
     "react-scripts": "2.0.5",
