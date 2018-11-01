@@ -11,8 +11,9 @@ class NavBar extends Component {
       <div>
         <nav className="navbar">
           <div className="d-flex justify-content-start">
+            <img src={require("./icons/infinifig-512.png")} style={{height:"100px", width:"100px", marginRight:"0.8em"}} />
             <ul className="navbar-title">
-              <li>The Platform</li>
+              <li>A Platform</li>
               <li>for Hosting</li>
               <li>Infinite Generativity</li>
             </ul>
