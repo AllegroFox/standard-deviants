@@ -1,0 +1,43 @@
+﻿Git Policies:
+One master branch
+
+
+Each collaborator has their development/[name], which should function as THEIR personal master branch.  The goal is for that branch to have a working version of the project at all times.
+
+
+From the development/[name] branch, each collaborator can instantiate sub-feature branches, like: development/Alfred/feature/explosions
+
+
+Brench conventions:
+feature/
+bug/
+
+
+Stack:
+
+
+
+
+Frontend: React, JavaScript, Bootstrap?
+Middleware: Reeeeedux (Helps with state management, may be overkill)?!  Express?
+
+
+WebSockets
+Database: Firebase (alternatively, Postgres) Mongo?
+
+
+Authentication: Passport
+
+
+CORS: Cross-Origin Resource Sharing
+
+
+Chats don’t need to persist
+
+
+Database contents:
+Users
+
+
+InfGen?
+Something about graphemes...Graphēma, Lexēma
