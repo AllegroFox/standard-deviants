@@ -1,5 +1,6 @@
+(We'll be updating this space with a much more useful README in the following day or so.  Please check back soon if we've scared you off.)
+
 # Platform for Hosting Infinite Generativity
-=====================
 
 Final Project for Lighthouse Labs Web Development Bootcamp, Toronto 2018-08-22 Cohort
 
