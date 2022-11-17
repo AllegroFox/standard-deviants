@@ -8,7 +8,7 @@
     "react-confetti": "^2.3.0",
     "react-dom": "^16.5.2",
     "react-flip-move": "^3.0.3",
-    "react-scripts": "2.0.5",
+    "react-scripts": "2.1.8",
     "tinysort": "^2.3.6"
   },
   "scripts": {
