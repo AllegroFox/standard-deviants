@@ -100,6 +100,14 @@ class Room {
 
   // Returns an array of all guesses by the winner of the round with point value and player handle and score attached.
   findGuessesByWinner() {
+    if (this.players.length == 0) {
+      return {
+        handle: undefined,
+        score: 0,
+        guesses: [ ]
+      };
+    }
+
     let roundEndResults = this.roundEndResults();
     let guessesByWinner = [];
     let winnerProfile = roundEndResults.finalScoreboard[0]
