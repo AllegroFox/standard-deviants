@@ -1,3 +1,5 @@
+import hostingConfig from './config/hosting-config.json';
+
 import React, { Component } from 'react';
 import './App.css';
 import './gameRoom.css';
@@ -125,11 +127,20 @@ class App extends Component {
     this.socket = null;
   }
 
+  getSocketAddressFromConfig() {
+    if (hostingConfig.remote_address) {
+      console.log(`REMOTE HOSTING CONFIGURATION FOUND.  Attempting to host at ws://${hostingConfig.remote_address}`)
+      return `ws://${hostingConfig.remote_address}`
+    } else {
+      console.log(`REMOTE HOSTING CONFIGURATION NOT FOUND.  Hosting locally at ${"ws://" + document.location.hostname + ":3001"}`)
+      return "ws://" + document.location.hostname + ":3001";
+    }
+  }
+
   componentDidMount() {
 
     // Connection is attempted.
-    // this.socket = new WebSocket("ws://localhost:3001");
-    this.socket = new WebSocket("ws://"+document.location.hostname+":3001");
+    this.socket = new WebSocket(this.getSocketAddressFromConfig());
 
     // Successful connection is reported to the client.
     this.socket.onopen = function (event) {
