@@ -6,7 +6,7 @@ class UserInRoom extends Component {
     return (
 
       <li className="list-group-item" id="active-player">
-        <img src={'https://api.adorable.io/avatars/60/' + this.props.player + '.io.png'} className="tiny-profile-img" alt=""/>
+        <img src={'https://api.dicebear.com/5.x/thumbs/svg?size=60&seed=' + this.props.player} className="tiny-profile-img" alt=""/>
         {this.props.player}
         <span className="badge badge-primary badge-pill">{this.props.score}</span>
       </li>

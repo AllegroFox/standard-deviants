@@ -170,7 +170,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
     type: "postLogin",
     clientId: uuidv4(),
     handle: "default",
-    avatar: "https://api.adorable.io/avatars/285/Bob.png"
+    avatar: "https://api.dicebear.com/5.x/thumbs/svg?size=285&seed="
 
   }
 
