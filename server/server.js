@@ -11,7 +11,7 @@ const Messager = require('./message-functions.js');
 
 
 const {MongoClient} = require("mongodb");
-const MONGODB_URI = "mongodb://localhost:27017/standardDeviants";
+const MONGODB_URI = "mongodb://127.0.0.1:27017/phig";
 const Database = require('./database-functions.js');
 
 // ######################
