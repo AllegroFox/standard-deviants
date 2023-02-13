@@ -10,9 +10,9 @@ Array.prototype.sample = function () {
     return this[Math.floor(Math.random() * this.length)]
 }
 
-// Gets an rhyming answer pool for the seed and returns a bank of answer-building objects, each stamped with a seed step number.
+// Gets a rhyming answer pool for the seed and returns a bank of answer-building objects, each stamped with a seed step number.
 async function getAnswerPool (seed, step) {
-  const bank = datamuse.request(`/words?rel_rhy=${seed}&max=1000`)
+  const bank = datamuse.request(`words?rel_rhy=${seed}&max=1000`)
     .then((results) => {
       const filteredPool = results.reduce((acc, next) => {
         if (!next.word.includes(" ")) {
@@ -33,7 +33,7 @@ async function getAnswerPool (seed, step) {
 };
 
 function getPronunciation (word) {
-  const pronunciation = datamuse.request(`/words?sp=${word}&qe=sp&md=r&ipa=1&max=1`)
+  const pronunciation = datamuse.request(`words?sp=${word}&qe=sp&md=r&ipa=1&max=1`)
     .then((results) => {
       // return results.tags;
       return `Pronounced: ${results[0].tags[2].slice(9)}`;
