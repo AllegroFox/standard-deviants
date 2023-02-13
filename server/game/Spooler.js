@@ -20,10 +20,9 @@ class Spooler {
       bufferRound.generateAnswerpool();
       this.spool = this.spool.concat(newRound)
     }
-      console.log("Spooler: The buffer's full.  Waiting for the next call.")
-    }
-  }
 
+    console.log("Spooler: The buffer's full.  Waiting for the next call.")
+  }
 }
 
 module.exports = Spooler;
