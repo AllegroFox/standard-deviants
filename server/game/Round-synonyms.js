@@ -13,17 +13,16 @@ class Round {
     this.marqueeForGetGuessing = "Guess the synonyms!";
     this.marqueeForGetResults = "Everyone's results...";
     this.inputBarMessage = "Guess a synonym!";
-    this.guessingPeriod = 75;  // Standard game length
+    this.guessingPeriod = 30;  // Standard game length
     // this.guessingPeriod = 15;  // Testing game length
     this.resultsPeriod = 15;
     this.objective = [];
     this.rules = {
-      rules: "Guess synonyms for either of the above words.  (Pay close attention to the definitions and parts of speech!)",
+      rules: "Guess synonyms for either of the above words.  (Don't forget homonyms and alternative parts of speech!)",
       scoring: "Longer words with unusual letters score more points.",
       promptBanner: "SYNONYMS ROUND!"
     };
     this.resultsHelperLabel = "synonyms";
-
   }
 
   checkGuess(guessObject) {

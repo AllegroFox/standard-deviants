@@ -1,3 +1,6 @@
+// This approach has been shown to be obsolete as of 2023-01.  The scraping
+// code is left here for nostalgic porpoises; we're using Datamuse now.
+
 const request = require('sync-request');
 const cheerio = require('cheerio');
 

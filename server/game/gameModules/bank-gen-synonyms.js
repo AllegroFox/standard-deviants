@@ -1,46 +1,46 @@
-// const datamuse = require('datamuse');
-const thesaurus = require('./thesaurus-scraper');
+const datamuse = require('datamuse');
+// const thesaurus = require('./thesaurus-scraper');  // Obsolete, alas.
 const randomWords = require('random-words');
+
+
 // ############ Here begins the code ###############
 
-// let target = process.argv[2];
+const thesaurusSearch = async function(seed) {
+  const rawSynonyms = await datamuse.request(
+    `words?rel_syn=${seed}&max=200`
+  );
 
-// Adds random sampling functionality to all arrays
-Array.prototype.sample = function () {
-    return this[Math.floor(Math.random() * this.length)]
+  return rawSynonyms.map((hit) => {
+    return hit['word'];
+  }).filter((word) => {
+    return !(word.includes(' ')) && !(word.includes('-')) && !(word.match(/\d/))
+  });
 }
 
-const buildPool = function (minimumPoolLength) {
-  let seed = randomWords(1)[0];
-  const lookup = thesaurus.search(seed);
-  let bank = [];
-  // let validationCriteria = element => !element.includes(" ") && !element.includes("-")
+const buildPool = async function(minimumPoolLength) {
+  const seeds = randomWords(2);
 
-  if (lookup.antonyms.length < 1) {
-    console.log(`Failed to find an antonym with the seed, ${seed}.  Trying again...`)
-    return buildPool(minimumPoolLength);
-  } else {
-    bank = bank.concat(lookup.synonyms).map((word) => { return {answer: word, seed: 0}; });
-    const antonym = lookup.antonyms.sample();
-    const antonymLookup = thesaurus.search(antonym);
+  const banks = await Promise.all(
+    seeds.map(async (seed, index) => {
+      const synonyms = await thesaurusSearch(seed)
 
-    const antonymPool = antonymLookup.synonyms.map((word) => { return {answer: word, seed: 1}; }    );
-    bank = bank.concat(antonymPool);
+      return synonyms.map((word) => {
+        return { answer: word, seed: index }
+      })
+    })
+  );
 
-    if (bank.length >= minimumPoolLength) {
-      return {targets: [
-        {word: seed, definition: lookup.definition},
-        {word: antonym, definition: antonymLookup.definition}
-        ], bank: bank}
-    } else {
-      console.log(`Failed to find bank with the minimum pool of ${minimumPoolLength} for ${seed} and ${antonym}.  Trying again...`)
-      return buildPool(minimumPoolLength);
-    }
+  const bank = banks.flat();
+
+  if (bank.length < minimumPoolLength) { return buildPool(minimumPoolLength); }
+
+  return {
+    targets: [
+      { word: seeds[0], definition: `(${banks[0].length} Answers)` },
+      { word: seeds[1], definition: `(${banks[1].length} Answers)` },
+    ],
+    bank: bank
   }
 }
-
-
-
-// console.log(buildPool(50));
 
 module.exports = buildPool;
