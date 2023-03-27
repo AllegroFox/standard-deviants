@@ -24,6 +24,7 @@ class Room {
     this.startGetReady = this.startGetReady.bind(this);
   }
 
+
   // #############################
   // #############################
   //  Round Lifecycle Controllers
@@ -42,7 +43,6 @@ class Room {
 
     // Alternating modes:
     this.round = (this.roundNumber % 2) ? new RoundRhymes(this.messager) : new RoundSynonyms(this.messager);
-
 
 
     this.roundNumber++;
@@ -84,12 +84,6 @@ class Room {
     this.zeroGuesses();
     this.countDownFrom(this.round.resultsPeriod, this.startGetReady);
     await this.updateLeaderboard();
-
-    // const myObject = {
-    //   createdAt: new Date()
-    // }
-    // console.log("Checking the checkdate function:");
-    // console.log(this.checkDate(myObject));
   }
 
   // #########################
@@ -117,6 +111,7 @@ class Room {
         guessesByWinner.push(guess)
       }
     });
+
     const winnerStats = {
       handle: winnerProfile.handle,
       score: winnerProfile.score,
@@ -127,7 +122,6 @@ class Room {
 
   // Returns an array of scoring answers from the round with point value and player handle attached.
   findScoringAnswersByPlayer() {
-
     let uniqueAnswers = [];
     let taggedUniqueAnswers = [];
     this.round.answerBank.reduce((acc, next) => {
@@ -253,6 +247,7 @@ class Room {
         null, null, "incomingGuessZero"));
   }
 
+
   // #################################
   // #################################
   //  Player-Game Interaction Helpers
@@ -286,6 +281,7 @@ class Room {
             status: "unique"
           }, guessObject.clientId, "incomingGuess")
         );
+
         // DONE? Change [logic] current player's score by guess.pointValue
         this.updateScoreByPlayer(guessObject.clientId, guess.pointValue);
         break;
@@ -299,6 +295,7 @@ class Room {
             status: "popular"
           }, guessObject.clientId, "incomingGuess")
         );
+
         // ... Also send the first player (who thinks their guess is unique) the bad news.
         const playerToUpdate = (this.round.findGuess(guess));
         this.messager.sendClientMessage(
@@ -308,6 +305,7 @@ class Room {
             status: "popular"
           }, playerToUpdate.player, "incomingGuessState")
         );
+
         // DONE? Change playerToUpdate.score by guess.pointValue
         this.updateScoreByPlayer(playerToUpdate.player, guess.pointValue);
         break;
@@ -324,6 +322,7 @@ class Room {
         break;
     }
   }
+
 
   // #################################
   // #################################
@@ -343,7 +342,9 @@ class Room {
       clientId: newPlayer.clientId,
       handle: newPlayer.handle
     }, newPlayer.clientId, "incomingPlayerInitialization"));
+
     this.broadcastPrompt(newPlayer.clientId);
+
     this.messager.sendClientMessage(this.messager.parcelMessage({
       // gameStateMessage: "Welcome to the game!", gameState: "getHandle"
       stateMessage: this.marqueeText, state: this.gameState
@@ -381,9 +382,11 @@ class Room {
       handle: result.handle
     }, updateObject.clientId, "incomingPlayerInitialization"));
 
-    // Broadcast the scoreb0oard so that players see the updated name.
+    // Broadcast the scoreboard so that players see the updated name.
     this.broadcastScoreboard();
   }
+
+
   // #####################
   // #####################
   //  Database Interaction
@@ -477,11 +480,6 @@ class Room {
     leaderboardContent.push(leaderboardAllTime, leaderboardToday);
 
     this.messager.broadcastMessage(this.messager.parcelMessage(leaderboardContent, clientId, "incomingLeaderboard"));
-
-    // console.log("Top synonyms round:");
-    // console.log(topSynonymsRound[0])
-    // console.log("Top scoring rhymes:");
-    // console.log(topRhymesRound[0])
   }
 
   sortByPointValue(a,b) {
@@ -507,7 +505,6 @@ class Room {
     const yyyy = today.getFullYear();
     return (inputObject.createdAt.getDate() === dd && inputObject.createdAt.getMonth()+1 === mm && inputObject.createdAt.getFullYear() === yyyy)
   }
-
 }
 
 module.exports = Room;
