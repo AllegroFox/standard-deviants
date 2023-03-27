@@ -35,13 +35,13 @@ class Room {
     // this.round = new this.gameModes[Math.floor(Math.random() * this.gameModes.length)](this.messager);
 
     // Rhyme-mode only, for n3wbz:
-    this.round = new RoundRhymes(this.messager);
+    // this.round = new RoundRhymes(this.messager);
 
     // Synonym-mode only, for l33tz:
     // this.round = new RoundSynonyms(this.messager);
 
     // Alternating modes:
-    // this.round = (this.roundNumber % 2) ? new RoundRhymes(this.messager) : new RoundSynonyms(this.messager);
+    this.round = (this.roundNumber % 2) ? new RoundRhymes(this.messager) : new RoundSynonyms(this.messager);
 
 
 
