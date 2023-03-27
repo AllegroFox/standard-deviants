@@ -20,7 +20,7 @@ Our **tech stack** was:
   * Both modules use the [`random-words`](https://github.com/apostrophecms/random-words) library to generate seed-words that are relatively common in English.
   * The *Rhymes* module uses the [DataMuse API](https://www.datamuse.com/api/) to populate a bank of valid rhymes
   * The *Synonyms* module originally used the [`cheerio`](https://cheerio.js.org/) web-scraping library to navigate the DOM of [thesaurus.com](https://thesaurus.com) queries.  This was an exciting but brittle approach, and in returning to this project in 2023, it was necessary to switch over to the DataMuse API for better sustainability.
-  * Answer banks are persisted to the database to prevent unnecessary duplication of requests and are spooled ahead of games to minimize disruptions between rounds.
+  <!-- * Answer banks are persisted to the database to prevent unnecessary duplication of requests and are spooled ahead of games to minimize disruptions between rounds. -->
 * **Persistent Daily Scoreboards** for each game type using MongoDB.
 * Amusing, auto-generated (but consistent-by-name) avatars for players originally using the adorable.io Avatars API (now defunct, alas), now updated to the [DiceBear Thumbs API](https://dicebear.com/styles/thumbs).
 * The **[Tim Johns](https://timjohns.ca) Confetti Period** follows each round with a magnitude of celebration proportional to how well players scored.  This feature was added at the request of a beloved Lighthouse Labs mentor who discovered the [`react-confetti`](https://github.com/alampros/react-confetti) library and invited us to use it.
