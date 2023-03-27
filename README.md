@@ -90,6 +90,8 @@ Our **tech stack** was:
 
 ### Start
 
+> **Note:** MongoDB must be running during operation so that high scores can be checked and persisted.  If it's not currently running as a background process, it can be started in a terminal with the command `mongod`.
+
 To start the game, both the server and the client need to be running at the same time.  The easiest way to do this is to run the startup script in `client/package.json`:
 
 ```bash
