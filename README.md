@@ -140,7 +140,7 @@ At present, playing online is possible, but it takes some doing.  Basic tunnelli
 
     > **NOTE:** The address will change every time you restart ngrok unless you have a paid account.
 
-3. In `./hosting-config.json`, set the `remote_address` key to that forwarding address:
+3. In `client/src/config/hosting-config.json`, set the `remote_address` key to that forwarding address:
 
     ```json
     {
